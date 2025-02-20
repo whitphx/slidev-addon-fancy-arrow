@@ -14,15 +14,17 @@ mdc: true
 
 ## Slidev
 
-<img src="https://sli.dev/logo.svg" class="w-10" id="slidev-logo" />
-<div bg-white fit-content>
-<img src="https://raw.githubusercontent.com/dcurtis/markdown-mark/refs/heads/master/svg/markdown-mark.svg" class="w-10" id="markdown-mark" />
+<img src="https://sli.dev/logo.svg" class="w-10" id="slidev-logo" absolute top-20 left-20 />
+<div bg-white fit-content absolute top-20 right-20>
+    <img src="https://raw.githubusercontent.com/dcurtis/markdown-mark/refs/heads/master/svg/markdown-mark.svg" class="w-10" id="markdown-mark" />
 </div>
 
-<FancyArrow id1="slidev-logo" pos1="bottomright" id2="slidev-text" pos2="bottomleft" color="teal" width="2" arc="-0.3" seed="1" roughness="2" />
+<FancyArrow id1="slidev-logo" pos1="bottom" id2="slidev-text" pos2="bottom" color="teal" width="2" arc="-0.3" seed="1" roughness="2" />
 <FancyArrow id1="markdown-mark" pos1="bottomright" id2="markdown-text" pos2="bottomleft" color="gray" width="2" arc="-0.3" seed="1" roughness="2" />
 
-<span id="slidev-text" v-mark.teal>Slidev</span> (slide + dev, /slaɪdɪv/) is a web-based slides maker and presenter. It's designed for developers to focus on writing content in <span id="markdown-text" v-mark.gray>Markdown</span>. With the power of web technologies like Vue, you are able to deliver pixel-perfect designs with interactive demos to your presentation.
+<div w="2/3" m-auto mt-32>
+    <span id="slidev-text" v-mark.teal="0">Slidev</span> (slide + dev, /slaɪdɪv/) is a web-based slides maker and presenter. It's designed for developers to focus on writing content in <span id="markdown-text" v-mark.gray="0">Markdown</span>. With the power of web technologies like Vue, you are able to deliver pixel-perfect designs with interactive demos to your presentation.
+</div>
 
 
 ---
