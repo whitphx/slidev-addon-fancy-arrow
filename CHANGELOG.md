@@ -1,5 +1,15 @@
 # slidev-addon-fancy-arrow
 
+## 0.3.0
+
+### Minor Changes
+
+- [#18](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/18) [`2e3cef5`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/2e3cef5ba0fa0f76e45d7f28979fe726242c9a00) Thanks [@whitphx](https://github.com/whitphx)! - Apply correct color palette
+
+### Patch Changes
+
+- [#14](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/14) [`bca9bf4`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/bca9bf42efead42417d7ae5304d3fd4445c4d69d) Thanks [@whitphx](https://github.com/whitphx)! - Polling to detect position/size changes on the snapped element
+
 ## 0.2.0
 
 ### Minor Changes
