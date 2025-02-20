@@ -42,7 +42,6 @@ const createArrowHeadSvg = (
 export function useRoughArrow(props: {
   point1: Ref<{ x: number; y: number } | undefined>;
   point2: Ref<{ x: number; y: number } | undefined>;
-  color: string;
   width: number;
   arrowHeadType: "line" | "polygon";
   arrowHeadSize: number | null;
@@ -54,7 +53,6 @@ export function useRoughArrow(props: {
   const {
     point1: point1Ref,
     point2: point2Ref,
-    color,
     width,
     arrowHeadType,
     arrowHeadSize,
@@ -64,9 +62,9 @@ export function useRoughArrow(props: {
     centerPositionParam,
   } = props;
   const options = {
-    stroke: color,
+    stroke: "currentColor",
     strokeWidth: width,
-    fill: color,
+    fill: "currentColor",
     fillStyle: "solid",
     // We don't support the `bowing` param because it's not so effective for arc.
     ...(roughness !== undefined && { roughness }),
