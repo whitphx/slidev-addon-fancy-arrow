@@ -58,7 +58,12 @@ export function useElementPosition(
       y += height / 2;
     }
 
-    point.value = { x, y };
+    if (point.value?.x !== x || point.value?.y !== y) {
+      // This if-condition is important.
+      // If the position/size of the element doesn't change,
+      // we must not update the point ref to avoid unnecessary re-renders.
+      point.value = { x, y };
+    }
   };
 
   onSlideEnter(() => {
@@ -69,6 +74,14 @@ export function useElementPosition(
 
   onMounted(() => {
     update();
+
+    // Some type of position/size changes can't be observed by MutationObserver.
+    // So we need to update the position/size periodically in the polling manner.
+    const interval = setInterval(() => {
+      update();
+    }, 100);
+
+    return () => clearInterval(interval);
   });
 
   return point;
