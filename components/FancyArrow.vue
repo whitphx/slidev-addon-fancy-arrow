@@ -33,7 +33,6 @@ const point2 = props.id2
 const roughSvg = useRoughArrow({
   point1,
   point2,
-  color: props.color ?? "currentColor",
   width: Number(props.width ?? 2),
   twoWay: props.twoWay ?? false,
   centerPositionParam: Number(props.arc ?? 0),
@@ -47,7 +46,7 @@ const roughSvg = useRoughArrow({
 <template>
   <svg
     v-if="point1 && point2"
-    class="absolute left-0 top-0"
+    :class="['absolute left-0 top-0', props.color && `text-${props.color}`]"
     :width="slideWidth"
     :height="slideHeight"
   >
