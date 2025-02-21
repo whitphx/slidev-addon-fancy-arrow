@@ -165,6 +165,12 @@ export function useRoughArrow(props: {
       endAngle += 2 * Math.PI;
     }
 
+    // RoughJS has .arc() method as follows with which we can more easily understand what arc we are drawing (that's why we left it commented out),
+    // however, it doesn't work well in our case as https://github.com/whitphx/slidev-addon-fancy-arrow/issues/17
+    // because large arcs are drawn too rough with it.
+    // const D = 2 * R;
+    // const svg = roughSvg.arc(center.x, center.y, D, D, startAngle, endAngle, false, lineOptions);
+    // So we use .path() instead as below.
     const largeArcFlag =
       centerPositionParam < -1 || 1 < centerPositionParam ? 1 : 0;
     const sweepFlag = centerPositionParam > 0 ? 1 : 0;
@@ -172,19 +178,6 @@ export function useRoughArrow(props: {
       `M${point1.x} ${point1.y} A${R} ${R} 0 ${largeArcFlag} ${sweepFlag} ${point2.x} ${point2.y}`,
       lineOptions,
     );
-    // RoughJS has .arc() method as follows, however, it doesn't work well in our case as https://github.com/whitphx/slidev-addon-fancy-arrow/issues/17
-    // because large arc is drawn too rough. So we use .path() instead as above.
-    // const D = 2 * R;
-    // const svg = roughSvg.arc(
-    //   center.x,
-    //   center.y,
-    //   D,
-    //   D,
-    //   startAngle,
-    //   endAngle,
-    //   false,
-    //   options,
-    // );
 
     return {
       svg,
