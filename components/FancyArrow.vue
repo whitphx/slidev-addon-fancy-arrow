@@ -45,7 +45,7 @@ const roughSvg = useRoughArrow({
 <template>
   <svg
     v-if="point1 && point2"
-    :class="props.color && `text-${props.color}`"
+    :class="props.color ? `text-${props.color}` : ''"
     style="
       position: absolute;
       top: 0;
