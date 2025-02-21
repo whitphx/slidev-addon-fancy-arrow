@@ -22,11 +22,13 @@ const props = defineProps<{
   seed?: number | string;
 }>();
 
+const container = ref<SVGSVGElement>();
+
 const point1 = props.id1
-  ? useElementPosition(props.id1, props.pos1)
+  ? useElementPosition(container, props.id1, props.pos1)
   : ref({ x: Number(props.x1 ?? 0), y: Number(props.y1 ?? 0) });
 const point2 = props.id2
-  ? useElementPosition(props.id2, props.pos2)
+  ? useElementPosition(container, props.id2, props.pos2)
   : ref({ x: Number(props.x2 ?? 0), y: Number(props.y2 ?? 0) });
 
 const roughSvg = useRoughArrow({
@@ -45,6 +47,7 @@ const roughSvg = useRoughArrow({
 <template>
   <svg
     v-if="point1 && point2"
+    ref="container"
     :class="props.color ? `text-${props.color}` : ''"
     style="
       position: absolute;
