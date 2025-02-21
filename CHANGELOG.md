@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.3.2
+
+### Patch Changes
+
+- [#25](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/25) [`c5e578d`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/c5e578d8632607ec49254e86bdd258d98730425b) Thanks [@whitphx](https://github.com/whitphx)! - Fix large arcs not to be drawn too rough
+
 ## 0.3.1
 
 ### Patch Changes
