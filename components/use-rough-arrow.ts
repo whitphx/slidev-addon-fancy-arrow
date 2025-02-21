@@ -61,11 +61,7 @@ export function useRoughArrow(props: {
     twoWay,
     centerPositionParam,
   } = props;
-  const options = {
-    stroke: "currentColor",
-    strokeWidth: width,
-    fill: "currentColor",
-    fillStyle: "solid",
+  const baseOptions = {
     // We don't support the `bowing` param because it's not so effective for arc.
     ...(roughness !== undefined && { roughness }),
     ...(seed !== undefined && { seed }),
@@ -88,6 +84,12 @@ export function useRoughArrow(props: {
       return;
     }
 
+    const lineOptions = {
+      ...baseOptions,
+      stroke: "currentColor",
+      strokeWidth: width,
+    };
+
     if (centerPositionParam === 0) {
       // Straight line.
       // This can be interpreted as the arc's center is at infinity.
@@ -96,7 +98,7 @@ export function useRoughArrow(props: {
         point1.y,
         point2.x,
         point2.y,
-        options,
+        lineOptions,
       );
       const angle =
         Math.atan2(point2.y - point1.y, point2.x - point1.x) - Math.PI / 2;
@@ -163,16 +165,18 @@ export function useRoughArrow(props: {
       endAngle += 2 * Math.PI;
     }
 
-    const D = 2 * R;
-    const svg = roughSvg.arc(
-      center.x,
-      center.y,
-      D,
-      D,
-      startAngle,
-      endAngle,
-      false,
-      options,
+    // RoughJS has .arc() method as follows with which we can more easily understand what arc we are drawing (that's why we left it commented out),
+    // however, it doesn't work well in our case as https://github.com/whitphx/slidev-addon-fancy-arrow/issues/17
+    // because large arcs are drawn too rough with it.
+    // const D = 2 * R;
+    // const svg = roughSvg.arc(center.x, center.y, D, D, startAngle, endAngle, false, lineOptions);
+    // So we use .path() instead as below.
+    const largeArcFlag =
+      centerPositionParam < -1 || 1 < centerPositionParam ? 1 : 0;
+    const sweepFlag = centerPositionParam > 0 ? 1 : 0;
+    const svg = roughSvg.path(
+      `M${point1.x} ${point1.y} A${R} ${R} 0 ${largeArcFlag} ${sweepFlag} ${point2.x} ${point2.y}`,
+      lineOptions,
     );
 
     return {
@@ -197,22 +201,28 @@ export function useRoughArrow(props: {
     return (30 * Math.log(line.value.lineLength)) / Math.log(200);
   });
 
-  const arrowHead1 = computed(() =>
-    createArrowHeadSvg(
+  const arrowHeads = computed(() => {
+    const arrowHeadOptions = {
+      ...baseOptions,
+      stroke: "currentColor",
+      strokeWidth: width,
+      fill: "currentColor",
+      fillStyle: "solid",
+    };
+    const arrowHead1 = createArrowHeadSvg(
       rc.value as RoughSVG,
       computedArrowHeadSize.value,
       arrowHeadType,
-      options,
-    ),
-  );
-  const arrowHead2 = computed(() =>
-    createArrowHeadSvg(
+      arrowHeadOptions,
+    );
+    const arrowHead2 = createArrowHeadSvg(
       rc.value as RoughSVG,
       computedArrowHeadSize.value,
       arrowHeadType,
-      options,
-    ),
-  );
+      arrowHeadOptions,
+    );
+    return [arrowHead1, arrowHead2];
+  });
 
   return computed(() => {
     svg.value.innerHTML = "";
@@ -227,18 +237,21 @@ export function useRoughArrow(props: {
 
     svg.value.appendChild(line.value.svg);
 
-    arrowHead2.value.setAttribute(
+    const arrowHead1 = arrowHeads.value[0];
+    const arrowHead2 = arrowHeads.value[1];
+
+    arrowHead2.setAttribute(
       "transform",
       `translate(${point2Ref.value.x},${point2Ref.value.y}) rotate(${(line.value.angle2 * 180) / Math.PI + (centerPositionParam >= 0 ? 90 : -90)})`,
     );
-    svg.value.appendChild(arrowHead2.value);
+    svg.value.appendChild(arrowHead2);
 
     if (twoWay) {
-      arrowHead1.value.setAttribute(
+      arrowHead1.setAttribute(
         "transform",
         `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(line.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
       );
-      svg.value.appendChild(arrowHead1.value);
+      svg.value.appendChild(arrowHead1);
     }
 
     return svg.value.innerHTML;
