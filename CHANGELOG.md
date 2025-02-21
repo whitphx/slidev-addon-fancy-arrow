@@ -1,5 +1,13 @@
 # slidev-addon-fancy-arrow
 
+## 0.3.1
+
+### Patch Changes
+
+- [#22](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/22) [`2d80c44`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/2d80c440178a49322567f62fc45219b06062b228) Thanks [@whitphx](https://github.com/whitphx)! - Prevent the SVG element from covering the entire screen
+
+- [#24](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/24) [`1bacd10`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/1bacd10af5888542e594c97eebd5b30747a6987c) Thanks [@whitphx](https://github.com/whitphx)! - Get the snapped element positions more precisely
+
 ## 0.3.0
 
 ### Minor Changes
