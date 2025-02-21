@@ -12,6 +12,7 @@ export type SnapPosition =
   | "bottomright";
 
 export function useElementPosition(
+  rootElement: Ref<SVGSVGElement | undefined>,
   id: string,
   pos?: SnapPosition,
 ): Ref<{ x: number; y: number } | undefined> {
@@ -25,12 +26,6 @@ export function useElementPosition(
       if (elem.value) {
         const observer = new MutationObserver(update);
         observer.observe(elem.value, { attributes: true });
-
-        const parent = elem.value.offsetParent;
-        if (parent) {
-          const parentObserver = new MutationObserver(update);
-          parentObserver.observe(parent, { attributes: true });
-        }
       }
     }
 
@@ -40,10 +35,10 @@ export function useElementPosition(
     }
 
     const rect = elem.value.getBoundingClientRect();
-    const parentRect = elem.value.offsetParent?.getBoundingClientRect();
+    const rootRect = rootElement.value?.getBoundingClientRect();
 
-    let x = (rect.left - (parentRect?.left ?? 0)) / $scale.value;
-    let y = (rect.top - (parentRect?.top ?? 0)) / $scale.value;
+    let x = (rect.left - (rootRect?.left ?? 0)) / $scale.value;
+    let y = (rect.top - (rootRect?.top ?? 0)) / $scale.value;
     const width = rect.width / $scale.value;
     const height = rect.height / $scale.value;
 
