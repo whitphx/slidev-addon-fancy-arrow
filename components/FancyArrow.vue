@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { slideWidth, slideHeight } from "@slidev/client";
 import { useElementPosition, type SnapPosition } from "./use-element-position";
 import { useRoughArrow } from "./use-rough-arrow";
 
@@ -47,8 +46,7 @@ const roughSvg = useRoughArrow({
   <svg
     v-if="point1 && point2"
     :class="['absolute left-0 top-0', props.color && `text-${props.color}`]"
-    :width="slideWidth"
-    :height="slideHeight"
+    style="width: 10px; height: 10px; overflow: visible"
   >
     <g v-html="roughSvg" />
   </svg>
