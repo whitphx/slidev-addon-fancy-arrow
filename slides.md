@@ -4,11 +4,11 @@ mdc: true
 
 # Fancy Arrow
 
-## Slidev addon for drawing arrows with <span v-mark.red id="fancy-styles">fancy styles</span>,
+## Slidev addon for drawing arrows with <span v-mark.orange="0" id="fancy-styles">fancy styles</span>,
 
-<span v-click id="rough-js">powered by [Rough.js](https://roughjs.com).</span>
+<span forward:delay-500 id="rough-js">powered by [Rough.js](https://roughjs.com).</span>
 
-<FancyArrow v-after id1="rough-js" pos1="bottomright" id2="fancy-styles" pos2="bottomleft" color="red" width="2" arc="-0.3" seed="1" roughness="2" />
+<FancyArrow id1="rough-js" pos1="bottomright" id2="fancy-styles" pos2="bottom" color="orange" width="3" arc="-0.3" seed="1" roughness="2" />
 
 ---
 
