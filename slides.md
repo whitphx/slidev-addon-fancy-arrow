@@ -28,9 +28,9 @@ mdc: true
 
 ---
 
-## Positioning
+# Positioning
 
-<div grid="~ cols-3 gap-4" mt-10>
+<div grid="~ cols-3 gap-4" mt-6>
 
 <div bg-gray:10 p-4 border="~ gray/50 rounded-lg">
 
@@ -112,6 +112,68 @@ mdc: true
     x2="800"
     y2="300"
 />
+```
+
+</div>
+
+</div>
+
+---
+
+# Appearance
+
+<div grid="~ cols-3 gap-4" mt-6>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg">
+
+### Color
+
+<FancyArrow color="orange" x1="100" y1="200" x2="200" y2="300" />
+<FancyArrow color="lime" x1="140" y1="200" x2="240" y2="300" />
+<FancyArrow color="sky" x1="180" y1="200" x2="280" y2="300" />
+
+<div h-40><!-- Placeholder--></div>
+
+```html
+<FancyArrow color="orange" x1="100" y1="200" x2="200" y2="300" />
+<FancyArrow color="lime" x1="140" y1="200" x2="240" y2="300" />
+<FancyArrow color="sky" x1="180" y1="200" x2="280" y2="300" />
+```
+
+</div>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg">
+
+### Width
+
+<FancyArrow width="2" x1="400" y1="200" x2="500" y2="300" />
+<FancyArrow width="4" x1="440" y1="200" x2="540" y2="300" />
+<FancyArrow width="6" x1="480" y1="200" x2="580" y2="300" />
+
+<div h-40><!-- Placeholder--></div>
+
+```html
+<FancyArrow width="2" x1="400" y1="200" x2="500" y2="300" />
+<FancyArrow width="4" x1="440" y1="200" x2="540" y2="300" />
+<FancyArrow width="6" x1="480" y1="200" x2="580" y2="300" />
+```
+
+</div>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg">
+
+### Arrow head customization
+
+<FancyArrow two-way x1="700" y1="200" x2="800" y2="300" />
+<FancyArrow arrowHeadType="polygon" x1="740" y1="200" x2="840" y2="300" />
+<FancyArrow arrowHeadSize="60" x1="780" y1="200" x2="880" y2="300" />
+
+<div h-40><!-- Placeholder--></div>
+
+```html
+<FancyArrow two-way x1="700" y1="200" x2="800" y2="300" />
+<FancyArrow arrowHeadType="polygon" x1="740" y1="200" x2="840" y2="300" />
+<FancyArrow arrowHeadSize="60" x1="780" y1="200" x2="880" y2="300" />
 ```
 
 </div>
