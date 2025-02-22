@@ -101,7 +101,7 @@ export function useRoughArrow(props: {
         lineOptions,
       );
       const angle =
-        Math.atan2(point2.y - point1.y, point2.x - point1.x) - Math.PI / 2;
+        Math.atan2(point2.y - point1.y, point2.x - point1.x) + Math.PI / 2;
       return {
         svg,
         angle1: angle,
@@ -122,10 +122,9 @@ export function useRoughArrow(props: {
     const chordLength = Math.hypot(dx, dy);
 
     // Unit vector perpendicular to the chord.
-    // (Here we use (-dy, dx) for the perpendicular direction.)
     const n = {
-      x: -dy / chordLength,
-      y: dx / chordLength,
+      x: dy / chordLength,
+      y: -dx / chordLength,
     };
 
     // Offset for the arc's center from the midpoint.
@@ -173,7 +172,7 @@ export function useRoughArrow(props: {
     // So we use .path() instead as below.
     const largeArcFlag =
       centerPositionParam < -1 || 1 < centerPositionParam ? 1 : 0;
-    const sweepFlag = centerPositionParam > 0 ? 1 : 0;
+    const sweepFlag = centerPositionParam > 0 ? 0 : 1;
     const svg = roughSvg.path(
       `M${point1.x} ${point1.y} A${R} ${R} 0 ${largeArcFlag} ${sweepFlag} ${point2.x} ${point2.y}`,
       lineOptions,
@@ -249,14 +248,14 @@ export function useRoughArrow(props: {
 
     arrowHead2.setAttribute(
       "transform",
-      `translate(${point2Ref.value.x},${point2Ref.value.y}) rotate(${(arcData.value.angle2 * 180) / Math.PI + (centerPositionParam >= 0 ? 90 : -90)})`,
+      `translate(${point2Ref.value.x},${point2Ref.value.y}) rotate(${(arcData.value.angle2 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
     );
     svg.value.appendChild(arrowHead2);
 
     if (twoWay) {
       arrowHead1.setAttribute(
         "transform",
-        `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
+        `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? 90 : -90)})`,
       );
       svg.value.appendChild(arrowHead1);
     }

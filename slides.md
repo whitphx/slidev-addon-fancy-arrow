@@ -180,6 +180,57 @@ mdc: true
 
 </div>
 
+---
+
+# Arc
+
+<div id="arc-start" absolute left-300px top-400px style="transform: translate(-50%, -50%);">
+    <code>#arc-start</code>
+</div>
+<div id="arc-end" absolute left-300px top-100px style="transform: translate(-50%, -50%);">
+    <code>#arc-end</code>
+</div>
+
+<FancyArrow id1="arc-start" id2="arc-end" arc="1.5" color="red" />
+<FancyArrow id1="arc-start" id2="arc-end" arc="1.0" color="orange" />
+<FancyArrow id1="arc-start" id2="arc-end" arc="0.5" color="yellow" />
+<FancyArrow id1="arc-start" id2="arc-end" arc="0.0" color="green" />
+<FancyArrow id1="arc-start" id2="arc-end" arc="-0.5" color="blue" />
+<FancyArrow id1="arc-start" id2="arc-end" arc="-1.0" color="purple" />
+<FancyArrow id1="arc-start" id2="arc-end" arc="-1.5" color="pink" />
+
+<Arrow x1="50" y1="450" x2="550" y2="450" />
+
+<code absolute left-0px top-460px>arc=</code>
+<code absolute left-75px top-460px style="transform: translateX(-50%);">-1.5</code>
+<code absolute left-150px top-460px style="transform: translateX(-50%);">-1.0</code>
+<code absolute left-225px top-460px style="transform: translateX(-50%);">-0.5</code>
+<code absolute left-300px top-460px style="transform: translateX(-50%);">0</code>
+<code absolute left-375px top-460px style="transform: translateX(-50%);">0.5</code>
+<code absolute left-450px top-460px style="transform: translateX(-50%);">1.0</code>
+<code absolute left-525px top-460px style="transform: translateX(-50%);">1.5</code>
+
+<div absolute right-0 top-30 w-100>
+
+```html
+<div id="arc-start" absolute left-300px top-400px style="transform: translate(-50%, -50%);">
+    <code>#arc-start</code>
+</div>
+<div id="arc-end" absolute left-300px top-100px style="transform: translate(-50%, -50%);">
+    <code>#arc-end</code>
+</div>
+
+<FancyArrow arc="1.5" id1="arc-start" id2="arc-end" color="red" />
+<FancyArrow arc="1.0" id1="arc-start" id2="arc-end" color="orange" />
+<FancyArrow arc="0.5" id1="arc-start" id2="arc-end" color="yellow" />
+<FancyArrow arc="0.0" id1="arc-start" id2="arc-end" color="green" />
+<FancyArrow arc="-0.5" id1="arc-start" id2="arc-end" color="blue" />
+<FancyArrow arc="-1.0" id1="arc-start" id2="arc-end" color="purple" />
+<FancyArrow arc="-1.5" id1="arc-start" id2="arc-end" color="pink" />
+```
+
+</div>
+
 
 ---
 
@@ -193,8 +244,8 @@ mdc: true
     <span id="bar">Bar</span>
 </div>
 
-<FancyArrow v-click="1" forward:delay-100 id1="foo" pos1="bottomleft" id2="bar" pos2="topleft" color="red" width="2" arc="-0.3" seed="1" roughness="2" >Hey</FancyArrow>
-<FancyArrow v-click="1" forward:delay-100 id2="foo" pos2="bottomright" id1="bar" pos1="topright" color="red" width="2" arc="-0.3" seed="1" roughness="2" >
+<FancyArrow v-click="1" forward:delay-100 id1="foo" pos1="bottomleft" id2="bar" pos2="topleft" color="red" width="2" arc="0.3" seed="1" roughness="2" >Hey</FancyArrow>
+<FancyArrow v-click="1" forward:delay-100 id2="foo" pos2="bottomright" id1="bar" pos1="topright" color="red" width="2" arc="0.3" seed="1" roughness="2" >
     <span text-red>Ahoy</span>
 </FancyArrow>
 
