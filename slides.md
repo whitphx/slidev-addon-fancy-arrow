@@ -184,12 +184,8 @@ mdc: true
 
 # Arc
 
-<div id="arc-start" absolute left-300px top-400px style="transform: translate(-50%, -50%);">
-    <code>#arc-start</code>
-</div>
-<div id="arc-end" absolute left-300px top-100px style="transform: translate(-50%, -50%);">
-    <code>#arc-end</code>
-</div>
+<code id="arc-start" absolute left-300px top-400px style="transform: translate(-50%, -50%);">#arc-start</code>
+<code id="arc-end" absolute left-300px top-100px style="transform: translate(-50%, -50%);">#arc-end</code>
 
 <FancyArrow id1="arc-start" id2="arc-end" arc="1.5" color="red" />
 <FancyArrow id1="arc-start" id2="arc-end" arc="1.0" color="orange" />
@@ -213,12 +209,8 @@ mdc: true
 <div absolute right-0 top-30 w-100>
 
 ```html
-<div id="arc-start" absolute left-300px top-400px style="transform: translate(-50%, -50%);">
-    <code>#arc-start</code>
-</div>
-<div id="arc-end" absolute left-300px top-100px style="transform: translate(-50%, -50%);">
-    <code>#arc-end</code>
-</div>
+<code id="arc-start" absolute left-300px top-400px style="transform: translate(-50%, -50%);">#arc-start</code>
+<code id="arc-end" absolute left-300px top-100px style="transform: translate(-50%, -50%);">#arc-end</code>
 
 <FancyArrow arc="1.5" id1="arc-start" id2="arc-end" color="red" />
 <FancyArrow arc="1.0" id1="arc-start" id2="arc-end" color="orange" />
