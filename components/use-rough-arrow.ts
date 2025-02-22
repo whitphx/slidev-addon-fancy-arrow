@@ -71,7 +71,7 @@ export function useRoughArrow(props: {
   );
   const rc = ref(roughjs.svg(svg.value));
 
-  const line = computed(() => {
+  const arcData = computed(() => {
     if (!point1Ref.value || !point2Ref.value) {
       return null;
     }
@@ -179,16 +179,23 @@ export function useRoughArrow(props: {
       lineOptions,
     );
 
+    const signedR = R * Math.sign(offset);
+    const arcMid = {
+      x: center.x - signedR * n.x,
+      y: center.y - signedR * n.y,
+    };
+
     return {
       svg,
       angle1,
       angle2,
       lineLength: R * (endAngle - startAngle),
+      arcMid,
     };
   });
 
   const computedArrowHeadSize = computed(() => {
-    if (line.value == null) {
+    if (arcData.value == null) {
       return 0;
     }
 
@@ -198,7 +205,7 @@ export function useRoughArrow(props: {
 
     // The arrow size is proportional to the line length.
     // The constant factor is chosen so that the arrow size is 30 when the line length is 200.
-    return (30 * Math.log(line.value.lineLength)) / Math.log(200);
+    return (30 * Math.log(arcData.value.lineLength)) / Math.log(200);
   });
 
   const arrowHeads = computed(() => {
@@ -224,36 +231,49 @@ export function useRoughArrow(props: {
     return [arrowHead1, arrowHead2];
   });
 
-  return computed(() => {
+  const arcSvg = computed(() => {
     svg.value.innerHTML = "";
 
     if (
-      line.value == null ||
+      arcData.value == null ||
       point1Ref.value == null ||
       point2Ref.value == null
     ) {
       return null;
     }
 
-    svg.value.appendChild(line.value.svg);
+    svg.value.appendChild(arcData.value.svg);
 
     const arrowHead1 = arrowHeads.value[0];
     const arrowHead2 = arrowHeads.value[1];
 
     arrowHead2.setAttribute(
       "transform",
-      `translate(${point2Ref.value.x},${point2Ref.value.y}) rotate(${(line.value.angle2 * 180) / Math.PI + (centerPositionParam >= 0 ? 90 : -90)})`,
+      `translate(${point2Ref.value.x},${point2Ref.value.y}) rotate(${(arcData.value.angle2 * 180) / Math.PI + (centerPositionParam >= 0 ? 90 : -90)})`,
     );
     svg.value.appendChild(arrowHead2);
 
     if (twoWay) {
       arrowHead1.setAttribute(
         "transform",
-        `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(line.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
+        `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
       );
       svg.value.appendChild(arrowHead1);
     }
 
     return svg.value.innerHTML;
   });
+
+  const textPosition = computed(() => {
+    if (arcData.value == null) {
+      return null;
+    }
+
+    return arcData.value.arcMid;
+  });
+
+  return {
+    arcSvg,
+    textPosition,
+  };
 }
