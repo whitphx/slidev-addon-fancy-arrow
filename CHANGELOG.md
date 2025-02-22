@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.5.0
+
+### Minor Changes
+
+- [#30](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/30) [`b4bcfaa`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/b4bcfaa0d67322dbd6aad6a8c75d5b48700102a7) Thanks [@whitphx](https://github.com/whitphx)! - [BREAKING] Reverse arc direction
+
 ## 0.4.0
 
 ### Minor Changes
