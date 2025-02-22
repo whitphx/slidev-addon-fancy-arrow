@@ -31,7 +31,7 @@ const point2 = props.id2
   ? useElementPosition(container, props.id2, props.pos2)
   : ref({ x: Number(props.x2 ?? 0), y: Number(props.y2 ?? 0) });
 
-const roughSvg = useRoughArrow({
+const { arcSvg, textPosition } = useRoughArrow({
   point1,
   point2,
   width: Number(props.width ?? 2),
@@ -45,19 +45,32 @@ const roughSvg = useRoughArrow({
 </script>
 
 <template>
-  <svg
-    v-if="point1 && point2"
-    ref="container"
-    :class="props.color ? `text-${props.color}` : ''"
-    style="
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 10px;
-      height: 10px;
-      overflow: visible;
-    "
-  >
-    <g v-html="roughSvg" />
-  </svg>
+  <!-- Use use <div v-if> as a root element here because <template v-if> doesn't work with v-click on Slidev -->
+  <div v-if="point1 && point2" style="position: absolute; top: 0; left: 0">
+    <svg
+      ref="container"
+      :class="props.color ? `text-${props.color}` : ''"
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 10px;
+        height: 10px;
+        overflow: visible;
+      "
+    >
+      <g v-html="arcSvg" />
+    </svg>
+    <div
+      v-if="$slots.default && textPosition"
+      :style="{
+        position: 'absolute',
+        left: `${textPosition.x}px`,
+        top: `${textPosition.y}px`,
+        transform: 'translate(-50%, -50%)',
+      }"
+    >
+      <slot />
+    </div>
+  </div>
 </template>

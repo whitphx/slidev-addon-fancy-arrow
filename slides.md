@@ -39,13 +39,18 @@ mdc: true
     <span id="bar">Bar</span>
 </div>
 
-<FancyArrow v-click="1" forward:delay-1000 id1="foo" pos1="bottomleft" id2="bar" pos2="topleft" color="red" width="2" arc="-0.3" seed="1" roughness="2" />
+<FancyArrow v-click="1" forward:delay-100 id1="foo" pos1="bottomleft" id2="bar" pos2="topleft" color="red" width="2" arc="-0.3" seed="1" roughness="2" >Hey</FancyArrow>
+<FancyArrow v-click="1" forward:delay-100 id2="foo" pos2="bottomright" id1="bar" pos1="topright" color="red" width="2" arc="-0.3" seed="1" roughness="2" >
+    <span text-red>Ahoy</span>
+</FancyArrow>
 
 <div v-click p-8 :class="$clicks === 0 ? 'translate-y--32' : $clicks === 1 ? 'translate-y--16' : ''">
     <span id="baz">Baz</span>
 </div>
 
-<FancyArrow v-click="2" forward:delay-1000 id1="bar" pos1="bottomleft" id2="baz" pos2="topleft" color="green" width="2" arc="-0.3" seed="1" roughness="2" />
+<FancyArrow v-click="2" forward:delay-100 id1="bar" pos1="bottomleft" id2="baz" pos2="topleft" color="green" width="2" arc="0.3" seed="1" roughness="2" >
+    <span text-green v-mark.green="2">Hola!</span>
+</FancyArrow>
 ---
 
 # Demo
