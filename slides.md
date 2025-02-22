@@ -60,12 +60,8 @@ mdc: true
 
 ### Snapped to elements
 
-<div id="snapped-element1" absolute left-380px top-200px>
-    <code>#snapped-element1</code>
-</div>
-<div id="snapped-element2" absolute left-420px top-300px>
-    <code>#snapped-element2</code>
-</div>
+<code id="snapped-element1" absolute left-380px top-200px>#snapped-element1</code>
+<code id="snapped-element2" absolute left-420px top-300px>#snapped-element2</code>
 <FancyArrow
     id1="snapped-element1"
     id2="snapped-element2"
@@ -74,12 +70,8 @@ mdc: true
 <div h-40><!-- Placeholder--></div>
 
 ```html
-<div id="snapped-element1" absolute left-380px top-200px>
-    <code>#snapped-element1</code>
-</div>
-<div id="snapped-element2" absolute left-420px top-300px>
-    <code>#snapped-element2</code>
-</div>
+<code id="snapped-element1" absolute left-380px top-200px>#snapped-element1</code>
+<code id="snapped-element2" absolute left-420px top-300px>#snapped-element2</code>
 <FancyArrow
     id1="snapped-element1"
     id2="snapped-element2"
@@ -92,9 +84,7 @@ mdc: true
 
 ### Mixed
 
-<div id="snapped-element3" absolute left-680px top-200px>
-    <code>#snapped-element3</code>
-</div>
+<code id="snapped-element3" absolute left-680px top-200px>#snapped-element3</code>
 <FancyArrow
     id1="snapped-element3"
     x2="800"
@@ -104,9 +94,7 @@ mdc: true
 <div h-40><!-- Placeholder--></div>
 
 ```html
-<div id="snapped-element3" absolute left-680px top-200px>
-    <code>#snapped-element3</code>
-</div>
+<code id="snapped-element3" absolute left-680px top-200px>#snapped-element3</code>
 <FancyArrow
     id1="snapped-element3"
     x2="800"
