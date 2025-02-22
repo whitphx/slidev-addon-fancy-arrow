@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.4.0
+
+### Minor Changes
+
+- [#28](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/28) [`992d63c`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/992d63c8a65e1b64221da6f2154cab897df57bcd) Thanks [@whitphx](https://github.com/whitphx)! - Add a slot to be displayed at the midpoint of the arc
+
 ## 0.3.2
 
 ### Patch Changes
