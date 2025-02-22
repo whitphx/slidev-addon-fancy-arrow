@@ -28,6 +28,99 @@ mdc: true
 
 ---
 
+## Positioning
+
+<div grid="~ cols-3 gap-4" mt-10>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg">
+
+### Absolute positioning
+
+<FancyArrow
+    x1="100"
+    y1="200"
+    x2="200"
+    y2="300"
+/>
+
+<div h-40><!-- Placeholder--></div>
+
+```html
+<FancyArrow
+    x1="100"
+    y1="200"
+    x2="200"
+    y2="300"
+/>
+```
+
+</div>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg">
+
+### Snapped to elements
+
+<div id="snapped-element1" absolute left-380px top-200px>
+    <code>#snapped-element1</code>
+</div>
+<div id="snapped-element2" absolute left-420px top-300px>
+    <code>#snapped-element2</code>
+</div>
+<FancyArrow
+    id1="snapped-element1"
+    id2="snapped-element2"
+/>
+
+<div h-40><!-- Placeholder--></div>
+
+```html
+<div id="snapped-element1" absolute left-380px top-200px>
+    <code>#snapped-element1</code>
+</div>
+<div id="snapped-element2" absolute left-420px top-300px>
+    <code>#snapped-element2</code>
+</div>
+<FancyArrow
+    id1="snapped-element1"
+    id2="snapped-element2"
+/>
+```
+
+</div>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg">
+
+### Mixed
+
+<div id="snapped-element3" absolute left-680px top-200px>
+    <code>#snapped-element3</code>
+</div>
+<FancyArrow
+    id1="snapped-element3"
+    x2="800"
+    y2="300"
+/>
+
+<div h-40><!-- Placeholder--></div>
+
+```html
+<div id="snapped-element3" absolute left-680px top-200px>
+    <code>#snapped-element3</code>
+</div>
+<FancyArrow
+    id1="snapped-element3"
+    x2="800"
+    y2="300"
+/>
+```
+
+</div>
+
+</div>
+
+
+---
+
 ### Snapped to animated elements
 
 <div v-click p-8>
