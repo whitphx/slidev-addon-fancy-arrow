@@ -62,11 +62,11 @@ const { arcSvg, textPosition } = useRoughArrow({
       <g v-html="arcSvg" />
     </svg>
     <div
-      v-if="$slots.default"
+      v-if="$slots.default && textPosition"
       :style="{
         position: 'absolute',
-        left: `${textPosition?.x ?? 0}px`,
-        top: `${textPosition?.y ?? 0}px`,
+        left: `${textPosition.x}px`,
+        top: `${textPosition.y}px`,
         transform: 'translate(-50%, -50%)',
       }"
     >
