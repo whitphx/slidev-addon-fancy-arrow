@@ -122,7 +122,6 @@ export function useRoughArrow(props: {
     const chordLength = Math.hypot(dx, dy);
 
     // Unit vector perpendicular to the chord.
-    // (Here we use (-dy, dx) for the perpendicular direction.)
     const n = {
       x: -dy / chordLength,
       y: dx / chordLength,
