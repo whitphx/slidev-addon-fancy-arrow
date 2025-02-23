@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.6.0
+
+### Minor Changes
+
+- [#32](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/32) [`4986a65`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/4986a6537c6f3e9713d7eea8878b7e5b07db72c6) Thanks [@whitphx](https://github.com/whitphx)! - [BREAKING] Revert the previous version
+
 ## 0.5.0
 
 ### Minor Changes
