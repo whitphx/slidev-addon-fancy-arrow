@@ -172,16 +172,16 @@ mdc: true
 
 # Arc
 
-<code id="arc-start" absolute left-300px top-400px style="transform: translate(-50%, -50%);">#arc-start</code>
-<code id="arc-end" absolute left-300px top-100px style="transform: translate(-50%, -50%);">#arc-end</code>
+<code id="arc-start" absolute left-300px top-100px style="transform: translate(-50%, -50%);">#arc-start</code>
+<code id="arc-end" absolute left-300px top-400px style="transform: translate(-50%, -50%);">#arc-end</code>
 
-<FancyArrow id1="arc-start" id2="arc-end" arc="1.5" color="red" />
-<FancyArrow id1="arc-start" id2="arc-end" arc="1.0" color="orange" />
-<FancyArrow id1="arc-start" id2="arc-end" arc="0.5" color="yellow" />
-<FancyArrow id1="arc-start" id2="arc-end" arc="0.0" color="green" />
-<FancyArrow id1="arc-start" id2="arc-end" arc="-0.5" color="blue" />
-<FancyArrow id1="arc-start" id2="arc-end" arc="-1.0" color="purple" />
-<FancyArrow id1="arc-start" id2="arc-end" arc="-1.5" color="pink" />
+<FancyArrow arc="1.5" id1="arc-start" pos1="bottom" id2="arc-end" pos2="top" color="red" />
+<FancyArrow arc="1.0" id1="arc-start" pos1="bottom" id2="arc-end" pos2="top" color="orange" />
+<FancyArrow arc="0.5" id1="arc-start" pos1="bottom" id2="arc-end" pos2="top" color="yellow" />
+<FancyArrow arc="0.0" id1="arc-start" pos1="bottom" id2="arc-end" pos2="top" color="green" />
+<FancyArrow arc="-0.5" id1="arc-start" pos1="bottom" id2="arc-end" pos2="top" color="blue" />
+<FancyArrow arc="-1.0" id1="arc-start" pos1="bottom" id2="arc-end" pos2="top" color="purple" />
+<FancyArrow arc="-1.5" id1="arc-start" pos1="bottom" id2="arc-end" pos2="top" color="pink" />
 
 <Arrow x1="50" y1="450" x2="550" y2="450" />
 
