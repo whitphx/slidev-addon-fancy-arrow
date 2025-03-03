@@ -261,6 +261,49 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 </div>
 
+---
+
+# Content on the arrow
+
+<FancyArrow x1="100" y1="100" x2="200" y2="200" >
+    Hello
+</FancyArrow>
+
+<FancyArrow x1="200" y1="100" x2="300" y2="200" arc="0.3">
+    Ahoy
+</FancyArrow>
+
+<FancyArrow x1="300" y1="100" x2="400" y2="200" arc="0.3">
+    <span text-4xl text-red>Hello</span>
+</FancyArrow>
+
+<FancyArrow x1="400" y1="100" x2="500" y2="200" arc="0.3">
+    <span text-nowrap>Slidev logo</span>
+    <img src="https://sli.dev/logo.svg" w-10 m-auto/>
+</FancyArrow>
+
+<div mt-40>
+
+```html
+<FancyArrow x1="100" y1="100" x2="200" y2="200" >
+    Hello
+</FancyArrow>
+
+<FancyArrow x1="200" y1="100" x2="300" y2="200" arc="0.3">
+    Ahoy
+</FancyArrow>
+
+<FancyArrow x1="300" y1="100" x2="400" y2="200" arc="0.3">
+    <span text-4xl text-red>Hello</span>
+</FancyArrow>
+
+<FancyArrow x1="400" y1="100" x2="500" y2="200" arc="0.3">
+    <span text-nowrap>Slidev logo</span>
+    <img src="https://sli.dev/logo.svg" w-10 m-auto/>
+</FancyArrow>
+```
+
+</div>
 
 ---
 
