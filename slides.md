@@ -200,7 +200,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 <div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
 
-### Arrow head customization
+### Arrow head
 
 <FancyArrow two-way x1="700" y1="200" x2="800" y2="300" />
 <FancyArrow arrowHeadType="polygon" x1="740" y1="200" x2="840" y2="300" />
