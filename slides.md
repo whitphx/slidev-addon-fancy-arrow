@@ -36,20 +36,22 @@ mdc: true
 
 ### Absolute positioning
 
+<p><!-- placeholder --></p>
+
 <FancyArrow
-    x1="100"
+    x1="120"
     y1="200"
-    x2="200"
+    x2="260"
     y2="300"
 />
 
-<div h-40><!-- Placeholder--></div>
+<div h-50><!-- Placeholder--></div>
 
 ```html
 <FancyArrow
-    x1="100"
+    x1="120"
     y1="200"
-    x2="200"
+    x2="260"
     y2="300"
 />
 ```
@@ -67,7 +69,7 @@ mdc: true
     id2="snapped-element2"
 />
 
-<div h-40><!-- Placeholder--></div>
+<div h-50><!-- Placeholder--></div>
 
 ```html
 <code id="snapped-element1" absolute left-380px top-200px>#snapped-element1</code>
@@ -91,7 +93,7 @@ mdc: true
     y2="300"
 />
 
-<div h-40><!-- Placeholder--></div>
+<div h-50><!-- Placeholder--></div>
 
 ```html
 <code id="snapped-element3" absolute left-680px top-200px>#snapped-element3</code>
