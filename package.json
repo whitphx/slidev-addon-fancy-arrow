@@ -3,8 +3,7 @@
   "version": "0.6.2",
   "type": "module",
   "files": [
-    "components",
-    "vite.config.ts"
+    "components"
   ],
   "scripts": {
     "build": "slidev build",
