@@ -291,7 +291,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 ---
 
-# Demo: Animated arrows
+# Demo: animated arrows
 
 <img v-click="1" src="https://sli.dev/logo.svg" w-10 id="slidev-logo" absolute top-25 left-25 v-motion :initial="{x: -80, y: -80}" :enter="{x: 0, y: 0}" />
 <img v-click="1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/1280px_Markdown_with_White_Background.png/640px-1280px_Markdown_with_White_Background.png" w-15 id="markdown-mark" absolute top-30 right-30 v-motion :initial="{x: +80, y: -80}" :enter="{x: 0, y: 0}"/>
@@ -307,7 +307,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 ---
 
-### Snapped to animated elements
+# Demo: arrows snapped to animated elements
 
 <div v-click p-8>
     <span id="foo">Foo</span>
@@ -329,33 +329,3 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 <FancyArrow v-click="2" forward:delay-100 id1="bar" pos1="bottomright" id2="baz" pos2="topright" color="green" width="2" arc="0.3" seed="1" roughness="2" >
     <span text-green v-mark.green="2">Hola!</span>
 </FancyArrow>
----
-
-# Demo
-
-<div id="block1">Block 1</div>
-
-<div v-click>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    <br />
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    <br />
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    <br />
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    <br />
-</div>
-
-<div id="block2" :class="$clicks === 0 ? 'translate-y--32' : ''">Block 2</div>
-
-<FancyArrow x1="10" y1="20" x2="100" y2="200" color="green" width="3"  />
-
-<FancyArrow id1="block1" pos1="bottomleft" id2="block2" pos2="topleft" color="red" width="3" />
-
-<FancyArrow id1="block1" pos1="bottom" id2="block2" pos2="top" color="red" width="3" twoWay />
-
-<FancyArrow id1="block1" pos1="bottomright" id2="block2" pos2="topright" color="red" width="3" twoWay arc="0.5" arrowHeadType="polygon" arrowHeadSize="30" />
-
----
-
-# Next page
