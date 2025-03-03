@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.6.2
+
+### Patch Changes
+
+- [#40](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/40) [`7fefd85`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/7fefd852c085719c879cf2d3bb5254d6c7876ae6) Thanks [@whitphx](https://github.com/whitphx)! - Fix to display the contents on straight arrows
+
 ## 0.6.1
 
 ### Patch Changes
