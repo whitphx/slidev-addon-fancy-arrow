@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.6.1
+
+### Patch Changes
+
+- [#38](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/38) [`109c149`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/109c149a6d134a4147f29adbf338f38697181a5a) Thanks [@whitphx](https://github.com/whitphx)! - Resolve the problem in the build mode
+
 ## 0.6.0
 
 ### Minor Changes
