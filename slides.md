@@ -94,7 +94,7 @@ mdc: true
 
 # Anchor point
 
-<div absolute left="50%" top="50%" translate-x="-50%" translate-y="-50%" w-100 h-30 border="~ gray/50 rounded-lg" id="anchor-example">
+<div absolute left="50%" top-45 translate-x="-50%" w-100 h-30 border="~ gray/50 rounded-lg" id="anchor-example">
 
 <code bg-gray:10 p-1 min-w-25 text-center rounded-md absolute left="50%" top="50%" translate-x="-50%" translate-y="-50%">center</code>
 
@@ -132,13 +132,27 @@ mdc: true
 
 </div>
 
-<FancyArrow x1="0" y1="0" id2="anchor-example" pos2="topleft" color="red" width="4" roughness="3" arc="-0.4" seed="1" />
+<FancyArrow
+    x1="0" y1="0"
+    id2="anchor-example"
+    pos2="left"
+    color="red" arc="-0.4"
+/>
 
 Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
-```html
-<FancyArrow x1="0" y1="0" id2="anchor-example" pos2="topleft" color="red" width="4" roughness="3" arc="-0.4" seed="1" />
+<div mx-auto mt-60>
+
+```html {4}
+<FancyArrow
+    x1="0" y1="0"
+    id2="anchor-example"
+    pos2="topleft"
+    color="red" arc="-0.4"
+/>
 ```
+
+</div>
 
 ---
 
