@@ -139,15 +139,49 @@ mdc: true
     color="red" arc="-0.4"
 />
 
-Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
+<FancyArrow
+    x1="0" y1="0"
+    id2="anchor-example"
+    pos2="center"
+    color="red" arc="-0.4"
+/>
 
-<div mx-auto mt-60>
+<FancyArrow
+    x1="0" y1="0"
+    id2="anchor-example"
+    pos2="bottomright"
+    color="red" arc="-0.4"
+/>
+
+<div mx-8>
+    Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
+</div>
+
+<div mx-auto mt-60 grid="~ cols-3 gap-4">
 
 ```html {4}
 <FancyArrow
     x1="0" y1="0"
     id2="anchor-example"
-    pos2="topleft"
+    pos2="left"
+    color="red" arc="-0.4"
+/>
+```
+
+```html {4}
+<FancyArrow
+    x1="0" y1="0"
+    id2="anchor-example"
+    pos2="center"
+    color="red" arc="-0.4"
+/>
+```
+
+```html {4}
+<FancyArrow
+    x1="0" y1="0"
+    id2="anchor-example"
+    pos2="bottomright"
     color="red" arc="-0.4"
 />
 ```
