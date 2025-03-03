@@ -30,13 +30,11 @@ mdc: true
 
 # Positioning
 
-<div grid="~ cols-3 gap-4" mt-6>
+<div grid="~ cols-3 gap-4" mt-6 h-100>
 
-<div bg-gray:10 p-4 border="~ gray/50 rounded-lg">
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
 
 ### Absolute positioning
-
-<p><!-- placeholder --></p>
 
 <FancyArrow
     x1="120"
@@ -45,7 +43,7 @@ mdc: true
     y2="300"
 />
 
-<div h-50><!-- Placeholder--></div>
+<div grow-1><!-- Placeholder--></div>
 
 ```html
 <FancyArrow
@@ -58,7 +56,7 @@ mdc: true
 
 </div>
 
-<div bg-gray:10 p-4 border="~ gray/50 rounded-lg">
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
 
 ### Snapped to elements
 
@@ -69,7 +67,7 @@ mdc: true
     id2="snapped-element2"
 />
 
-<div h-50><!-- Placeholder--></div>
+<div grow-1><!-- Placeholder--></div>
 
 ```html
 <code id="snapped-element1" absolute left-380px top-200px>#snapped-element1</code>
@@ -82,7 +80,7 @@ mdc: true
 
 </div>
 
-<div bg-gray:10 p-4 border="~ gray/50 rounded-lg">
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
 
 ### Mixed
 
@@ -93,7 +91,7 @@ mdc: true
     y2="300"
 />
 
-<div h-50><!-- Placeholder--></div>
+<div grow-1><!-- Placeholder--></div>
 
 ```html
 <code id="snapped-element3" absolute left-680px top-200px>#snapped-element3</code>
@@ -162,9 +160,9 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 # Appearance
 
-<div grid="~ cols-3 gap-4" mt-6>
+<div grid="~ cols-3 gap-4" mt-6 h-80>
 
-<div bg-gray:10 p-4 border="~ gray/50 rounded-lg">
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
 
 ### Color
 
@@ -172,7 +170,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 <FancyArrow color="lime" x1="140" y1="200" x2="240" y2="300" />
 <FancyArrow color="sky" x1="180" y1="200" x2="280" y2="300" />
 
-<div h-40><!-- Placeholder--></div>
+<div grow-1><!-- Placeholder--></div>
 
 ```html
 <FancyArrow color="orange" x1="100" y1="200" x2="200" y2="300" />
@@ -182,7 +180,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 </div>
 
-<div bg-gray:10 p-4 border="~ gray/50 rounded-lg">
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
 
 ### Width
 
@@ -190,7 +188,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 <FancyArrow width="4" x1="440" y1="200" x2="540" y2="300" />
 <FancyArrow width="6" x1="480" y1="200" x2="580" y2="300" />
 
-<div h-40><!-- Placeholder--></div>
+<div grow-1><!-- Placeholder--></div>
 
 ```html
 <FancyArrow width="2" x1="400" y1="200" x2="500" y2="300" />
@@ -200,7 +198,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 </div>
 
-<div bg-gray:10 p-4 border="~ gray/50 rounded-lg">
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
 
 ### Arrow head customization
 
@@ -208,7 +206,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 <FancyArrow arrowHeadType="polygon" x1="740" y1="200" x2="840" y2="300" />
 <FancyArrow arrowHeadSize="60" x1="780" y1="200" x2="880" y2="300" />
 
-<div h-40><!-- Placeholder--></div>
+<div grow-1><!-- Placeholder--></div>
 
 ```html
 <FancyArrow two-way x1="700" y1="200" x2="800" y2="300" />
