@@ -107,6 +107,10 @@ export function useRoughArrow(props: {
         angle1: angle,
         angle2: angle,
         lineLength: Math.hypot(point2.x - point1.x, point2.y - point1.y),
+        arcMid: {
+          x: (point1.x + point2.x) / 2,
+          y: (point1.y + point2.y) / 2,
+        },
       };
     }
 
