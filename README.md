@@ -2,13 +2,9 @@
 
 Slidev addon for adding fancy arrows to your slides, powered by [Rough.js](https://roughjs.com/).
 
-![Cover image](./assets/cover.png)
-
-<div style="text-align: center; font-size: 1.5rem;">
+[![Cover image](./assets/cover.png)](https://whitphx.github.io/slidev-addon-fancy-arrow/)
 
 [👉 Check out the demo and docs](https://whitphx.github.io/slidev-addon-fancy-arrow/).
-
-</div>
 
 ## Installation
 
