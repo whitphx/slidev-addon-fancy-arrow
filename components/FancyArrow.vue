@@ -46,7 +46,7 @@ const { arcSvg, textPosition } = useRoughArrow({
 
 <template>
   <div v-if="point1 && point2" style="position: absolute; top: 0; left: 0">
-    <!-- Use use <div v-if> as a root element above because <template v-if> doesn't work with v-click on Slidev -->
+    <!-- Use <div v-if> as a root element above because <template v-if> doesn't work with v-click on Slidev -->
     <svg
       ref="container"
       :class="props.color ? `text-${props.color}` : ''"
