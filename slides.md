@@ -258,7 +258,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 </FancyArrow>
 
 <FancyArrow x1="300" y1="100" x2="400" y2="200" arc="0.3">
-    <span text-4xl text-red>Hello</span>
+    <span text-4xl text-red v-mark.red="0">Hello</span>
 </FancyArrow>
 
 <FancyArrow x1="400" y1="100" x2="500" y2="200" arc="0.3">
@@ -278,7 +278,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 </FancyArrow>
 
 <FancyArrow x1="300" y1="100" x2="400" y2="200" arc="0.3">
-    <span text-4xl text-red>Hello</span>
+    <span text-4xl text-red v-mark.red="0">Hello</span>
 </FancyArrow>
 
 <FancyArrow x1="400" y1="100" x2="500" y2="200" arc="0.3">
