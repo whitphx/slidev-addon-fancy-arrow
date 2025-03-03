@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.6.3
+
+### Patch Changes
+
+- [#43](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/43) [`b7d6c6c`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/b7d6c6c460db072c3c818b5f1dabbb2589385ca1) Thanks [@whitphx](https://github.com/whitphx)! - Delete invalid entry from the files field in package.json
+
 ## 0.6.2
 
 ### Patch Changes
