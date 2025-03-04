@@ -264,10 +264,10 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
     two-way
 />
 <FancyArrow x1="740" y1="180" x2="840" y2="280"
-    arrowHeadType="polygon"
+    head-type="polygon"
 />
 <FancyArrow x1="780" y1="180" x2="880" y2="280"
-    arrowHeadSize="60"
+    head-size="60"
 />
 
 <div grow-1><!-- Placeholder--></div>
@@ -277,10 +277,10 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
     two-way
 />
 <FancyArrow x1="740" y1="180" x2="840" y2="280"
-    arrowHeadType="polygon"
+    head-type="polygon"
 />
 <FancyArrow x1="780" y1="180" x2="880" y2="280"
-    arrowHeadSize="60"
+    head-size="60"
 />
 ```
 
