@@ -252,6 +252,105 @@ mdc: true
 
 ---
 
+# Rough.js options
+
+<div grid="~ cols-3 gap-4" mt-6 h-100>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
+
+### Roughness
+
+<FancyArrow x1="100" y1="200" x2="200" y2="300"
+    roughness="0"
+/>
+<FancyArrow x1="150" y1="200" x2="250" y2="300"
+    roughness="2"
+/>
+<FancyArrow x1="200" y1="200" x2="300" y2="300"
+    roughness="4"
+/>
+
+<div grow-1><!-- Placeholder--></div>
+
+```html {2,5,8}
+<FancyArrow x1="100" y1="200" x2="200" y2="300"
+    roughness="0"
+/>
+<FancyArrow x1="150" y1="200" x2="250" y2="300"
+    roughness="2"
+/>
+<FancyArrow x1="200" y1="200" x2="300" y2="300"
+    roughness="4"
+/>
+```
+
+</div>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
+
+### Bowing
+
+<FancyArrow x1="400" y1="180" x2="500" y2="280" roughness="2"
+    bowing="0"
+/>
+<FancyArrow x1="440" y1="180" x2="540" y2="280" roughness="2"
+    bowing="0.5"
+/>
+<FancyArrow x1="480" y1="180" x2="580" y2="280" roughness="2"
+    bowing="1"
+/>
+
+<div grow-1><!-- Placeholder--></div>
+
+```html {2,5,8}
+<FancyArrow x1="400" y1="180" x2="500" y2="280" roughness="2"
+    bowing="0"
+/>
+<FancyArrow x1="440" y1="180" x2="540" y2="280" roughness="2"
+    bowing="0.5"
+/>
+<FancyArrow x1="480" y1="180" x2="580" y2="280" roughness="2"
+    bowing="1"
+/>
+```
+
+</div>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
+
+### Seed
+
+<FancyArrow x1="700" y1="180" x2="800" y2="280" roughness="3"
+    seed="2"
+/>
+<FancyArrow x1="740" y1="180" x2="840" y2="280" roughness="3"
+    seed="3"
+/>
+<FancyArrow x1="780" y1="180" x2="880" y2="280" roughness="3"
+    seed="4"
+/>
+
+<div grow-1><!-- Placeholder--></div>
+
+```html {2,5,8}
+
+<FancyArrow x1="700" y1="180" x2="800" y2="280" roughness="3"
+    seed="2"
+/>
+<FancyArrow x1="740" y1="180" x2="840" y2="280" roughness="3"
+    seed="3"
+/>
+<FancyArrow x1="780" y1="180" x2="880" y2="280" roughness="3"
+    seed="4"
+/>
+```
+
+</div>
+
+</div>
+
+---
+
 # Arc
 
 <code id="arc-start" absolute left-300px top-100px style="transform: translate(-50%, -50%);">#arc-start</code>
