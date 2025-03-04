@@ -194,22 +194,34 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 # Appearance
 
-<div grid="~ cols-3 gap-4" mt-6 h-80>
+<div grid="~ cols-3 gap-4" mt-6 h-100>
 
 <div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
 
 ### Color
 
-<FancyArrow color="orange" x1="100" y1="200" x2="200" y2="300" />
-<FancyArrow color="lime" x1="140" y1="200" x2="240" y2="300" />
-<FancyArrow color="sky" x1="180" y1="200" x2="280" y2="300" />
+<FancyArrow x1="100" y1="180" x2="200" y2="280"
+    color="orange"
+/>
+<FancyArrow x1="140" y1="180" x2="240" y2="280"
+    color="lime"
+/>
+<FancyArrow x1="180" y1="180" x2="280" y2="280"
+    color="sky"
+/>
 
 <div grow-1><!-- Placeholder--></div>
 
-```html
-<FancyArrow color="orange" x1="100" y1="200" x2="200" y2="300" />
-<FancyArrow color="lime" x1="140" y1="200" x2="240" y2="300" />
-<FancyArrow color="sky" x1="180" y1="200" x2="280" y2="300" />
+```html {2,5,8}
+<FancyArrow x1="100" y1="180" x2="200" y2="280"
+    color="orange"
+/>
+<FancyArrow x1="140" y1="180" x2="240" y2="280"
+    color="lime"
+/>
+<FancyArrow x1="180" y1="180" x2="280" y2="280"
+    color="sky"
+/>
 ```
 
 </div>
@@ -218,16 +230,28 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 ### Width
 
-<FancyArrow width="2" x1="400" y1="200" x2="500" y2="300" />
-<FancyArrow width="4" x1="440" y1="200" x2="540" y2="300" />
-<FancyArrow width="6" x1="480" y1="200" x2="580" y2="300" />
+<FancyArrow  x1="400" y1="180" x2="500" y2="280"
+    width="2"
+/>
+<FancyArrow x1="440" y1="180" x2="540" y2="280"
+    width="4"
+/>
+<FancyArrow x1="480" y1="180" x2="580" y2="280"
+    width="6"
+/>
 
 <div grow-1><!-- Placeholder--></div>
 
-```html
-<FancyArrow width="2" x1="400" y1="200" x2="500" y2="300" />
-<FancyArrow width="4" x1="440" y1="200" x2="540" y2="300" />
-<FancyArrow width="6" x1="480" y1="200" x2="580" y2="300" />
+```html {2,5,8}
+<FancyArrow x1="400" y1="180" x2="500" y2="280"
+    width="2"
+/>
+<FancyArrow x1="440" y1="180" x2="540" y2="280"
+    width="4"
+/>
+<FancyArrow x1="480" y1="180" x2="580" y2="280"
+    width="6"
+/>
 ```
 
 </div>
@@ -236,16 +260,28 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 ### Arrow head
 
-<FancyArrow two-way x1="700" y1="200" x2="800" y2="300" />
-<FancyArrow arrowHeadType="polygon" x1="740" y1="200" x2="840" y2="300" />
-<FancyArrow arrowHeadSize="60" x1="780" y1="200" x2="880" y2="300" />
+<FancyArrow x1="700" y1="180" x2="800" y2="280"
+    two-way
+/>
+<FancyArrow x1="740" y1="180" x2="840" y2="280"
+    arrowHeadType="polygon"
+/>
+<FancyArrow x1="780" y1="180" x2="880" y2="280"
+    arrowHeadSize="60"
+/>
 
 <div grow-1><!-- Placeholder--></div>
 
-```html
-<FancyArrow two-way x1="700" y1="200" x2="800" y2="300" />
-<FancyArrow arrowHeadType="polygon" x1="740" y1="200" x2="840" y2="300" />
-<FancyArrow arrowHeadSize="60" x1="780" y1="200" x2="880" y2="300" />
+```html {2,5,8}
+<FancyArrow x1="700" y1="180" x2="800" y2="280"
+    two-way
+/>
+<FancyArrow x1="740" y1="180" x2="840" y2="280"
+    arrowHeadType="polygon"
+/>
+<FancyArrow x1="780" y1="180" x2="880" y2="280"
+    arrowHeadSize="60"
+/>
 ```
 
 </div>
@@ -262,26 +298,26 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 ### Roughness
 
-<FancyArrow x1="100" y1="200" x2="200" y2="300"
+<FancyArrow x1="100" y1="180" x2="200" y2="280"
     roughness="0"
 />
-<FancyArrow x1="150" y1="200" x2="250" y2="300"
+<FancyArrow x1="150" y1="180" x2="250" y2="280"
     roughness="2"
 />
-<FancyArrow x1="200" y1="200" x2="300" y2="300"
+<FancyArrow x1="200" y1="180" x2="300" y2="280"
     roughness="4"
 />
 
 <div grow-1><!-- Placeholder--></div>
 
 ```html {2,5,8}
-<FancyArrow x1="100" y1="200" x2="200" y2="300"
+<FancyArrow x1="100" y1="180" x2="200" y2="280"
     roughness="0"
 />
-<FancyArrow x1="150" y1="200" x2="250" y2="300"
+<FancyArrow x1="150" y1="180" x2="250" y2="280"
     roughness="2"
 />
-<FancyArrow x1="200" y1="200" x2="300" y2="300"
+<FancyArrow x1="200" y1="180" x2="300" y2="280"
     roughness="4"
 />
 ```
