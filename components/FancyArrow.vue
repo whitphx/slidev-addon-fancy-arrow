@@ -16,8 +16,8 @@ const props = defineProps<{
   color?: string;
   twoWay?: boolean;
   arc?: number | string;
-  arrowHeadType?: "line" | "polygon";
-  arrowHeadSize?: number | string;
+  headType?: "line" | "polygon";
+  headSize?: number | string;
   roughness?: number | string;
   seed?: number | string;
 }>();
@@ -37,8 +37,8 @@ const { arcSvg, textPosition } = useRoughArrow({
   width: Number(props.width ?? 2),
   twoWay: props.twoWay ?? false,
   centerPositionParam: Number(props.arc ?? 0),
-  arrowHeadType: props.arrowHeadType ?? "line",
-  arrowHeadSize: props.arrowHeadSize ? Number(props.arrowHeadSize) : null,
+  headType: props.headType ?? "line",
+  headSize: props.headSize ? Number(props.headSize) : null,
   roughness: props.roughness ? Number(props.roughness) : undefined,
   seed: props.seed ? Number(props.seed) : undefined,
 });

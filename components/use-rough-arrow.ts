@@ -43,8 +43,8 @@ export function useRoughArrow(props: {
   point1: Ref<{ x: number; y: number } | undefined>;
   point2: Ref<{ x: number; y: number } | undefined>;
   width: number;
-  arrowHeadType: "line" | "polygon";
-  arrowHeadSize: number | null;
+  headType: "line" | "polygon";
+  headSize: number | null;
   roughness?: number;
   seed?: number;
   twoWay: boolean;
@@ -54,8 +54,8 @@ export function useRoughArrow(props: {
     point1: point1Ref,
     point2: point2Ref,
     width,
-    arrowHeadType,
-    arrowHeadSize,
+    headType,
+    headSize,
     roughness,
     seed,
     twoWay,
@@ -202,8 +202,8 @@ export function useRoughArrow(props: {
       return 0;
     }
 
-    if (arrowHeadSize != null) {
-      return arrowHeadSize;
+    if (headSize != null) {
+      return headSize;
     }
 
     // The arrow size is proportional to the line length.
@@ -222,13 +222,13 @@ export function useRoughArrow(props: {
     const arrowHead1 = createArrowHeadSvg(
       rc.value as RoughSVG,
       computedArrowHeadSize.value,
-      arrowHeadType,
+      headType,
       arrowHeadOptions,
     );
     const arrowHead2 = createArrowHeadSvg(
       rc.value as RoughSVG,
       computedArrowHeadSize.value,
-      arrowHeadType,
+      headType,
       arrowHeadOptions,
     );
     return [arrowHead1, arrowHead2];
