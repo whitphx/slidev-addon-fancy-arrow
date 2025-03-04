@@ -154,7 +154,9 @@ mdc: true
 />
 
 <div mx-8>
-    Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
+
+Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
+
 </div>
 
 <div mx-auto mt-60 grid="~ cols-3 gap-4">
