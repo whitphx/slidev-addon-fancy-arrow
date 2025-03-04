@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.7.0
+
+### Minor Changes
+
+- [#48](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/48) [`787a5b4`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/787a5b49a18a3c789da97de1bc195b2b0e083142) Thanks [@whitphx](https://github.com/whitphx)! - Rename the arrowHeadType and arrowHeadSize options to headType and headSize
+
 ## 0.6.3
 
 ### Patch Changes
