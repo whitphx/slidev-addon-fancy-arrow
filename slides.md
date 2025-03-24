@@ -4,11 +4,11 @@ mdc: true
 
 # Fancy Arrow
 
-## Slidev addon for drawing arrows with <span v-mark.orange="0" id="fancy-styles">fancy styles</span>,
+## Slidev addon for drawing arrows with <span v-mark.orange="0" data-id="fancy-styles">fancy styles</span>,
 
-<span forward:delay-500 id="rough-js">powered by [Rough.js](https://roughjs.com).</span>
+<span forward:delay-500 data-id="rough-js">powered by [Rough.js](https://roughjs.com).</span>
 
-<FancyArrow id1="rough-js" pos1="bottomright" id2="fancy-styles" pos2="bottom" color="orange" width="3" arc="-0.3" seed="1" roughness="2" />
+<FancyArrow q1="[data-id=rough-js]" pos1="bottomright" q2="[data-id=fancy-styles]" pos2="bottom" color="orange" width="3" arc="-0.3" seed="1" roughness="2" />
 
 ---
 
@@ -100,7 +100,7 @@ Using ID is not recommended because each component is rendered twice in the pres
 
 # Anchor point
 
-<div absolute left="50%" top-45 translate-x="-50%" w-100 h-30 border="~ gray/50 rounded-lg" overflow-hidden id="anchor-example">
+<div absolute left="50%" top-45 translate-x="-50%" w-100 h-30 border="~ gray/50 rounded-lg" overflow-hidden data-id="anchor-example">
 
 <code bg-gray:10 p-1 min-w-25 text-center rounded-md absolute left="50%" top="50%" translate-x="-50%" translate-y="-50%">center</code>
 
@@ -140,21 +140,21 @@ Using ID is not recommended because each component is rendered twice in the pres
 
 <FancyArrow
     x1="0" y1="0"
-    id2="anchor-example"
+    q2="[data-id=anchor-example]"
     pos2="left"
     color="red" arc="-0.4"
 />
 
 <FancyArrow
     x1="0" y1="0"
-    id2="anchor-example"
+    q2="[data-id=anchor-example]"
     pos2="center"
     color="red" arc="-0.4"
 />
 
 <FancyArrow
     x1="0" y1="0"
-    id2="anchor-example"
+    q2="[data-id=anchor-example]"
     pos2="bottomright"
     color="red" arc="-0.4"
 />
@@ -170,7 +170,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 ```html {4}
 <FancyArrow
     x1="0" y1="0"
-    id2="anchor-example"
+    q2="[data-id=anchor-example]"
     pos2="left"
     color="red" arc="-0.4"
 />
@@ -179,7 +179,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 ```html {4}
 <FancyArrow
     x1="0" y1="0"
-    id2="anchor-example"
+    q2="[data-id=anchor-example]"
     pos2="center"
     color="red" arc="-0.4"
 />
@@ -188,7 +188,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 ```html {4}
 <FancyArrow
     x1="0" y1="0"
-    id2="anchor-example"
+    q2="[data-id=anchor-example]"
     pos2="bottomright"
     color="red" arc="-0.4"
 />
@@ -397,16 +397,16 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 # Arc
 
-<code id="arc-start" absolute left-300px top-100px style="transform: translate(-50%, -50%);">#arc-start</code>
-<code id="arc-end" absolute left-300px top-400px style="transform: translate(-50%, -50%);">#arc-end</code>
+<code data-id="arc-start" absolute left-300px top-100px style="transform: translate(-50%, -50%);">#arc-start</code>
+<code data-id="arc-end" absolute left-300px top-400px style="transform: translate(-50%, -50%);">#arc-end</code>
 
-<FancyArrow arc="1.5" id1="arc-start" pos1="bottom" id2="arc-end" pos2="top" color="red" />
-<FancyArrow arc="1.0" id1="arc-start" pos1="bottom" id2="arc-end" pos2="top" color="orange" />
-<FancyArrow arc="0.5" id1="arc-start" pos1="bottom" id2="arc-end" pos2="top" color="yellow" />
-<FancyArrow arc="0.0" id1="arc-start" pos1="bottom" id2="arc-end" pos2="top" color="green" />
-<FancyArrow arc="-0.5" id1="arc-start" pos1="bottom" id2="arc-end" pos2="top" color="blue" />
-<FancyArrow arc="-1.0" id1="arc-start" pos1="bottom" id2="arc-end" pos2="top" color="purple" />
-<FancyArrow arc="-1.5" id1="arc-start" pos1="bottom" id2="arc-end" pos2="top" color="pink" />
+<FancyArrow arc="1.5" q1="[data-id=arc-start]" pos1="bottom" q2="[data-id=arc-end]" pos2="top" color="red" />
+<FancyArrow arc="1.0" q1="[data-id=arc-start]" pos1="bottom" q2="[data-id=arc-end]" pos2="top" color="orange" />
+<FancyArrow arc="0.5" q1="[data-id=arc-start]" pos1="bottom" q2="[data-id=arc-end]" pos2="top" color="yellow" />
+<FancyArrow arc="0.0" q1="[data-id=arc-start]" pos1="bottom" q2="[data-id=arc-end]" pos2="top" color="green" />
+<FancyArrow arc="-0.5" q1="[data-id=arc-start]" pos1="bottom" q2="[data-id=arc-end]" pos2="top" color="blue" />
+<FancyArrow arc="-1.0" q1="[data-id=arc-start]" pos1="bottom" q2="[data-id=arc-end]" pos2="top" color="purple" />
+<FancyArrow arc="-1.5" q1="[data-id=arc-start]" pos1="bottom" q2="[data-id=arc-end]" pos2="top" color="pink" />
 
 <Arrow x1="50" y1="450" x2="550" y2="450" />
 
@@ -422,16 +422,16 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 <div absolute right-0 top-30 w-100>
 
 ```html
-<code id="arc-start" absolute left-300px top-400px style="transform: translate(-50%, -50%);">#arc-start</code>
-<code id="arc-end" absolute left-300px top-100px style="transform: translate(-50%, -50%);">#arc-end</code>
+<code data-id="arc-start" absolute left-300px top-400px style="transform: translate(-50%, -50%);">#arc-start</code>
+<code data-id="arc-end" absolute left-300px top-100px style="transform: translate(-50%, -50%);">#arc-end</code>
 
-<FancyArrow arc="1.5" id1="arc-start" id2="arc-end" color="red" />
-<FancyArrow arc="1.0" id1="arc-start" id2="arc-end" color="orange" />
-<FancyArrow arc="0.5" id1="arc-start" id2="arc-end" color="yellow" />
-<FancyArrow arc="0.0" id1="arc-start" id2="arc-end" color="green" />
-<FancyArrow arc="-0.5" id1="arc-start" id2="arc-end" color="blue" />
-<FancyArrow arc="-1.0" id1="arc-start" id2="arc-end" color="purple" />
-<FancyArrow arc="-1.5" id1="arc-start" id2="arc-end" color="pink" />
+<FancyArrow arc="1.5" q1="[data-id=arc-start]" q2="[data-id=arc-end]" color="red" />
+<FancyArrow arc="1.0" q1="[data-id=arc-start]" q2="[data-id=arc-end]" color="orange" />
+<FancyArrow arc="0.5" q1="[data-id=arc-start]" q2="[data-id=arc-end]" color="yellow" />
+<FancyArrow arc="0.0" q1="[data-id=arc-start]" q2="[data-id=arc-end]" color="green" />
+<FancyArrow arc="-0.5" q1="[data-id=arc-start]" q2="[data-id=arc-end]" color="blue" />
+<FancyArrow arc="-1.0" q1="[data-id=arc-start]" q2="[data-id=arc-end]" color="purple" />
+<FancyArrow arc="-1.5" q1="[data-id=arc-start]" q2="[data-id=arc-end]" color="pink" />
 ```
 
 </div>
@@ -484,16 +484,16 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 # Demo: animated arrows
 
-<img v-click="1" src="https://sli.dev/logo.svg" w-10 id="slidev-logo" absolute top-25 left-25 v-motion :initial="{x: -80, y: -80}" :enter="{x: 0, y: 0}" />
-<img v-click="1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/1280px_Markdown_with_White_Background.png/640px-1280px_Markdown_with_White_Background.png" w-15 id="markdown-mark" absolute top-30 right-30 v-motion :initial="{x: +80, y: -80}" :enter="{x: 0, y: 0}"/>
-<img v-click="1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/512px-Vue.js_Logo_2.svg.png" w-10 id="vue-mark" absolute bottom-20 right-100 v-motion :initial="{x: +30, y: +80}" :enter="{x: 0, y: 0}"/>
+<img v-click="1" src="https://sli.dev/logo.svg" w-10 data-id="slidev-logo" absolute top-25 left-25 v-motion :initial="{x: -80, y: -80}" :enter="{x: 0, y: 0}" />
+<img v-click="1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/1280px_Markdown_with_White_Background.png/640px-1280px_Markdown_with_White_Background.png" w-15 data-id="markdown-mark" absolute top-30 right-30 v-motion :initial="{x: +80, y: -80}" :enter="{x: 0, y: 0}"/>
+<img v-click="1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/512px-Vue.js_Logo_2.svg.png" w-10 data-id="vue-mark" absolute bottom-20 right-100 v-motion :initial="{x: +30, y: +80}" :enter="{x: 0, y: 0}"/>
 
-<FancyArrow v-click="1" id1="slidev-logo" pos1="bottom" id2="slidev-text" pos2="bottomleft" color="teal" width="4" roughness="3" arc="-0.3" seed="1" />
-<FancyArrow v-click="1" id1="markdown-mark" pos1="bottom" id2="markdown-text" pos2="bottomright" color="gray" width="4" roughness="2" arc="0.3" seed="1" />
-<FancyArrow v-click="1" id1="vue-mark" pos1="left" id2="vue-text" pos2="bottom" color="green" width="4" roughness="2" arc="0.3" seed="1" />
+<FancyArrow v-click="1" q1="[data-id=slidev-logo]" pos1="bottom" q2="[data-id=slidev-text]" pos2="bottomleft" color="teal" width="4" roughness="3" arc="-0.3" seed="1" />
+<FancyArrow v-click="1" q1="[data-id=markdown-mark]" pos1="bottom" q2="[data-id=markdown-text]" pos2="bottomright" color="gray" width="4" roughness="2" arc="0.3" seed="1" />
+<FancyArrow v-click="1" q1="[data-id=vue-mark]" pos1="left" q2="[data-id=vue-text]" pos2="bottom" color="green" width="4" roughness="2" arc="0.3" seed="1" />
 
 <div w="2/3" m-auto mt-40>
-    <span id="slidev-text" v-mark.teal="1">Slidev</span> <sub top--1>(slide + dev, /slaɪdɪv/)</sub> is a web-based slides maker and presenter. It's designed for developers to focus on writing content in <span id="markdown-text" v-mark.gray="1">Markdown</span>. With the power of web technologies like <span id="vue-text" v-mark.green="1">Vue</span>, you are able to deliver pixel-perfect designs with interactive demos to your presentation.
+    <span data-id="slidev-text" v-mark.teal="1">Slidev</span> <sub top--1>(slide + dev, /slaɪdɪv/)</sub> is a web-based slides maker and presenter. It's designed for developers to focus on writing content in <span data-id="markdown-text" v-mark.gray="1">Markdown</span>. With the power of web technologies like <span data-id="vue-text" v-mark.green="1">Vue</span>, you are able to deliver pixel-perfect designs with interactive demos to your presentation.
 </div>
 
 ---
@@ -501,22 +501,22 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 # Demo: arrows snapped to animated elements
 
 <div v-click p-8>
-    <span id="foo">Foo</span>
+    <span data-id="foo">Foo</span>
 </div>
 
 <div :class="$clicks === 0 ? 'translate-y--16' : ''" p-8>
-    <span id="bar">Bar</span>
+    <span data-id="bar">Bar</span>
 </div>
 
-<FancyArrow v-click="1" forward:delay-100 id1="foo" pos1="bottomright" id2="bar" pos2="topright" color="red" width="2" arc="0.3" seed="1" roughness="2" >Hey</FancyArrow>
-<FancyArrow v-click="1" forward:delay-100 id2="foo" pos2="bottomleft" id1="bar" pos1="topleft" color="red" width="2" arc="0.3" seed="1" roughness="2" >
+<FancyArrow v-click="1" forward:delay-100 q1="[data-id=foo]" pos1="bottomright" q2="[data-id=bar]" pos2="topright" color="red" width="2" arc="0.3" seed="1" roughness="2" >Hey</FancyArrow>
+<FancyArrow v-click="1" forward:delay-100 q2="[data-id=foo]" pos2="bottomleft" q1="[data-id=bar]" pos1="topleft" color="red" width="2" arc="0.3" seed="1" roughness="2" >
     <span text-red>Ahoy</span>
 </FancyArrow>
 
 <div v-click p-8 :class="$clicks === 0 ? 'translate-y--32' : $clicks === 1 ? 'translate-y--16' : ''">
-    <span id="baz">Baz</span>
+    <span data-id="baz">Baz</span>
 </div>
 
-<FancyArrow v-click="2" forward:delay-100 id1="bar" pos1="bottomright" id2="baz" pos2="topright" color="green" width="2" arc="0.3" seed="1" roughness="2" >
+<FancyArrow v-click="2" forward:delay-100 q1="[data-id=bar]" pos1="bottomright" q2="[data-id=baz]" pos2="topright" color="green" width="2" arc="0.3" seed="1" roughness="2" >
     <span text-green v-mark.green="2">Hola!</span>
 </FancyArrow>
