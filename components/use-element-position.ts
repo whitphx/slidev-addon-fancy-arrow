@@ -1,5 +1,12 @@
-import { ref, onMounted, type Ref } from "vue";
-import { useSlideContext, onSlideEnter } from "@slidev/client";
+import {
+  ref,
+  onMounted,
+  computed,
+  watch,
+  onWatcherCleanup,
+  type Ref,
+} from "vue";
+import { useSlideContext, useIsSlideActive } from "@slidev/client";
 
 export type SnapPosition =
   | "top"
@@ -14,32 +21,29 @@ export type SnapPosition =
 export function useElementPosition(
   slideContainer: Ref<Element | undefined>,
   rootElement: Ref<SVGSVGElement | undefined>,
-  id: string,
+  selector: string,
   pos?: SnapPosition,
 ): Ref<{ x: number; y: number } | undefined> {
   const { $scale } = useSlideContext();
-  const elem = ref<HTMLElement | null>(null);
+  const isSlideActive = useIsSlideActive();
+
+  const elem = computed(() => {
+    return slideContainer.value?.querySelector(selector) ?? null;
+  });
+
   const point = ref<{ x: number; y: number } | undefined>(undefined);
 
   const update = () => {
-    if (!elem.value) {
-      elem.value = slideContainer.value?.querySelector(`#${id}`) ?? null;
-      if (elem.value) {
-        const observer = new MutationObserver(update);
-        observer.observe(elem.value, { attributes: true });
-      }
-    }
-
-    if (!elem.value) {
+    if (!isSlideActive.value || !rootElement.value || !elem.value) {
       point.value = undefined;
       return;
     }
 
     const rect = elem.value.getBoundingClientRect();
-    const rootRect = rootElement.value?.getBoundingClientRect();
+    const rootRect = rootElement.value.getBoundingClientRect();
 
-    let x = (rect.left - (rootRect?.left ?? 0)) / $scale.value;
-    let y = (rect.top - (rootRect?.top ?? 0)) / $scale.value;
+    let x = (rect.left - rootRect.left) / $scale.value;
+    let y = (rect.top - rootRect.top) / $scale.value;
     const width = rect.width / $scale.value;
     const height = rect.height / $scale.value;
 
@@ -62,11 +66,27 @@ export function useElementPosition(
     }
   };
 
-  onSlideEnter(() => {
+  watch(isSlideActive, () => {
     setTimeout(() => {
+      // This `setTimeout` is important to ensure `update()` is called after the DOM elements in the slide are updated after `isSlideActive` is changed.
       update();
     });
   });
+
+  watch(
+    elem,
+    (newVal) => {
+      if (newVal) {
+        const observer = new MutationObserver(update);
+        observer.observe(newVal, { attributes: true });
+
+        onWatcherCleanup(() => {
+          observer.disconnect();
+        });
+      }
+    },
+    { immediate: true },
+  );
 
   onMounted(() => {
     update();
