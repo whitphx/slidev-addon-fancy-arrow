@@ -1,5 +1,15 @@
 # slidev-addon-fancy-arrow
 
+## 0.8.0
+
+### Minor Changes
+
+- [#63](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/63) [`81edafd`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/81edafd10fad0d67f99e0453baade32e7c95c910) Thanks [@whitphx](https://github.com/whitphx)! - Accept any query selector to specify the anchor elements
+
+### Patch Changes
+
+- [#63](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/63) [`81edafd`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/81edafd10fad0d67f99e0453baade32e7c95c910) Thanks [@whitphx](https://github.com/whitphx)! - Fix flickering in page transitions
+
 ## 0.7.1
 
 ### Patch Changes
