@@ -4,11 +4,32 @@ mdc: true
 
 # Fancy Arrow
 
-## Slidev addon for drawing arrows with <span v-mark.orange="0" data-id="fancy-styles">fancy styles</span>,
+<h2>
+Slidev addon for drawing arrows with<br>
+<span v-mark.orange="0" data-id="fancy-styles">fancy styles</span> and <span v-mark.green="0" data-id="intuitive-positioning">intuitive positioning</span>.
+</h2>
 
-<span forward:delay-500 data-id="rough-js">powered by [Rough.js](https://roughjs.com).</span>
+<div mt-20>
 
-<FancyArrow q1="[data-id=rough-js]" pos1="bottomright" q2="[data-id=fancy-styles]" pos2="bottom" color="orange" width="3" arc="-0.3" seed="1" roughness="2" />
+<span forward:delay-500 data-id="rough-js">Powered by [Rough.js](https://roughjs.com).</span>
+
+</div>
+
+<FancyArrow q1="[data-id=rough-js]" pos1="top" q2="[data-id=fancy-styles]" pos2="bottom" color="orange" width="3" arc="-0.3" seed="1" roughness="2" />
+
+<div absolute left-80 top-110>
+<p>
+    <code data-id="snap-sample">Snapped to an element</code>
+</p>
+
+<p>
+    <code data-id="abspos-sample">or an absolute position</code>
+</p>
+</div>
+
+<FancyArrow q1="[data-id=intuitive-positioning]" pos1="bottom" q2="[data-id=snap-sample]" pos2="top" color="green" width="3" arc="-0.3" seed="1" roughness="2" />
+
+<FancyArrow q1="[data-id=abspos-sample]" pos1="right" x2="700" y2="500" color="blue" width="3" arc="-0.3" seed="1" roughness="2" />
 
 ---
 
