@@ -62,22 +62,21 @@ const { arcSvg, textPosition } = useRoughArrow({
 <template>
   <div ref="root" style="position: absolute; top: 0; left: 0">
     <svg
-      v-if="point1 && point2"
       ref="svgContainer"
       :class="props.color ? `text-${props.color}` : ''"
       style="
         position: absolute;
         top: 0;
         left: 0;
-        width: 10px;
-        height: 10px;
+        width: 1px;
+        height: 1px;
         overflow: visible;
       "
     >
       <g v-html="arcSvg" />
     </svg>
     <div
-      v-if="point1 && point2 && $slots.default && textPosition"
+      v-if="$slots.default && textPosition"
       :style="{
         position: 'absolute',
         left: `${textPosition.x}px`,
