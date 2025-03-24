@@ -14,7 +14,7 @@ mdc: true
 
 # Positioning
 
-<div grid="~ cols-3 gap-4" mt-6 h-90>
+<div grid="~ cols-3 gap-4" mt-6 h-85>
 
 <div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
 
@@ -92,7 +92,7 @@ mdc: true
 
 <div m-2 text-sm>
 
-You can pass any valid CSS selector to `q1` and `q2` to specify the elements to snap to.
+You can pass any valid CSS selector to `q1` and `q2` to specify the elements to snap to. `FancyArrow` will snap to the first element that matches the selector in the same page.
 Using ID is not recommended because each component is rendered twice in the presenter mode and IDs will not be unique in such a case.
 </div>
 
