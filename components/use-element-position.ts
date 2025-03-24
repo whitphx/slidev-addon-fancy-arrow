@@ -6,7 +6,7 @@ import {
   onWatcherCleanup,
   type Ref,
 } from "vue";
-import { useSlideContext, onSlideEnter } from "@slidev/client";
+import { useSlideContext, useIsSlideActive } from "@slidev/client";
 
 export type SnapPosition =
   | "top"
@@ -25,27 +25,16 @@ export function useElementPosition(
   pos?: SnapPosition,
 ): Ref<{ x: number; y: number } | undefined> {
   const { $scale } = useSlideContext();
+  const isSlideActive = useIsSlideActive();
+
   const elem = computed(() => {
     return slideContainer.value?.querySelector(selector) ?? null;
   });
-  watch(
-    elem,
-    (newVal) => {
-      if (newVal) {
-        const observer = new MutationObserver(update);
-        observer.observe(newVal, { attributes: true });
 
-        onWatcherCleanup(() => {
-          observer.disconnect();
-        });
-      }
-    },
-    { immediate: true },
-  );
   const point = ref<{ x: number; y: number } | undefined>(undefined);
 
   const update = () => {
-    if (!rootElement.value || !elem.value) {
+    if (!isSlideActive.value || !rootElement.value || !elem.value) {
       point.value = undefined;
       return;
     }
@@ -77,11 +66,27 @@ export function useElementPosition(
     }
   };
 
-  onSlideEnter(() => {
+  watch(isSlideActive, () => {
     setTimeout(() => {
+      // This `setTimeout` is important to ensure `update()` is called after the DOM elements in the slide are updated after `isSlideActive` is changed.
       update();
     });
   });
+
+  watch(
+    elem,
+    (newVal) => {
+      if (newVal) {
+        const observer = new MutationObserver(update);
+        observer.observe(newVal, { attributes: true });
+
+        onWatcherCleanup(() => {
+          observer.disconnect();
+        });
+      }
+    },
+    { immediate: true },
+  );
 
   onMounted(() => {
     update();
