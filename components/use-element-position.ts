@@ -1,4 +1,11 @@
-import { ref, onMounted, type Ref } from "vue";
+import {
+  ref,
+  onMounted,
+  type Ref,
+  computed,
+  watch,
+  onWatcherCleanup,
+} from "vue";
 import { useSlideContext, onSlideEnter } from "@slidev/client";
 
 export type SnapPosition =
@@ -18,18 +25,26 @@ export function useElementPosition(
   pos?: SnapPosition,
 ): Ref<{ x: number; y: number } | undefined> {
   const { $scale } = useSlideContext();
-  const elem = ref<HTMLElement | null>(null);
+  const elem = computed(() => {
+    return slideContainer.value?.querySelector(selector) ?? null;
+  });
+  watch(
+    elem,
+    (newVal) => {
+      if (newVal) {
+        const observer = new MutationObserver(update);
+        observer.observe(newVal, { attributes: true });
+
+        onWatcherCleanup(() => {
+          observer.disconnect();
+        });
+      }
+    },
+    { immediate: true },
+  );
   const point = ref<{ x: number; y: number } | undefined>(undefined);
 
   const update = () => {
-    if (!elem.value) {
-      elem.value = slideContainer.value?.querySelector(selector) ?? null;
-      if (elem.value) {
-        const observer = new MutationObserver(update);
-        observer.observe(elem.value, { attributes: true });
-      }
-    }
-
     if (!elem.value) {
       point.value = undefined;
       return;
