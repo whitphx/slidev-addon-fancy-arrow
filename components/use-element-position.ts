@@ -14,7 +14,7 @@ export type SnapPosition =
 export function useElementPosition(
   slideContainer: Ref<Element | undefined>,
   rootElement: Ref<SVGSVGElement | undefined>,
-  id: string,
+  selector: string,
   pos?: SnapPosition,
 ): Ref<{ x: number; y: number } | undefined> {
   const { $scale } = useSlideContext();
@@ -23,7 +23,7 @@ export function useElementPosition(
 
   const update = () => {
     if (!elem.value) {
-      elem.value = slideContainer.value?.querySelector(`#${id}`) ?? null;
+      elem.value = slideContainer.value?.querySelector(selector) ?? null;
       if (elem.value) {
         const observer = new MutationObserver(update);
         observer.observe(elem.value, { attributes: true });
