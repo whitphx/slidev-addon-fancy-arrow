@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.7.1
+
+### Patch Changes
+
+- [#64](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/64) [`e257dda`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/e257dda2bcb0bd02ce308850a3e6855e2b4e5f58) Thanks [@whitphx](https://github.com/whitphx)! - Query the anchor elements only inside the current page, which fixes a but in the presentation mode that snapped arrows are not rendered in the presenter preview
+
 ## 0.7.0
 
 ### Minor Changes
