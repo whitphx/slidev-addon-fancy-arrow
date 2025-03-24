@@ -12,6 +12,7 @@ export type SnapPosition =
   | "bottomright";
 
 export function useElementPosition(
+  slideContainer: Ref<Element | undefined>,
   rootElement: Ref<SVGSVGElement | undefined>,
   id: string,
   pos?: SnapPosition,
@@ -22,7 +23,7 @@ export function useElementPosition(
 
   const update = () => {
     if (!elem.value) {
-      elem.value = document.getElementById(id);
+      elem.value = slideContainer.value?.querySelector(`#${id}`) ?? null;
       if (elem.value) {
         const observer = new MutationObserver(update);
         observer.observe(elem.value, { attributes: true });

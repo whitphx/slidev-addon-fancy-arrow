@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useElementPosition, type SnapPosition } from "./use-element-position";
 import { useRoughArrow } from "./use-rough-arrow";
 
@@ -22,13 +22,18 @@ const props = defineProps<{
   seed?: number | string;
 }>();
 
-const container = ref<SVGSVGElement>();
+const root = ref<HTMLElement>();
+const slideContainer = computed(() => {
+  return root.value?.closest(".slidev-page") ?? undefined;
+});
+
+const svgContainer = ref<SVGSVGElement>();
 
 const point1 = props.id1
-  ? useElementPosition(container, props.id1, props.pos1)
+  ? useElementPosition(slideContainer, svgContainer, props.id1, props.pos1)
   : ref({ x: Number(props.x1 ?? 0), y: Number(props.y1 ?? 0) });
 const point2 = props.id2
-  ? useElementPosition(container, props.id2, props.pos2)
+  ? useElementPosition(slideContainer, svgContainer, props.id2, props.pos2)
   : ref({ x: Number(props.x2 ?? 0), y: Number(props.y2 ?? 0) });
 
 const { arcSvg, textPosition } = useRoughArrow({
@@ -45,10 +50,10 @@ const { arcSvg, textPosition } = useRoughArrow({
 </script>
 
 <template>
-  <div v-if="point1 && point2" style="position: absolute; top: 0; left: 0">
-    <!-- Use <div v-if> as a root element above because <template v-if> doesn't work with v-click on Slidev -->
+  <div ref="root" style="position: absolute; top: 0; left: 0">
     <svg
-      ref="container"
+      v-if="point1 && point2"
+      ref="svgContainer"
       :class="props.color ? `text-${props.color}` : ''"
       style="
         position: absolute;
@@ -62,7 +67,7 @@ const { arcSvg, textPosition } = useRoughArrow({
       <g v-html="arcSvg" />
     </svg>
     <div
-      v-if="$slots.default && textPosition"
+      v-if="point1 && point2 && $slots.default && textPosition"
       :style="{
         position: 'absolute',
         left: `${textPosition.x}px`,
