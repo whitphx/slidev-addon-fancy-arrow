@@ -14,7 +14,7 @@ mdc: true
 
 # Positioning
 
-<div grid="~ cols-3 gap-4" mt-6 h-100>
+<div grid="~ cols-3 gap-4" mt-6 h-90>
 
 <div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
 
@@ -24,7 +24,7 @@ mdc: true
     x1="120"
     y1="200"
     x2="260"
-    y2="300"
+    y2="280"
 />
 
 <div grow-1><!-- Placeholder--></div>
@@ -34,7 +34,7 @@ mdc: true
     x1="120"
     y1="200"
     x2="260"
-    y2="300"
+    y2="280"
 />
 ```
 
@@ -44,21 +44,21 @@ mdc: true
 
 ### Snapped to elements
 
-<code id="snapped-element1" absolute left-380px top-200px>#snapped-element1</code>
-<code id="snapped-element2" absolute left-420px top-300px>#snapped-element2</code>
+<code data-id="anchor1" absolute left-380px top-180px>data-id=anchor1</code>
+<code data-id="anchor2" absolute left-420px top-260px>data-id=anchor2</code>
 <FancyArrow
-    id1="snapped-element1"
-    id2="snapped-element2"
+    q1="[data-id=anchor1]"
+    q2="[data-id=anchor2]"
 />
 
 <div grow-1><!-- Placeholder--></div>
 
 ```html
-<code id="snapped-element1" absolute left-380px top-200px>#snapped-element1</code>
-<code id="snapped-element2" absolute left-420px top-300px>#snapped-element2</code>
+<code data-id="anchor1" absolute left-380px top-180px>data-id=anchor1</code>
+<code data-id="anchor2" absolute left-420px top-260px>data-id=anchor2</code>
 <FancyArrow
-    id1="snapped-element1"
-    id2="snapped-element2"
+    q1="[data-id=anchor1]"
+    q2="[data-id=anchor2]"
 />
 ```
 
@@ -68,26 +68,32 @@ mdc: true
 
 ### Mixed
 
-<code id="snapped-element3" absolute left-680px top-200px>#snapped-element3</code>
+<code data-id="anchor3" absolute left-680px top-180px>data-id=anchor3</code>
 <FancyArrow
-    id1="snapped-element3"
+    q1="[data-id=anchor3]"
     x2="800"
-    y2="300"
+    y2="280"
 />
 
 <div grow-1><!-- Placeholder--></div>
 
 ```html
-<code id="snapped-element3" absolute left-680px top-200px>#snapped-element3</code>
+<code data-id="anchor3" absolute left-680px top-180px>data-id=anchor3</code>
 <FancyArrow
-    id1="snapped-element3"
+    q1="[data-id=anchor3]"
     x2="800"
-    y2="300"
+    y2="280"
 />
 ```
 
 </div>
 
+</div>
+
+<div m-2 text-sm>
+
+You can pass any valid CSS selector to `q1` and `q2` to specify the elements to snap to.
+Using ID is not recommended because each component is rendered twice in the presenter mode and IDs will not be unique in such a case.
 </div>
 
 ---
