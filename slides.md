@@ -234,7 +234,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
     color="lime"
 />
 <FancyArrow x1="180" y1="180" x2="280" y2="280"
-    color="sky"
+    color="cyan"
 />
 
 <div grow-1><!-- Placeholder--></div>
@@ -247,7 +247,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
     color="lime"
 />
 <FancyArrow x1="180" y1="180" x2="280" y2="280"
-    color="sky"
+    color="cyan"
 />
 ```
 
@@ -418,8 +418,8 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 # Arc
 
-<code data-id="arc-start" absolute left-300px top-100px style="transform: translate(-50%, -50%);">#arc-start</code>
-<code data-id="arc-end" absolute left-300px top-400px style="transform: translate(-50%, -50%);">#arc-end</code>
+<code data-id="arc-start" absolute left-300px top-100px style="transform: translate(-50%, -50%);">\[data-id=arc-start\]</code>
+<code data-id="arc-end" absolute left-300px top-400px style="transform: translate(-50%, -50%);">\[data-id=arc-end\]</code>
 
 <FancyArrow arc="1.5" q1="[data-id=arc-start]" pos1="bottom" q2="[data-id=arc-end]" pos2="top" color="red" />
 <FancyArrow arc="1.0" q1="[data-id=arc-start]" pos1="bottom" q2="[data-id=arc-end]" pos2="top" color="orange" />
@@ -432,13 +432,13 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 <Arrow x1="50" y1="450" x2="550" y2="450" />
 
 <code absolute left-0px top-460px>arc=</code>
-<code absolute left-75px top-460px style="transform: translateX(-50%);">-1.5</code>
-<code absolute left-150px top-460px style="transform: translateX(-50%);">-1.0</code>
-<code absolute left-225px top-460px style="transform: translateX(-50%);">-0.5</code>
+<code absolute left-105px top-460px style="transform: translateX(-50%);">-1.5</code>
+<code absolute left-170px top-460px style="transform: translateX(-50%);">-1.0</code>
+<code absolute left-235px top-460px style="transform: translateX(-50%);">-0.5</code>
 <code absolute left-300px top-460px style="transform: translateX(-50%);">0</code>
-<code absolute left-375px top-460px style="transform: translateX(-50%);">0.5</code>
-<code absolute left-450px top-460px style="transform: translateX(-50%);">1.0</code>
-<code absolute left-525px top-460px style="transform: translateX(-50%);">1.5</code>
+<code absolute left-365px top-460px style="transform: translateX(-50%);">0.5</code>
+<code absolute left-430px top-460px style="transform: translateX(-50%);">1.0</code>
+<code absolute left-495px top-460px style="transform: translateX(-50%);">1.5</code>
 
 <div absolute right-0 top-30 w-100>
 
@@ -459,7 +459,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 ---
 
-# Content on the arrow
+# Contents on the arrow
 
 <FancyArrow x1="100" y1="100" x2="200" y2="200" >
     Hello
@@ -511,10 +511,10 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 <FancyArrow v-click="1" q1="[data-id=slidev-logo]" pos1="bottom" q2="[data-id=slidev-text]" pos2="bottomleft" color="teal" width="4" roughness="3" arc="-0.3" seed="1" />
 <FancyArrow v-click="1" q1="[data-id=markdown-mark]" pos1="bottom" q2="[data-id=markdown-text]" pos2="bottomright" color="gray" width="4" roughness="2" arc="0.3" seed="1" />
-<FancyArrow v-click="1" q1="[data-id=vue-mark]" pos1="left" q2="[data-id=vue-text]" pos2="bottom" color="green" width="4" roughness="2" arc="0.3" seed="1" />
+<FancyArrow v-click="1" q1="[data-id=vue-mark]" pos1="left" q2="[data-id=vue-text]" pos2="bottom" color="cyan" width="4" roughness="2" arc="0.3" seed="1" />
 
 <div w="2/3" m-auto mt-40>
-    <span data-id="slidev-text" v-mark.teal="1">Slidev</span> <sub top--1>(slide + dev, /slaɪdɪv/)</sub> is a web-based slides maker and presenter. It's designed for developers to focus on writing content in <span data-id="markdown-text" v-mark.gray="1">Markdown</span>. With the power of web technologies like <span data-id="vue-text" v-mark.green="1">Vue</span>, you are able to deliver pixel-perfect designs with interactive demos to your presentation.
+    <span data-id="slidev-text" v-mark.teal="1">Slidev</span> <sub top--1>(slide + dev, /slaɪdɪv/)</sub> is a web-based slides maker and presenter. It's designed for developers to focus on writing content in <span data-id="markdown-text" v-mark.gray="1">Markdown</span>. With the power of web technologies like <span data-id="vue-text" v-mark.cyan="1">Vue</span>, you are able to deliver pixel-perfect designs with interactive demos to your presentation.
 </div>
 
 ---
