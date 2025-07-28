@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, Ref } from "vue";
+import { ref, computed, type Ref } from "vue";
 import { compileArrowEndpointProps } from "./parse-option";
 import { useElementPosition, type SnapPosition } from "./use-element-position";
 import { useRoughArrow, type AbsolutePosition } from "./use-rough-arrow";
