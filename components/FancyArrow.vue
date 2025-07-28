@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, type Ref } from "vue";
-import { compileArrowEndpointProps } from "./parse-option";
+import { compileArrowEndpointProps, isSnapTarget } from "./parse-option";
 import { useElementPosition, type SnapPosition } from "./use-element-position";
 import { useRoughArrow, type AbsolutePosition } from "./use-rough-arrow";
 
@@ -34,45 +34,41 @@ const slideContainer = computed(() => {
 
 const svgContainer = ref<SVGSVGElement>();
 
-const from = computed(() =>
-  compileArrowEndpointProps({
-    shorthand: props.from,
-    q: props.q1,
-    id: props.id1,
-    pos: props.pos1,
-    x: props.x1,
-    y: props.y1,
-  }),
-);
-const to = computed(() =>
-  compileArrowEndpointProps({
-    shorthand: props.to,
-    q: props.q2,
-    id: props.id2,
-    pos: props.pos2,
-    x: props.x2,
-    y: props.y2,
-  }),
-);
+const from = compileArrowEndpointProps({
+  shorthand: props.from,
+  q: props.q1,
+  id: props.id1,
+  pos: props.pos1,
+  x: props.x1,
+  y: props.y1,
+});
+const to = compileArrowEndpointProps({
+  shorthand: props.to,
+  q: props.q2,
+  id: props.id2,
+  pos: props.pos2,
+  x: props.x2,
+  y: props.y2,
+});
 
 const point1: Ref<AbsolutePosition | undefined> =
-  from.value && "query" in from.value
+  from && isSnapTarget(from)
     ? useElementPosition(
         slideContainer,
         svgContainer,
-        from.value.query,
-        from.value.snapPosition,
+        from.query,
+        from.snapPosition,
       )
-    : ref(from.value);
+    : ref(from);
 const point2: Ref<AbsolutePosition | undefined> =
-  to.value && "query" in to.value
+  to && isSnapTarget(to)
     ? useElementPosition(
         slideContainer,
         svgContainer,
-        to.value.query,
-        to.value.snapPosition,
+        to.query,
+        to.snapPosition,
       )
-    : ref(to.value);
+    : ref(to);
 
 const { arcSvg, textPosition } = useRoughArrow({
   point1,

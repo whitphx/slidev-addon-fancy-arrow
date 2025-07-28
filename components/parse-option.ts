@@ -5,6 +5,11 @@ export interface SnapTarget {
   query: string;
   snapPosition: SnapPosition | undefined;
 }
+export function isSnapTarget(
+  target: SnapTarget | AbsolutePosition,
+): target is SnapTarget {
+  return "query" in target;
+}
 
 const absolutePositionRegex = /^\(\s*(\d+)\s*,\s*(\d+)\s*\)$/;
 const snapTargetRegex = /^(\S+?)(@(\S+?))?$/;
