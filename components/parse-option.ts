@@ -1,14 +1,14 @@
 import { SnapPosition } from "./use-element-position";
 
-interface SnappedArrowEndpoint {
+export interface SnappedArrowEndpoint {
   query: string;
   snapPosition: SnapPosition | undefined;
 }
-interface AbsoluteArrowEndpoint {
+export interface AbsoluteArrowEndpoint {
   x: number;
   y: number;
 }
-type ArrowEndpoint = SnappedArrowEndpoint | AbsoluteArrowEndpoint;
+export type ArrowEndpoint = SnappedArrowEndpoint | AbsoluteArrowEndpoint;
 
 const absolutePositionRegex = /^\(\s*(\d+)\s*,\s*(\d+)\s*\)$/;
 const snapTargetRegex = /^(\S+?)(@(\S+?))?$/;

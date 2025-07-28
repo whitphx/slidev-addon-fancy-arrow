@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, Ref } from "vue";
-import { compileArrowEndpointProps } from "./parse-option";
+import {
+  AbsoluteArrowEndpoint,
+  compileArrowEndpointProps,
+} from "./parse-option";
 import { useElementPosition, type SnapPosition } from "./use-element-position";
 import { useRoughArrow } from "./use-rough-arrow";
 
@@ -55,7 +58,7 @@ const to = computed(() =>
   }),
 );
 
-const point1: Ref<{ x: number; y: number } | undefined> =
+const point1: Ref<AbsoluteArrowEndpoint | undefined> =
   from.value && "query" in from.value
     ? useElementPosition(
         slideContainer,
@@ -64,7 +67,7 @@ const point1: Ref<{ x: number; y: number } | undefined> =
         from.value.snapPosition,
       )
     : ref(from.value);
-const point2: Ref<{ x: number; y: number } | undefined> =
+const point2: Ref<AbsoluteArrowEndpoint | undefined> =
   to.value && "query" in to.value
     ? useElementPosition(
         slideContainer,
