@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, type Ref } from "vue";
+import { compileArrowEndpointProps } from "./parse-option";
 import { useElementPosition, type SnapPosition } from "./use-element-position";
-import { useRoughArrow } from "./use-rough-arrow";
+import { useRoughArrow, type AbsolutePosition } from "./use-rough-arrow";
 
 const props = defineProps<{
+  from?: string; // Shorthand for (q1 and pos1) or (x1 and y1)
+  to?: string; // Shorthand for (q2 and pos2) or (x2 and y2)
   q1?: string;
   q2?: string;
   id1?: string; // Deprecated
@@ -31,23 +34,45 @@ const slideContainer = computed(() => {
 
 const svgContainer = ref<SVGSVGElement>();
 
-const query1 = computed(() => {
-  if (props.q1) return props.q1;
-  if (props.id1) return `#${props.id1}`;
-  return undefined;
-});
-const query2 = computed(() => {
-  if (props.q2) return props.q2;
-  if (props.id2) return `#${props.id2}`;
-  return undefined;
-});
+const from = computed(() =>
+  compileArrowEndpointProps({
+    shorthand: props.from,
+    q: props.q1,
+    id: props.id1,
+    pos: props.pos1,
+    x: props.x1,
+    y: props.y1,
+  }),
+);
+const to = computed(() =>
+  compileArrowEndpointProps({
+    shorthand: props.to,
+    q: props.q2,
+    id: props.id2,
+    pos: props.pos2,
+    x: props.x2,
+    y: props.y2,
+  }),
+);
 
-const point1 = query1.value
-  ? useElementPosition(slideContainer, svgContainer, query1.value, props.pos1)
-  : ref({ x: Number(props.x1 ?? 0), y: Number(props.y1 ?? 0) });
-const point2 = query2.value
-  ? useElementPosition(slideContainer, svgContainer, query2.value, props.pos2)
-  : ref({ x: Number(props.x2 ?? 0), y: Number(props.y2 ?? 0) });
+const point1: Ref<AbsolutePosition | undefined> =
+  from.value && "query" in from.value
+    ? useElementPosition(
+        slideContainer,
+        svgContainer,
+        from.value.query,
+        from.value.snapPosition,
+      )
+    : ref(from.value);
+const point2: Ref<AbsolutePosition | undefined> =
+  to.value && "query" in to.value
+    ? useElementPosition(
+        slideContainer,
+        svgContainer,
+        to.value.query,
+        to.value.snapPosition,
+      )
+    : ref(to.value);
 
 const { arcSvg, textPosition } = useRoughArrow({
   point1,

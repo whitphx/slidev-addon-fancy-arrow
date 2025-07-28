@@ -15,7 +15,7 @@ Slidev addon for drawing arrows with<br>
 
 </div>
 
-<FancyArrow q1="[data-id=rough-js]" pos1="top" q2="[data-id=fancy-styles]" pos2="bottom" color="orange" width="3" arc="-0.3" seed="1" roughness="2" />
+<FancyArrow from="[data-id=rough-js]@top" to="[data-id=fancy-styles]@bottom" color="orange" width="3" arc="-0.3" seed="1" roughness="2" />
 
 <div absolute left-80 top-110>
 <p>
@@ -27,9 +27,9 @@ Slidev addon for drawing arrows with<br>
 </p>
 </div>
 
-<FancyArrow q1="[data-id=intuitive-positioning]" pos1="bottom" q2="[data-id=snap-sample]" pos2="top" color="green" width="3" arc="-0.3" seed="1" roughness="2" />
+<FancyArrow from="[data-id=intuitive-positioning]@bottom" to="[data-id=snap-sample]@top" color="green" width="3" arc="-0.3" seed="1" roughness="2" />
 
-<FancyArrow q1="[data-id=abspos-sample]" pos1="right" x2="700" y2="500" color="blue" width="3" arc="-0.3" seed="1" roughness="2" />
+<FancyArrow from="[data-id=abspos-sample]@right" to="(700,500)" color="blue" width="3" arc="-0.3" seed="1" roughness="2" />
 
 ---
 
@@ -214,6 +214,82 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
     color="red" arc="-0.4"
 />
 ```
+
+</div>
+
+---
+
+# `from` and `to` shorthand
+
+<div grid="~ cols-3 gap-4" mt-6 h-85>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
+
+### Absolute positioning
+
+<FancyArrow
+    from="(120, 200)"
+    to="(260, 280)"
+/>
+
+<div grow-1><!-- Placeholder--></div>
+
+```html
+<FancyArrow
+    from="(120, 200)"
+    to="(260, 280)"
+/>
+```
+
+</div>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
+
+### Snapped to elements
+
+<code data-id="anchor1" absolute left-380px top-180px>data-id=anchor1</code>
+<code data-id="anchor2" absolute left-420px top-260px>data-id=anchor2</code>
+<FancyArrow
+    from="[data-id=anchor1]"
+    to="[data-id=anchor2]"
+/>
+
+<div grow-1><!-- Placeholder--></div>
+
+```html
+<code data-id="anchor1" absolute left-380px top-180px>data-id=anchor1</code>
+<code data-id="anchor2" absolute left-420px top-260px>data-id=anchor2</code>
+<FancyArrow
+    from="[data-id=anchor1]"
+    to="[data-id=anchor2]"
+/>
+```
+
+</div>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
+
+### With snapped points
+
+<code data-id="anchor3" absolute left-680px top-180px>data-id=anchor3</code>
+<code data-id="anchor4" absolute left-680px top-260px>data-id=anchor4</code>
+<FancyArrow
+    from="[data-id=anchor3]@bottom"
+    to="[data-id=anchor4]@top"
+/>
+
+<div grow-1><!-- Placeholder--></div>
+
+```html
+<code data-id="anchor3" absolute left-680px top-180px>data-id=anchor3</code>
+<code data-id="anchor4" absolute left-680px top-260px>data-id=anchor4</code>
+<FancyArrow
+    from="[data-id=anchor3]@bottom"
+    to="[data-id=anchor4]@top"
+/>
+```
+
+</div>
 
 </div>
 
