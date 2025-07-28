@@ -7,6 +7,7 @@ import {
   type Ref,
 } from "vue";
 import { useSlideContext, useIsSlideActive } from "@slidev/client";
+import { AbsolutePosition } from "./use-rough-arrow";
 
 export type SnapPosition =
   | "top"
@@ -23,7 +24,7 @@ export function useElementPosition(
   rootElement: Ref<SVGSVGElement | undefined>,
   selector: string,
   pos?: SnapPosition,
-): Ref<{ x: number; y: number } | undefined> {
+): Ref<AbsolutePosition | undefined> {
   const { $scale } = useSlideContext();
   const isSlideActive = useIsSlideActive();
 
@@ -31,7 +32,7 @@ export function useElementPosition(
     return slideContainer.value?.querySelector(selector) ?? null;
   });
 
-  const point = ref<{ x: number; y: number } | undefined>(undefined);
+  const point = ref<AbsolutePosition | undefined>(undefined);
 
   const update = () => {
     if (!isSlideActive.value || !rootElement.value || !elem.value) {
