@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.9.1
+
+### Patch Changes
+
+- [#131](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/131) [`e1a4aa0`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/e1a4aa07413d2e2c9363f9acff40df6ce420d752) Thanks [@whitphx](https://github.com/whitphx)! - Refactoring: use the AbsolutePosition interface where reasonable
+
 ## 0.9.0
 
 ### Minor Changes
