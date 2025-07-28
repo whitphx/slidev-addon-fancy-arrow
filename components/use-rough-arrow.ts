@@ -39,9 +39,13 @@ const createArrowHeadSvg = (
   return g;
 };
 
+export interface AbsolutePosition {
+  x: number;
+  y: number;
+}
 export function useRoughArrow(props: {
-  point1: Ref<{ x: number; y: number } | undefined>;
-  point2: Ref<{ x: number; y: number } | undefined>;
+  point1: Ref<AbsolutePosition | undefined>;
+  point2: Ref<AbsolutePosition | undefined>;
   width: number;
   headType: "line" | "polygon";
   headSize: number | null;

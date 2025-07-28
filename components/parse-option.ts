@@ -1,14 +1,10 @@
-import { SnapPosition } from "./use-element-position";
+import type { SnapPosition } from "./use-element-position";
+import type { AbsolutePosition } from "./use-rough-arrow";
 
-export interface SnappedArrowEndpoint {
+export interface SnapTarget {
   query: string;
   snapPosition: SnapPosition | undefined;
 }
-export interface AbsoluteArrowEndpoint {
-  x: number;
-  y: number;
-}
-export type ArrowEndpoint = SnappedArrowEndpoint | AbsoluteArrowEndpoint;
 
 const absolutePositionRegex = /^\(\s*(\d+)\s*,\s*(\d+)\s*\)$/;
 const snapTargetRegex = /^(\S+?)(@(\S+?))?$/;
@@ -21,7 +17,7 @@ const snapTargetRegex = /^(\S+?)(@(\S+?))?$/;
  */
 export function parseArrowEndpointShorthand(
   arrowEndpointShorthand: string,
-): ArrowEndpoint {
+): SnapTarget | AbsolutePosition {
   arrowEndpointShorthand = arrowEndpointShorthand.trim();
 
   const absolutePositionMatch = arrowEndpointShorthand.match(
@@ -53,7 +49,7 @@ interface ArrowEndpointProps {
 }
 export function compileArrowEndpointProps(
   props: ArrowEndpointProps,
-): ArrowEndpoint | undefined {
+): SnapTarget | AbsolutePosition | undefined {
   if (props.shorthand) {
     try {
       return parseArrowEndpointShorthand(props.shorthand);
