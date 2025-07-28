@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.9.0
+
+### Minor Changes
+
+- [#129](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/129) [`44e03ba`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/44e03ba4cd4db6e5f728733b80ced91b74a593af) Thanks [@whitphx](https://github.com/whitphx)! - Add `from` and `to` shorthand
+
 ## 0.8.1
 
 ### Patch Changes
