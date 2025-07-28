@@ -53,7 +53,8 @@ export function compileArrowEndpointProps(
   if (props.shorthand) {
     try {
       return parseArrowEndpointShorthand(props.shorthand);
-    } catch {
+    } catch (error) {
+      console.error(`Failed to parse shorthand "${props.shorthand}":`, error);
       return undefined;
     }
   }
