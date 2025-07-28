@@ -63,7 +63,7 @@ const point1: Ref<AbsolutePosition | undefined> =
         from.value.query,
         from.value.snapPosition,
       )
-    : ref(from.value);
+    : (from as Ref<AbsolutePosition | undefined>);
 const point2: Ref<AbsolutePosition | undefined> =
   to.value && "query" in to.value
     ? useElementPosition(
@@ -72,7 +72,7 @@ const point2: Ref<AbsolutePosition | undefined> =
         to.value.query,
         to.value.snapPosition,
       )
-    : ref(to.value);
+    : (to as Ref<AbsolutePosition | undefined>);
 
 const { arcSvg, textPosition } = useRoughArrow({
   point1,

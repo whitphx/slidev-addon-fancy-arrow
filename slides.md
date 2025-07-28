@@ -617,3 +617,13 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 <FancyArrow v-click="2" forward:delay-100 q1="[data-id=bar]" pos1="bottomright" q2="[data-id=baz]" pos2="topright" color="green" width="2" arc="0.3" seed="1" roughness="2" >
     <span text-green v-mark.green="2">Hola!</span>
 </FancyArrow>
+
+---
+clicks: 3
+---
+
+# Demo: dynamic positions
+
+<div absolute left="50%" top="50%" translate-x="-50%" translate-y="-50%" data-id="center-anchor"></div>
+
+<FancyArrow q1="[data-id=center-anchor]" :x2="$clicks % 2 === 0 ? 100 : 900" :y2="$clicks / 2 < 1 ? 100 : 500" />
