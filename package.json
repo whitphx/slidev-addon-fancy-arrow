@@ -1,6 +1,13 @@
 {
   "name": "slidev-addon-fancy-arrow",
   "version": "0.8.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whitphx/slidev-addon-fancy-arrow.git"
+  },
+  "publishConfig": {
+    "provenance": true
+  },
   "type": "module",
   "files": [
     "components"

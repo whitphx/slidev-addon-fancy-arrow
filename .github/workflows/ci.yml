@@ -97,6 +97,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      id-token: write # Necessary for provenance: https://docs.npmjs.com/generating-provenance-statements#publishing-packages-with-provenance-via-github-actions
 
     runs-on: ubuntu-latest
     steps:
