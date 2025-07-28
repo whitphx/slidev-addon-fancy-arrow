@@ -36,7 +36,7 @@ export function parseArrowEndpointShorthand(
     return { query, snapPosition };
   }
 
-  throw new Error(`Invalid snap option string: ${arrowEndpointShorthand}`);
+  throw new Error(`Invalid arrow endpoint format: ${arrowEndpointShorthand}`);
 }
 
 interface ArrowEndpointProps {
