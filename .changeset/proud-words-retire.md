@@ -1,5 +1,5 @@
 ---
-"slidev-addon-fancy-arrow": patch
+"slidev-addon-fancy-arrow": minor
 ---
 
 Add `from` and `to` shorthand
