@@ -1,12 +1,10 @@
 import { SnapPosition } from "./use-element-position";
 
 interface SnappedArrowEndpoint {
-  type: "snapped";
   query: string;
   snapPosition: SnapPosition | undefined;
 }
 interface AbsoluteArrowEndpoint {
-  type: "absolute";
   x: number;
   y: number;
 }
@@ -32,14 +30,14 @@ export function parseArrowEndpointShorthand(
   if (absolutePositionMatch) {
     const x = parseInt(absolutePositionMatch[1], 10);
     const y = parseInt(absolutePositionMatch[2], 10);
-    return { type: "absolute", x, y };
+    return { x, y };
   }
 
   const snapTargetMatch = arrowEndpointShorthand.match(snapTargetRegex);
   if (snapTargetMatch) {
     const query = snapTargetMatch[1];
     const snapPosition = snapTargetMatch[3] as SnapPosition | undefined;
-    return { type: "snapped", query, snapPosition };
+    return { query, snapPosition };
   }
 
   throw new Error(`Invalid snap option string: ${arrowEndpointShorthand}`);
@@ -66,7 +64,6 @@ export function compileArrowEndpointProps(
 
   if (props.q) {
     return {
-      type: "snapped",
       query: props.q,
       snapPosition: props.pos,
     };
@@ -74,14 +71,12 @@ export function compileArrowEndpointProps(
   if (props.id) {
     // Deprecated
     return {
-      type: "snapped",
       query: `#${props.id}`,
       snapPosition: props.pos,
     };
   }
 
   return {
-    type: "absolute",
     x: Number(props.x ?? 0),
     y: Number(props.y ?? 0),
   };

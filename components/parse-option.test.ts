@@ -21,7 +21,6 @@ describe("parsePosition", () => {
       // Assuming parsePosition is a function that processes the options
       const parsed = parseArrowEndpointShorthand(optionString);
       expect(parsed).toEqual({
-        type: "absolute",
         x: 100,
         y: 200,
       });
@@ -41,7 +40,6 @@ describe("parsePosition", () => {
     it(`parses string with snap target CSS selector correctly: "${optionString}"`, () => {
       const parsed = parseArrowEndpointShorthand(optionString);
       expect(parsed).toEqual({
-        type: "snapped",
         query: expectedQuery,
         snapPosition: expectedSnapPosition,
       });

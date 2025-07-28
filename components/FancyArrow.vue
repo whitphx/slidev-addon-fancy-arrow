@@ -56,7 +56,7 @@ const to = computed(() =>
 );
 
 const point1: Ref<{ x: number; y: number } | undefined> =
-  from.value && from.value.type === "snapped"
+  from.value && "query" in from.value
     ? useElementPosition(
         slideContainer,
         svgContainer,
@@ -65,7 +65,7 @@ const point1: Ref<{ x: number; y: number } | undefined> =
       )
     : ref(from.value);
 const point2: Ref<{ x: number; y: number } | undefined> =
-  to.value && to.value.type === "snapped"
+  to.value && "query" in to.value
     ? useElementPosition(
         slideContainer,
         svgContainer,
