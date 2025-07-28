@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.8.1
+
+### Patch Changes
+
+- [#127](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/127) [`a9568f4`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/a9568f42678d494a95fdbc6b97c47c7e0e50c3a3) Thanks [@whitphx](https://github.com/whitphx)! - Add provenance
+
 ## 0.8.0
 
 ### Minor Changes
