@@ -48,14 +48,20 @@ export function parseArrowEndpointShorthand(
 interface ArrowEndpointProps {
   shorthand?: string;
   q?: string;
-  id?: string;
+  id?: string; // Deprecated
   pos?: SnapPosition;
   x?: number | string;
   y?: number | string;
 }
-export function compileArrowEndpoint(props: ArrowEndpointProps): ArrowEndpoint {
+export function compileArrowEndpointProps(
+  props: ArrowEndpointProps,
+): ArrowEndpoint | undefined {
   if (props.shorthand) {
-    return parseArrowEndpointShorthand(props.shorthand);
+    try {
+      return parseArrowEndpointShorthand(props.shorthand);
+    } catch {
+      return undefined;
+    }
   }
 
   if (props.q) {

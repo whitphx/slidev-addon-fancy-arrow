@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import { compileArrowEndpoint } from "./parse-option";
+import { compileArrowEndpointProps } from "./parse-option";
 import { useElementPosition, type SnapPosition } from "./use-element-position";
 import { useRoughArrow } from "./use-rough-arrow";
 
@@ -35,7 +35,7 @@ const slideContainer = computed(() => {
 const svgContainer = ref<SVGSVGElement>();
 
 const from = computed(() =>
-  compileArrowEndpoint({
+  compileArrowEndpointProps({
     shorthand: props.from,
     q: props.q1,
     id: props.id1,
@@ -45,7 +45,7 @@ const from = computed(() =>
   }),
 );
 const to = computed(() =>
-  compileArrowEndpoint({
+  compileArrowEndpointProps({
     shorthand: props.to,
     q: props.q2,
     id: props.id2,
@@ -56,7 +56,7 @@ const to = computed(() =>
 );
 
 const point1 =
-  from.value.type === "snapped"
+  from.value && from.value.type === "snapped"
     ? useElementPosition(
         slideContainer,
         svgContainer,
@@ -65,7 +65,7 @@ const point1 =
       )
     : ref(from.value);
 const point2 =
-  to.value.type === "snapped"
+  to.value && to.value.type === "snapped"
     ? useElementPosition(
         slideContainer,
         svgContainer,
