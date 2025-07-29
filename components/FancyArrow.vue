@@ -55,24 +55,16 @@ const to = computed(() =>
   }),
 );
 
-const point1: Ref<AbsolutePosition | undefined> =
-  from.value && "query" in from.value
-    ? useElementPosition(
-        slideContainer,
-        svgContainer,
-        from.value.query,
-        from.value.snapPosition,
-      )
-    : (from as Ref<AbsolutePosition | undefined>);
-const point2: Ref<AbsolutePosition | undefined> =
-  to.value && "query" in to.value
-    ? useElementPosition(
-        slideContainer,
-        svgContainer,
-        to.value.query,
-        to.value.snapPosition,
-      )
-    : (to as Ref<AbsolutePosition | undefined>);
+const point1: Ref<AbsolutePosition | undefined> = useElementPosition(
+  slideContainer,
+  svgContainer,
+  from,
+);
+const point2: Ref<AbsolutePosition | undefined> = useElementPosition(
+  slideContainer,
+  svgContainer,
+  to,
+);
 
 const { arcSvg, textPosition } = useRoughArrow({
   point1,

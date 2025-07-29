@@ -8,6 +8,7 @@ import {
 } from "vue";
 import { useSlideContext, useIsSlideActive } from "@slidev/client";
 import { AbsolutePosition } from "./use-rough-arrow";
+import { SnapTarget } from "./parse-option";
 
 export type SnapPosition =
   | "top"
@@ -22,25 +23,60 @@ export type SnapPosition =
 export function useElementPosition(
   slideContainer: Ref<Element | undefined>,
   rootElement: Ref<SVGSVGElement | undefined>,
-  selector: string,
-  pos?: SnapPosition,
+  endpointRef: Ref<AbsolutePosition | SnapTarget | undefined>,
 ): Ref<AbsolutePosition | undefined> {
   const { $scale } = useSlideContext();
   const isSlideActive = useIsSlideActive();
 
-  const elem = computed(() => {
-    return slideContainer.value?.querySelector(selector) ?? null;
+  const snappedElementInfo = computed(() => {
+    const endpoint = endpointRef.value;
+    if (endpoint == null || !("query" in endpoint)) {
+      return undefined;
+    }
+    const element = slideContainer.value?.querySelector(endpoint.query) ?? null;
+    return {
+      element,
+      snapPosition: endpoint.snapPosition,
+    };
   });
 
-  const point = ref<AbsolutePosition | undefined>(undefined);
+  const initPoint =
+    endpointRef.value && "x" in endpointRef.value
+      ? { x: endpointRef.value.x, y: endpointRef.value.y }
+      : undefined;
+  const point = ref<AbsolutePosition | undefined>(initPoint);
 
-  const update = () => {
-    if (!isSlideActive.value || !rootElement.value || !elem.value) {
+  // Sync endpointRef -> point in case where endpoint is AbsolutePosition
+  watch(
+    endpointRef,
+    (endpoint) => {
+      if (endpoint == null) {
+        point.value = undefined;
+        return;
+      } else if ("x" in endpoint) {
+        point.value = { x: endpoint.x, y: endpoint.y };
+        return;
+      }
+    },
+    { immediate: true },
+  );
+
+  // Sync snappedElementInfo -> point in case where endpoint is SnapTarget
+  const updateSnappedPosition = () => {
+    if (!snappedElementInfo.value) {
+      // This case means endpoint is AbsolutePosition
+      // so we don't need to update point in this method
+      // as it's done in the watch above.
+      return;
+    }
+
+    const { element, snapPosition } = snappedElementInfo.value;
+    if (!isSlideActive.value || !rootElement.value || !element) {
       point.value = undefined;
       return;
     }
 
-    const rect = elem.value.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
     const rootRect = rootElement.value.getBoundingClientRect();
 
     let x = (rect.left - rootRect.left) / $scale.value;
@@ -48,14 +84,14 @@ export function useElementPosition(
     const width = rect.width / $scale.value;
     const height = rect.height / $scale.value;
 
-    if (pos?.includes("right")) {
+    if (snapPosition?.includes("right")) {
       x += width;
-    } else if (!pos?.includes("left")) {
+    } else if (!snapPosition?.includes("left")) {
       x += width / 2;
     }
-    if (pos?.includes("bottom")) {
+    if (snapPosition?.includes("bottom")) {
       y += height;
-    } else if (!pos?.includes("top")) {
+    } else if (!snapPosition?.includes("top")) {
       y += height / 2;
     }
 
@@ -70,16 +106,16 @@ export function useElementPosition(
   watch(isSlideActive, () => {
     setTimeout(() => {
       // This `setTimeout` is important to ensure `update()` is called after the DOM elements in the slide are updated after `isSlideActive` is changed.
-      update();
+      updateSnappedPosition();
     });
   });
 
   watch(
-    elem,
+    snappedElementInfo,
     (newVal) => {
-      if (newVal) {
-        const observer = new MutationObserver(update);
-        observer.observe(newVal, { attributes: true });
+      if (newVal?.element) {
+        const observer = new MutationObserver(updateSnappedPosition);
+        observer.observe(newVal.element, { attributes: true });
 
         onWatcherCleanup(() => {
           observer.disconnect();
@@ -90,12 +126,12 @@ export function useElementPosition(
   );
 
   onMounted(() => {
-    update();
+    updateSnappedPosition();
 
     // Some type of position/size changes can't be observed by MutationObserver.
     // So we need to update the position/size periodically in the polling manner.
     const interval = setInterval(() => {
-      update();
+      updateSnappedPosition();
     }, 100);
 
     return () => clearInterval(interval);
