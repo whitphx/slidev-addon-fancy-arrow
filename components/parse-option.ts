@@ -73,8 +73,12 @@ export function compileArrowEndpointProps(
     };
   }
 
-  return {
-    x: Number(props.x ?? 0),
-    y: Number(props.y ?? 0),
-  };
+  if (props.x != undefined || props.y != undefined) {
+    return {
+      x: Number(props.x ?? 0),
+      y: Number(props.y ?? 0),
+    };
+  }
+
+  return undefined;
 }
