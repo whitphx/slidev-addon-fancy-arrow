@@ -20,9 +20,9 @@ export type SnapPosition =
   | "bottomleft"
   | "bottomright";
 
-export function useElementPosition(
-  slideContainer: Ref<Element | undefined>,
-  rootElement: Ref<SVGSVGElement | undefined>,
+export function useEndpointResolution(
+  slideContainerRef: Ref<Element | undefined>,
+  rootElementRef: Ref<SVGSVGElement | undefined>,
   endpointRef: Ref<AbsolutePosition | SnapTarget | undefined>,
 ): Ref<AbsolutePosition | undefined> {
   const { $scale } = useSlideContext();
@@ -33,7 +33,8 @@ export function useElementPosition(
     if (endpoint == null || !("query" in endpoint)) {
       return undefined;
     }
-    const element = slideContainer.value?.querySelector(endpoint.query) ?? null;
+    const element =
+      slideContainerRef.value?.querySelector(endpoint.query) ?? null;
     return {
       element,
       snapPosition: endpoint.snapPosition,
@@ -71,13 +72,13 @@ export function useElementPosition(
     }
 
     const { element, snapPosition } = snappedElementInfo.value;
-    if (!isSlideActive.value || !rootElement.value || !element) {
+    if (!isSlideActive.value || !rootElementRef.value || !element) {
       point.value = undefined;
       return;
     }
 
     const rect = element.getBoundingClientRect();
-    const rootRect = rootElement.value.getBoundingClientRect();
+    const rootRect = rootElementRef.value.getBoundingClientRect();
 
     let x = (rect.left - rootRect.left) / $scale.value;
     let y = (rect.top - rootRect.top) / $scale.value;
