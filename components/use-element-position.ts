@@ -41,11 +41,7 @@ export function useEndpointResolution(
     };
   });
 
-  const initPoint =
-    endpointRef.value && "x" in endpointRef.value
-      ? { x: endpointRef.value.x, y: endpointRef.value.y }
-      : undefined;
-  const point = ref<AbsolutePosition | undefined>(initPoint);
+  const point = ref<AbsolutePosition | undefined>(undefined);
 
   // Sync endpointRef -> point in case where endpoint is AbsolutePosition
   watch(
