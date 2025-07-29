@@ -62,11 +62,19 @@ const point1: Ref<AbsolutePosition | undefined> = useEndpointResolution(
   slideContainer,
   svgContainer,
   endpoint1,
+  {
+    self: root,
+    direction: "prev",
+  },
 );
 const point2: Ref<AbsolutePosition | undefined> = useEndpointResolution(
   slideContainer,
   svgContainer,
   endpoint2,
+  {
+    self: root,
+    direction: "next",
+  },
 );
 
 const { arcSvg, textPosition } = useRoughArrow({

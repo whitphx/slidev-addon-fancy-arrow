@@ -24,13 +24,35 @@ export function useEndpointResolution(
   slideContainerRef: Ref<Element | undefined>,
   rootElementRef: Ref<SVGSVGElement | undefined>,
   endpointRef: Ref<AbsolutePosition | SnapTarget | undefined>,
+  fallbackOption: {
+    self: Ref<HTMLElement | undefined>;
+    direction: "next" | "prev";
+  },
 ): Ref<AbsolutePosition | undefined> {
   const { $scale } = useSlideContext();
   const isSlideActive = useIsSlideActive();
 
   const snappedElementInfo = computed(() => {
     const endpoint = endpointRef.value;
-    if (endpoint == null || !("query" in endpoint)) {
+    if (endpoint == null) {
+      // If endpoint is undefined, we try to use the next or previous element
+      // as fallback snap target.
+      const selfElem = fallbackOption.self.value;
+      if (!selfElem) {
+        return undefined;
+      }
+      const element =
+        fallbackOption.direction === "next"
+          ? selfElem.nextElementSibling
+          : selfElem.previousElementSibling;
+      return {
+        element,
+        snapPosition: undefined,
+      };
+    }
+    if (!("query" in endpoint)) {
+      // endpoint is AbsolutePosition
+      // so we don't need to resolve the element.
       return undefined;
     }
     const element =
