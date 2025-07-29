@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, type Ref } from "vue";
 import { compileArrowEndpointProps } from "./parse-option";
-import { useElementPosition, type SnapPosition } from "./use-element-position";
+import {
+  useEndpointResolution,
+  type SnapPosition,
+} from "./use-element-position";
 import { useRoughArrow, type AbsolutePosition } from "./use-rough-arrow";
 
 const props = defineProps<{
@@ -34,7 +37,7 @@ const slideContainer = computed(() => {
 
 const svgContainer = ref<SVGSVGElement>();
 
-const from = computed(() =>
+const endpoint1 = computed(() =>
   compileArrowEndpointProps({
     shorthand: props.from,
     q: props.q1,
@@ -44,7 +47,7 @@ const from = computed(() =>
     y: props.y1,
   }),
 );
-const to = computed(() =>
+const endpoint2 = computed(() =>
   compileArrowEndpointProps({
     shorthand: props.to,
     q: props.q2,
@@ -55,24 +58,16 @@ const to = computed(() =>
   }),
 );
 
-const point1: Ref<AbsolutePosition | undefined> =
-  from.value && "query" in from.value
-    ? useElementPosition(
-        slideContainer,
-        svgContainer,
-        from.value.query,
-        from.value.snapPosition,
-      )
-    : ref(from.value);
-const point2: Ref<AbsolutePosition | undefined> =
-  to.value && "query" in to.value
-    ? useElementPosition(
-        slideContainer,
-        svgContainer,
-        to.value.query,
-        to.value.snapPosition,
-      )
-    : ref(to.value);
+const point1: Ref<AbsolutePosition | undefined> = useEndpointResolution(
+  slideContainer,
+  svgContainer,
+  endpoint1,
+);
+const point2: Ref<AbsolutePosition | undefined> = useEndpointResolution(
+  slideContainer,
+  svgContainer,
+  endpoint2,
+);
 
 const { arcSvg, textPosition } = useRoughArrow({
   point1,
