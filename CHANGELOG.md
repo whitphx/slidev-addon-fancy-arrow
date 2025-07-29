@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.10.0
+
+### Minor Changes
+
+- [#137](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/137) [`834fce2`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/834fce280729c32a5841775e923ee77865ffeeea) Thanks [@whitphx](https://github.com/whitphx)! - Auto-snap to prev/next element if no snap target or absolute position is specified
+
 ## 0.9.2
 
 ### Patch Changes
