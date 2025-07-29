@@ -1,5 +1,13 @@
 # slidev-addon-fancy-arrow
 
+## 0.9.2
+
+### Patch Changes
+
+- [#135](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/135) [`023616e`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/023616e55b6b3359f5dfb60e09c60a27d783e5b8) Thanks [@whitphx](https://github.com/whitphx)! - Fix slides.md to set the 'at' props properly
+
+- [#134](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/134) [`0836e65`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/0836e65764ef6cfb7f4f1c919122d9ffc8af96a8) Thanks [@whitphx](https://github.com/whitphx)! - Fix the props reactivity to work properly
+
 ## 0.9.1
 
 ### Patch Changes
