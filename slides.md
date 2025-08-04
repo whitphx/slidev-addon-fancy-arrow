@@ -31,8 +31,8 @@ Slidev addon for drawing arrows with<br>
 
 <FancyArrow from="[data-id=abspos-sample]@topright" to="(800,500)" color="blue" width="3" arc="0.3" seed="1" roughness="2" />
 
-<div absolute w="3px" h="100%" left="800px" top="0" bg="gray" opacity="0.5" translate-x="-50%"></div>
-<div absolute h="3px" w="100%" left="0" top="500px" bg="gray" opacity="0.5" translate-y="-50%"></div>
+<div absolute w="1px" h="100%" left="800px" top="0" bg="gray" opacity="0.5" translate-x="-50%"></div>
+<div absolute h="1px" w="100%" left="0" top="500px" bg="gray" opacity="0.5" translate-y="-50%"></div>
 
 ---
 
