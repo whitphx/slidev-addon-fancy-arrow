@@ -11,13 +11,13 @@ Slidev addon for drawing arrows with<br>
 
 <div mt-20>
 
-<span forward:delay-500 data-id="rough-js">Powered by [Rough.js](https://roughjs.com).</span>
+<span data-id="rough-js">Powered by [Rough.js](https://roughjs.com).</span>
 
 </div>
 
 <FancyArrow from="[data-id=rough-js]@top" to="[data-id=fancy-styles]@bottom" color="orange" width="3" arc="-0.3" seed="1" roughness="2" />
 
-<div absolute left-80 top-110>
+<div absolute left-80 top-90>
 <p>
     <code data-id="snap-sample">Snapped to an element</code>
 </p>
@@ -29,7 +29,10 @@ Slidev addon for drawing arrows with<br>
 
 <FancyArrow from="[data-id=intuitive-positioning]@bottom" to="[data-id=snap-sample]@top" color="green" width="3" arc="-0.3" seed="1" roughness="2" />
 
-<FancyArrow from="[data-id=abspos-sample]@right" to="(700,500)" color="blue" width="3" arc="-0.3" seed="1" roughness="2" />
+<FancyArrow from="[data-id=abspos-sample]@topright" to="(800,500)" color="blue" width="3" arc="0.3" seed="1" roughness="2" />
+
+<div absolute w="3px" h="100%" left="800px" top="0" bg="gray" opacity="0.5" translate-x="-50%"></div>
+<div absolute h="3px" w="100%" left="0" top="500px" bg="gray" opacity="0.5" translate-y="-50%"></div>
 
 ---
 
