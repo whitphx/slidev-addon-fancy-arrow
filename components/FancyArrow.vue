@@ -91,7 +91,8 @@ const { arcSvg, textPosition } = useRoughArrow({
     duration: 1000,
     delay: 0,
   },
-  animationKeyframeName: "rough-arrow-dash",
+  strokeAnimationKeyframeName: "rough-arrow-dash",
+  fillAnimationKeyframeName: "rough-arrow-fill",
 });
 </script>
 
@@ -129,6 +130,11 @@ const { arcSvg, textPosition } = useRoughArrow({
 @keyframes rough-arrow-dash {
   to {
     stroke-dashoffset: 0;
+  }
+}
+@keyframes rough-arrow-fill {
+  to {
+    visibility: visible;
   }
 }
 </style>

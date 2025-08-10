@@ -64,7 +64,8 @@ export function useRoughArrow(props: {
     duration?: number;
     delay?: number;
   };
-  animationKeyframeName: string;
+  strokeAnimationKeyframeName: string;
+  fillAnimationKeyframeName: string;
 }) {
   const {
     point1: point1Ref,
@@ -77,7 +78,8 @@ export function useRoughArrow(props: {
     twoWay,
     centerPositionParam,
     animation,
-    animationKeyframeName,
+    strokeAnimationKeyframeName,
+    fillAnimationKeyframeName,
   } = props;
   const baseOptions = {
     // We don't support the `bowing` param because it's not so effective for arc.
@@ -288,41 +290,54 @@ export function useRoughArrow(props: {
 
       interface AnimationSegment {
         length: number;
-        paths: SVGPathElement[];
+        strokedPaths: SVGPathElement[];
+        filledPaths: SVGPathElement[];
       }
       const segments: AnimationSegment[] = [];
 
       const arcLength = arcData.value.lineLength;
       segments.push({
         length: arcLength,
-        paths: [arcPath],
+        strokedPaths: [arcPath],
+        filledPaths: [],
       });
 
-      const arrowHead2ChildPaths: SVGPathElement[] = [];
+      const arrowHead2StrokedPaths: SVGPathElement[] = [];
+      const arrowHead2FilledPaths: SVGPathElement[] = [];
       arrowHead2.childNodes.forEach((child) => {
         if (child instanceof SVGPathElement) {
-          arrowHead2ChildPaths.push(child);
+          const stroke = child.getAttribute("stroke");
+          const fill = child.getAttribute("fill");
+          if (stroke && stroke !== "none") {
+            arrowHead2StrokedPaths.push(child);
+          } else if (fill && fill !== "none") {
+            arrowHead2FilledPaths.push(child);
+          }
         }
-        // TODO: In case of `<g>`, e.g. Polygon type
       });
       segments.push({
-        paths: arrowHead2ChildPaths,
-        length: arrowHead2ChildPaths
-          .map((p) => p.getTotalLength())
-          .reduce((a, b) => a + b, 0),
+        strokedPaths: arrowHead2StrokedPaths,
+        filledPaths: arrowHead2FilledPaths,
+        length: computedArrowHeadSize.value * 2,
       });
 
-      const arrowHead1ChildPaths: SVGPathElement[] = [];
+      const arrowHead1StrokedPaths: SVGPathElement[] = [];
+      const arrowHead1FilledPaths: SVGPathElement[] = [];
       arrowHead1.childNodes.forEach((child) => {
         if (child instanceof SVGPathElement) {
-          arrowHead1ChildPaths.push(child);
+          const stroke = child.getAttribute("stroke");
+          const fill = child.getAttribute("fill");
+          if (stroke && stroke !== "none") {
+            arrowHead1StrokedPaths.push(child);
+          } else if (fill && fill !== "none") {
+            arrowHead1FilledPaths.push(child);
+          }
         }
       });
       segments.push({
-        paths: arrowHead1ChildPaths,
-        length: arrowHead1ChildPaths
-          .map((p) => p.getTotalLength())
-          .reduce((a, b) => a + b, 0),
+        strokedPaths: arrowHead1StrokedPaths,
+        filledPaths: arrowHead1FilledPaths,
+        length: computedArrowHeadSize.value * 2,
       });
 
       const totalLength = segments
@@ -333,14 +348,19 @@ export function useRoughArrow(props: {
       for (const segment of segments) {
         const length = segment.length;
         const segmentDuration = (length / totalLength) * duration;
-        segment.paths.forEach((path, index) => {
+        segment.strokedPaths.forEach((path, index) => {
           const pathDelay =
-            currentDelay + (index / segment.paths.length) * segmentDuration;
-          path.style.animation = `${animationKeyframeName} ${segmentDuration}ms ease-out ${pathDelay}ms forwards`;
+            currentDelay +
+            (index / segment.strokedPaths.length) * segmentDuration;
+          path.style.animation = `${strokeAnimationKeyframeName} ${segmentDuration}ms ease-out ${pathDelay}ms forwards`;
           path.style.strokeDashoffset = `${length}`;
           path.style.strokeDasharray = `${length}`;
         });
         currentDelay += segmentDuration;
+        segment.filledPaths.forEach((path) => {
+          path.style.animation = `${fillAnimationKeyframeName} ${segmentDuration}ms ease-out ${currentDelay}ms forwards`;
+          path.style.visibility = "hidden";
+        });
       }
     }
 
