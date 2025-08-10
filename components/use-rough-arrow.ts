@@ -5,16 +5,16 @@ type RoughSVG = ReturnType<typeof roughjs.svg>;
 
 const createArrowHeadSvg = (
   roughSvg: RoughSVG,
-  arrowSize: number,
+  lineLength: number,
   type: "line" | "polygon",
   options: Parameters<RoughSVG["line"]>[4],
 ): SVGGElement => {
   const arrowAngle = Math.PI / 6; // 30 degrees
 
-  const x1 = -arrowSize * Math.cos(arrowAngle);
-  const y1 = arrowSize * Math.sin(arrowAngle);
-  const x2 = -arrowSize * Math.cos(arrowAngle);
-  const y2 = arrowSize * Math.sin(-arrowAngle);
+  const x1 = -lineLength * Math.cos(arrowAngle);
+  const y1 = lineLength * Math.sin(arrowAngle);
+  const x2 = -lineLength * Math.cos(arrowAngle);
+  const y2 = lineLength * Math.sin(-arrowAngle);
 
   const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
@@ -199,7 +199,7 @@ export function useRoughArrow(props: {
     };
   });
 
-  const computedArrowHeadSize = computed(() => {
+  function getArrowHeadLineLength(): number {
     if (arcData.value == null) {
       return 0;
     }
@@ -211,9 +211,10 @@ export function useRoughArrow(props: {
     // The arrow size is proportional to the line length.
     // The constant factor is chosen so that the arrow size is 30 when the line length is 200.
     return (30 * Math.log(arcData.value.lineLength)) / Math.log(200);
-  });
+  }
 
   const arrowHeadData = computed(() => {
+    const lineLength = getArrowHeadLineLength();
     const arrowHeadOptions = {
       ...baseOptions,
       stroke: "currentColor",
@@ -223,11 +224,11 @@ export function useRoughArrow(props: {
     };
     const svg = createArrowHeadSvg(
       roughSvg,
-      computedArrowHeadSize.value,
+      lineLength,
       headType,
       arrowHeadOptions,
     );
-    return { svg };
+    return { svg, lineLength };
   });
 
   const arrowSvg = computed(() => {
