@@ -1,5 +1,13 @@
 # slidev-addon-fancy-arrow
 
+## 0.10.2
+
+### Patch Changes
+
+- [#154](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/154) [`6e4bcfd`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/6e4bcfd126540dc33007394a194100e19c81b1a2) Thanks [@whitphx](https://github.com/whitphx)! - Fix arrow head implementation
+
+- [#152](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/152) [`7de9227`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/7de92271cfb13afa333c6d6fa222e7c62b84f16d) Thanks [@whitphx](https://github.com/whitphx)! - Fix internal implementation of arrow head
+
 ## 0.10.1
 
 ### Patch Changes
