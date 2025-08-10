@@ -77,7 +77,7 @@ const point2: Ref<AbsolutePosition | undefined> = useEndpointResolution(
   },
 );
 
-const { arcSvg, textPosition } = useRoughArrow({
+const { arrowSvg, textPosition } = useRoughArrow({
   point1,
   point2,
   width: Number(props.width ?? 2),
@@ -110,7 +110,7 @@ const { arcSvg, textPosition } = useRoughArrow({
         overflow: visible;
       "
     >
-      <g v-html="arcSvg" />
+      <g v-html="arrowSvg" />
     </svg>
     <div
       v-if="$slots.default && textPosition"
