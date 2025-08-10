@@ -281,13 +281,11 @@ export function useRoughArrow(props: {
     }
 
     const arcPath = arcData.value.svgPath;
-    g.appendChild(arcPath);
-
     const arrowHeadBackwardSvg = arrowHeadData.value.arrowHeadBackwardSvg;
     const arrowHeadForwardSvg = arrowHeadData.value.arrowHeadForwardSvg;
 
+    g.appendChild(arcPath);
     g.appendChild(arrowHeadForwardSvg);
-
     if (arrowHeadBackwardSvg) {
       g.appendChild(arrowHeadBackwardSvg);
     }
@@ -302,9 +300,8 @@ export function useRoughArrow(props: {
       }
       const segments: AnimationSegment[] = [];
 
-      const arcLength = arcData.value.lineLength;
       segments.push({
-        length: arcLength,
+        length: arcData.value.lineLength,
         strokedPaths: [arcPath],
         filledPaths: [],
       });
