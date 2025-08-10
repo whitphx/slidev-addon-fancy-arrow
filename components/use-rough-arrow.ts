@@ -302,59 +302,46 @@ export function useRoughArrow(props: {
         filledPaths: [],
       });
 
-      const arrowHead2StrokedPaths: SVGPathElement[] = [];
-      const arrowHead2FilledPaths: SVGPathElement[] = [];
-      arrowHead2.childNodes.forEach((child) => {
-        if (child instanceof SVGPathElement) {
-          const stroke = child.getAttribute("stroke");
-          const fill = child.getAttribute("fill");
-          if (stroke && stroke !== "none") {
-            arrowHead2StrokedPaths.push(child);
-          } else if (fill && fill !== "none") {
-            arrowHead2FilledPaths.push(child);
+      function getArrowHeadAnimationSegment(
+        arrowHeadG: SVGGElement,
+      ): AnimationSegment {
+        const strokedPaths: SVGPathElement[] = [];
+        const filledPaths: SVGPathElement[] = [];
+        arrowHeadG.childNodes.forEach((child) => {
+          if (child instanceof SVGPathElement) {
+            const stroke = child.getAttribute("stroke");
+            const fill = child.getAttribute("fill");
+            if (stroke && stroke !== "none") {
+              strokedPaths.push(child);
+            } else if (fill && fill !== "none") {
+              filledPaths.push(child);
+            }
           }
-        }
-      });
-      segments.push({
-        strokedPaths: arrowHead2StrokedPaths,
-        filledPaths: arrowHead2FilledPaths,
-        length: computedArrowHeadSize.value * 2,
-      });
+        });
+        return {
+          strokedPaths: strokedPaths,
+          filledPaths: filledPaths,
+          length: computedArrowHeadSize.value * 2,
+        };
+      }
 
-      const arrowHead1StrokedPaths: SVGPathElement[] = [];
-      const arrowHead1FilledPaths: SVGPathElement[] = [];
-      arrowHead1.childNodes.forEach((child) => {
-        if (child instanceof SVGPathElement) {
-          const stroke = child.getAttribute("stroke");
-          const fill = child.getAttribute("fill");
-          if (stroke && stroke !== "none") {
-            arrowHead1StrokedPaths.push(child);
-          } else if (fill && fill !== "none") {
-            arrowHead1FilledPaths.push(child);
-          }
-        }
-      });
-      segments.push({
-        strokedPaths: arrowHead1StrokedPaths,
-        filledPaths: arrowHead1FilledPaths,
-        length: computedArrowHeadSize.value * 2,
-      });
+      segments.push(getArrowHeadAnimationSegment(arrowHead2));
+      segments.push(getArrowHeadAnimationSegment(arrowHead1));
 
       const totalLength = segments
         .map((s) => s.length)
         .reduce((a, b) => a + b, 0);
-      let currentDelay = delay;
 
+      let currentDelay = delay;
       for (const segment of segments) {
-        const length = segment.length;
-        const segmentDuration = (length / totalLength) * duration;
+        const segmentDuration = (segment.length / totalLength) * duration;
         segment.strokedPaths.forEach((path, index) => {
           const pathDelay =
             currentDelay +
             (index / segment.strokedPaths.length) * segmentDuration;
           path.style.animation = `${strokeAnimationKeyframeName} ${segmentDuration}ms ease-out ${pathDelay}ms forwards`;
-          path.style.strokeDashoffset = `${length}`;
-          path.style.strokeDasharray = `${length}`;
+          path.style.strokeDashoffset = `${segment.length}`;
+          path.style.strokeDasharray = `${segment.length}`;
         });
         currentDelay += segmentDuration;
         segment.filledPaths.forEach((path) => {
