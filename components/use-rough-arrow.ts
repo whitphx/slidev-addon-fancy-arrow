@@ -244,9 +244,9 @@ export function useRoughArrow(props: {
 
     g.appendChild(arcData.value.svg);
 
-    const arrowHeadsvg = arrowHeadData.value.svg;
-    const arrowHead1svg = arrowHeadsvg.cloneNode(true) as SVGGElement;
-    const arrowHead2svg = arrowHeadsvg.cloneNode(true) as SVGGElement;
+    const arrowHeadSvg = arrowHeadData.value.svg;
+    const arrowHead1svg = arrowHeadSvg.cloneNode(true) as SVGGElement;
+    const arrowHead2svg = arrowHeadSvg.cloneNode(true) as SVGGElement;
 
     arrowHead2svg.setAttribute(
       "transform",
