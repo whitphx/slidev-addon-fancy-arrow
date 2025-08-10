@@ -244,7 +244,7 @@ export function useRoughArrow(props: {
       headType,
       arrowHeadOptions,
     );
-    return { svg };
+    return { svg, lineLength };
   });
 
   const arrowSvg = computed(() => {
@@ -315,12 +315,12 @@ export function useRoughArrow(props: {
         return {
           strokedPaths: strokedPaths,
           filledPaths: filledPaths,
-          length: computedArrowHeadSize.value * 2,
+          length: arrowHeadData.value.lineLength * 2,
         };
       }
 
-      segments.push(getArrowHeadAnimationSegment(arrowHead2));
-      segments.push(getArrowHeadAnimationSegment(arrowHead1));
+      segments.push(getArrowHeadAnimationSegment(arrowHead2svg));
+      segments.push(getArrowHeadAnimationSegment(arrowHead1svg));
 
       const totalLength = segments
         .map((s) => s.length)
