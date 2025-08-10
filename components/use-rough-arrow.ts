@@ -230,16 +230,6 @@ export function useRoughArrow(props: {
       fill: "currentColor",
       fillStyle: "solid",
     };
-    const arrowHead1svg = createArrowHeadSvg(
-      roughSvg,
-      lineLength,
-      headType,
-      arrowHeadOptions,
-    );
-    arrowHead1svg.setAttribute(
-      "transform",
-      `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
-    );
     const arrowHead2svg = createArrowHeadSvg(
       roughSvg,
       lineLength,
@@ -249,6 +239,20 @@ export function useRoughArrow(props: {
     arrowHead2svg.setAttribute(
       "transform",
       `translate(${point2Ref.value.x},${point2Ref.value.y}) rotate(${(arcData.value.angle2 * 180) / Math.PI + (centerPositionParam >= 0 ? 90 : -90)})`,
+    );
+    if (!twoWay) {
+      return { arrowHead2svg, arrowHead1svg: null };
+    }
+
+    const arrowHead1svg = createArrowHeadSvg(
+      roughSvg,
+      lineLength,
+      headType,
+      arrowHeadOptions,
+    );
+    arrowHead1svg.setAttribute(
+      "transform",
+      `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
     );
     return { arrowHead1svg, arrowHead2svg };
   });
@@ -267,7 +271,7 @@ export function useRoughArrow(props: {
 
     g.appendChild(arrowHead2svg);
 
-    if (twoWay) {
+    if (arrowHead1svg) {
       g.appendChild(arrowHead1svg);
     }
 
