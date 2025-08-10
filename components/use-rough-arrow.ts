@@ -1,10 +1,10 @@
-import { computed, ref, type Ref } from "vue";
+import { computed, type Ref } from "vue";
 import roughjs from "roughjs";
 
 type RoughSVG = ReturnType<typeof roughjs.svg>;
 
 const createArrowHeadSvg = (
-  rc: RoughSVG,
+  roughSvg: RoughSVG,
   arrowSize: number,
   type: "line" | "polygon",
   options: Parameters<RoughSVG["line"]>[4],
@@ -19,11 +19,11 @@ const createArrowHeadSvg = (
   const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
   if (type === "line") {
-    g.appendChild(rc.line(x1, y1, 0, 0, options));
-    g.appendChild(rc.line(x2, y2, 0, 0, options));
+    g.appendChild(roughSvg.line(x1, y1, 0, 0, options));
+    g.appendChild(roughSvg.line(x2, y2, 0, 0, options));
   } else if (type === "polygon") {
     g.appendChild(
-      rc.polygon(
+      roughSvg.polygon(
         [
           [x1, y1],
           [0, 0],
@@ -70,8 +70,8 @@ export function useRoughArrow(props: {
     ...(roughness !== undefined && { roughness }),
     ...(seed !== undefined && { seed }),
   } as const;
-  const roughSvgRef = ref(
-    roughjs.svg(document.createElementNS("http://www.w3.org/2000/svg", "svg")),
+  const roughSvg = roughjs.svg(
+    document.createElementNS("http://www.w3.org/2000/svg", "svg"),
   );
 
   const arcData = computed(() => {
@@ -79,7 +79,6 @@ export function useRoughArrow(props: {
       return null;
     }
 
-    const roughSvg = roughSvgRef.value as RoughSVG;
     const point1 = point1Ref.value;
     const point2 = point2Ref.value;
 
@@ -223,13 +222,13 @@ export function useRoughArrow(props: {
       fillStyle: "solid",
     };
     const arrowHead1 = createArrowHeadSvg(
-      roughSvgRef.value as RoughSVG,
+      roughSvg,
       computedArrowHeadSize.value,
       headType,
       arrowHeadOptions,
     );
     const arrowHead2 = createArrowHeadSvg(
-      roughSvgRef.value as RoughSVG,
+      roughSvg,
       computedArrowHeadSize.value,
       headType,
       arrowHeadOptions,
