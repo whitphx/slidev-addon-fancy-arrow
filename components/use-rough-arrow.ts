@@ -230,31 +230,31 @@ export function useRoughArrow(props: {
       fill: "currentColor",
       fillStyle: "solid",
     };
-    const arrowHead2svg = createArrowHeadSvg(
+    const arrowHeadForwardSvg = createArrowHeadSvg(
       roughSvg,
       lineLength,
       headType,
       arrowHeadOptions,
     );
-    arrowHead2svg.setAttribute(
+    arrowHeadForwardSvg.setAttribute(
       "transform",
       `translate(${point2Ref.value.x},${point2Ref.value.y}) rotate(${(arcData.value.angle2 * 180) / Math.PI + (centerPositionParam >= 0 ? 90 : -90)})`,
     );
     if (!twoWay) {
-      return { arrowHead2svg, arrowHead1svg: null };
+      return { arrowHeadForwardSvg, arrowHeadBackwardSvg: null };
     }
 
-    const arrowHead1svg = createArrowHeadSvg(
+    const arrowHeadBackwardSvg = createArrowHeadSvg(
       roughSvg,
       lineLength,
       headType,
       arrowHeadOptions,
     );
-    arrowHead1svg.setAttribute(
+    arrowHeadBackwardSvg.setAttribute(
       "transform",
       `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
     );
-    return { arrowHead1svg, arrowHead2svg };
+    return { arrowHeadBackwardSvg, arrowHeadForwardSvg };
   });
 
   const arrowSvg = computed(() => {
@@ -266,13 +266,13 @@ export function useRoughArrow(props: {
 
     g.appendChild(arcData.value.svg);
 
-    const arrowHead1svg = arrowHeadData.value.arrowHead1svg;
-    const arrowHead2svg = arrowHeadData.value.arrowHead2svg;
+    const arrowHeadBackwardSvg = arrowHeadData.value.arrowHeadBackwardSvg;
+    const arrowHeadForwardSvg = arrowHeadData.value.arrowHeadForwardSvg;
 
-    g.appendChild(arrowHead2svg);
+    g.appendChild(arrowHeadForwardSvg);
 
-    if (arrowHead1svg) {
-      g.appendChild(arrowHead1svg);
+    if (arrowHeadBackwardSvg) {
+      g.appendChild(arrowHeadBackwardSvg);
     }
 
     return g.innerHTML;
