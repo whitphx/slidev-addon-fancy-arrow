@@ -214,26 +214,6 @@ export function useRoughArrow(props: {
   }
 
   const arrowHeadData = computed(() => {
-    const lineLength = getArrowHeadLineLength();
-    const arrowHeadOptions = {
-      ...baseOptions,
-      stroke: "currentColor",
-      strokeWidth: width,
-      fill: "currentColor",
-      fillStyle: "solid",
-    };
-    const svg = createArrowHeadSvg(
-      roughSvg,
-      lineLength,
-      headType,
-      arrowHeadOptions,
-    );
-    return { svg };
-  });
-
-  const arrowSvg = computed(() => {
-    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-
     if (
       arcData.value == null ||
       point1Ref.value == null ||
@@ -242,23 +222,52 @@ export function useRoughArrow(props: {
       return null;
     }
 
-    g.appendChild(arcData.value.svg);
-
-    const arrowHeadSvg = arrowHeadData.value.svg;
-    const arrowHead1svg = arrowHeadSvg.cloneNode(true) as SVGGElement;
-    const arrowHead2svg = arrowHeadSvg.cloneNode(true) as SVGGElement;
-
+    const lineLength = getArrowHeadLineLength();
+    const arrowHeadOptions = {
+      ...baseOptions,
+      stroke: "currentColor",
+      strokeWidth: width,
+      fill: "currentColor",
+      fillStyle: "solid",
+    };
+    const arrowHead1svg = createArrowHeadSvg(
+      roughSvg,
+      lineLength,
+      headType,
+      arrowHeadOptions,
+    );
+    arrowHead1svg.setAttribute(
+      "transform",
+      `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
+    );
+    const arrowHead2svg = createArrowHeadSvg(
+      roughSvg,
+      lineLength,
+      headType,
+      arrowHeadOptions,
+    );
     arrowHead2svg.setAttribute(
       "transform",
       `translate(${point2Ref.value.x},${point2Ref.value.y}) rotate(${(arcData.value.angle2 * 180) / Math.PI + (centerPositionParam >= 0 ? 90 : -90)})`,
     );
+    return { arrowHead1svg, arrowHead2svg };
+  });
+
+  const arrowSvg = computed(() => {
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+    if (arcData.value == null || arrowHeadData.value == null) {
+      return null;
+    }
+
+    g.appendChild(arcData.value.svg);
+
+    const arrowHead1svg = arrowHeadData.value.arrowHead1svg;
+    const arrowHead2svg = arrowHeadData.value.arrowHead2svg;
+
     g.appendChild(arrowHead2svg);
 
     if (twoWay) {
-      arrowHead1svg.setAttribute(
-        "transform",
-        `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
-      );
       g.appendChild(arrowHead1svg);
     }
 
