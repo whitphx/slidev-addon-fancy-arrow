@@ -2,4 +2,4 @@
 "slidev-addon-fancy-arrow": patch
 ---
 
-Fix internal implementation
+Fix internal implementation of arrow head
