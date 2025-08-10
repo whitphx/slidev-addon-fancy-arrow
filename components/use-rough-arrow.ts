@@ -18,11 +18,18 @@ const createArrowHeadSvg = (
 
   const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
+  function addAllChildren(anotherGroup: SVGGElement) {
+    // `for (... of anotherGroup.children)` doesn't work well: the second child and the latter will be discarded somehow.
+    for (const child of Array.from(anotherGroup.children)) {
+      g.appendChild(child);
+    }
+  }
+
   if (type === "line") {
-    g.appendChild(rc.line(x1, y1, 0, 0, options));
-    g.appendChild(rc.line(x2, y2, 0, 0, options));
+    addAllChildren(rc.line(x1, y1, 0, 0, options));
+    addAllChildren(rc.line(x2, y2, 0, 0, options));
   } else if (type === "polygon") {
-    g.appendChild(
+    addAllChildren(
       rc.polygon(
         [
           [x1, y1],
@@ -259,15 +266,6 @@ export function useRoughArrow(props: {
     const arcPath = arcData.value.svgPath.cloneNode() as SVGPathElement;
     svg.value.appendChild(arcPath);
 
-    if (animation) {
-      const arcLength = arcData.value.lineLength;
-      const { duration = 500, delay = 0 } = animation;
-      const style = arcPath.style;
-      style.strokeDashoffset = `${arcLength}`;
-      style.strokeDasharray = `${arcLength}`;
-      style.animation = `${animationKeyframeName} ${duration}ms ease-out ${delay}ms forwards`;
-    }
-
     const arrowHead1 = arrowHeads.value[0];
     const arrowHead2 = arrowHeads.value[1];
 
@@ -283,6 +281,67 @@ export function useRoughArrow(props: {
         `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
       );
       svg.value.appendChild(arrowHead1);
+    }
+
+    if (animation) {
+      const { duration = 500, delay = 0 } = animation;
+
+      interface AnimationSegment {
+        length: number;
+        paths: SVGPathElement[];
+      }
+      const segments: AnimationSegment[] = [];
+
+      const arcLength = arcData.value.lineLength;
+      segments.push({
+        length: arcLength,
+        paths: [arcPath],
+      });
+
+      const arrowHead2ChildPaths: SVGPathElement[] = [];
+      arrowHead2.childNodes.forEach((child) => {
+        if (child instanceof SVGPathElement) {
+          arrowHead2ChildPaths.push(child);
+        }
+        // TODO: In case of `<g>`, e.g. Polygon type
+      });
+      segments.push({
+        paths: arrowHead2ChildPaths,
+        length: arrowHead2ChildPaths
+          .map((p) => p.getTotalLength())
+          .reduce((a, b) => a + b, 0),
+      });
+
+      const arrowHead1ChildPaths: SVGPathElement[] = [];
+      arrowHead1.childNodes.forEach((child) => {
+        if (child instanceof SVGPathElement) {
+          arrowHead1ChildPaths.push(child);
+        }
+      });
+      segments.push({
+        paths: arrowHead1ChildPaths,
+        length: arrowHead1ChildPaths
+          .map((p) => p.getTotalLength())
+          .reduce((a, b) => a + b, 0),
+      });
+
+      const totalLength = segments
+        .map((s) => s.length)
+        .reduce((a, b) => a + b, 0);
+      let currentDelay = delay;
+
+      for (const segment of segments) {
+        const length = segment.length;
+        const segmentDuration = (length / totalLength) * duration;
+        segment.paths.forEach((path, index) => {
+          const pathDelay =
+            currentDelay + (index / segment.paths.length) * segmentDuration;
+          path.style.animation = `${animationKeyframeName} ${segmentDuration}ms ease-out ${pathDelay}ms forwards`;
+          path.style.strokeDashoffset = `${length}`;
+          path.style.strokeDasharray = `${length}`;
+        });
+        currentDelay += segmentDuration;
+      }
     }
 
     return svg.value.innerHTML;
