@@ -213,7 +213,7 @@ export function useRoughArrow(props: {
     return (30 * Math.log(arcData.value.lineLength)) / Math.log(200);
   });
 
-  const arrowHeads = computed(() => {
+  const arrowHeadData = computed(() => {
     const arrowHeadOptions = {
       ...baseOptions,
       stroke: "currentColor",
@@ -221,19 +221,13 @@ export function useRoughArrow(props: {
       fill: "currentColor",
       fillStyle: "solid",
     };
-    const arrowHead1 = createArrowHeadSvg(
+    const svg = createArrowHeadSvg(
       roughSvg,
       computedArrowHeadSize.value,
       headType,
       arrowHeadOptions,
     );
-    const arrowHead2 = createArrowHeadSvg(
-      roughSvg,
-      computedArrowHeadSize.value,
-      headType,
-      arrowHeadOptions,
-    );
-    return [arrowHead1, arrowHead2];
+    return { svg };
   });
 
   const arrowSvg = computed(() => {
@@ -249,21 +243,25 @@ export function useRoughArrow(props: {
 
     g.appendChild(arcData.value.svg);
 
-    const arrowHead1 = arrowHeads.value[0];
-    const arrowHead2 = arrowHeads.value[1];
+    const arrowHead1svg = arrowHeadData.value.svg.cloneNode(
+      true,
+    ) as SVGGElement;
+    const arrowHead2svg = arrowHeadData.value.svg.cloneNode(
+      true,
+    ) as SVGGElement;
 
-    arrowHead2.setAttribute(
+    arrowHead2svg.setAttribute(
       "transform",
       `translate(${point2Ref.value.x},${point2Ref.value.y}) rotate(${(arcData.value.angle2 * 180) / Math.PI + (centerPositionParam >= 0 ? 90 : -90)})`,
     );
-    g.appendChild(arrowHead2);
+    g.appendChild(arrowHead2svg);
 
     if (twoWay) {
-      arrowHead1.setAttribute(
+      arrowHead1svg.setAttribute(
         "transform",
         `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
       );
-      g.appendChild(arrowHead1);
+      g.appendChild(arrowHead1svg);
     }
 
     return g.innerHTML;
