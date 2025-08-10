@@ -53,6 +53,11 @@ export function useRoughArrow(props: {
   seed?: number;
   twoWay: boolean;
   centerPositionParam: number;
+  animation?: {
+    duration?: number;
+    delay?: number;
+  };
+  animationKeyframeName: string;
 }) {
   const {
     point1: point1Ref,
@@ -64,6 +69,8 @@ export function useRoughArrow(props: {
     seed,
     twoWay,
     centerPositionParam,
+    animation,
+    animationKeyframeName,
   } = props;
   const baseOptions = {
     // We don't support the `bowing` param because it's not so effective for arc.
@@ -107,7 +114,7 @@ export function useRoughArrow(props: {
       const angle =
         Math.atan2(point2.y - point1.y, point2.x - point1.x) - Math.PI / 2;
       return {
-        svg,
+        svgPath: svg.getElementsByTagName("path")[0],
         angle1: angle,
         angle2: angle,
         lineLength: Math.hypot(point2.x - point1.x, point2.y - point1.y),
@@ -193,7 +200,7 @@ export function useRoughArrow(props: {
     };
 
     return {
-      svg,
+      svgPath: svg.getElementsByTagName("path")[0],
       angle1,
       angle2,
       lineLength: R * (endAngle - startAngle),
@@ -249,7 +256,17 @@ export function useRoughArrow(props: {
       return null;
     }
 
-    svg.value.appendChild(arcData.value.svg);
+    const arcPath = arcData.value.svgPath.cloneNode() as SVGPathElement;
+    svg.value.appendChild(arcPath);
+
+    if (animation) {
+      const arcLength = arcData.value.lineLength;
+      const { duration = 500, delay = 0 } = animation;
+      const style = arcPath.style;
+      style.strokeDashoffset = `${arcLength}`;
+      style.strokeDasharray = `${arcLength}`;
+      style.animation = `${animationKeyframeName} ${duration}ms ease-out ${delay}ms forwards`;
+    }
 
     const arrowHead1 = arrowHeads.value[0];
     const arrowHead2 = arrowHeads.value[1];

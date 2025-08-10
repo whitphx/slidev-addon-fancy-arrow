@@ -87,6 +87,11 @@ const { arcSvg, textPosition } = useRoughArrow({
   headSize: props.headSize ? Number(props.headSize) : null,
   roughness: props.roughness ? Number(props.roughness) : undefined,
   seed: props.seed ? Number(props.seed) : undefined,
+  animation: {
+    duration: 1000,
+    delay: 0,
+  },
+  animationKeyframeName: "rough-arrow-dash",
 });
 </script>
 
@@ -119,3 +124,11 @@ const { arcSvg, textPosition } = useRoughArrow({
     </div>
   </div>
 </template>
+
+<style>
+@keyframes rough-arrow-dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+</style>
