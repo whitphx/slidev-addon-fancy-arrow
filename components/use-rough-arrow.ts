@@ -70,17 +70,16 @@ export function useRoughArrow(props: {
     ...(roughness !== undefined && { roughness }),
     ...(seed !== undefined && { seed }),
   } as const;
-  const svg = ref<SVGSVGElement>(
-    document.createElementNS("http://www.w3.org/2000/svg", "svg"),
+  const roughSvgRef = ref(
+    roughjs.svg(document.createElementNS("http://www.w3.org/2000/svg", "svg")),
   );
-  const rc = ref(roughjs.svg(svg.value));
 
   const arcData = computed(() => {
     if (!point1Ref.value || !point2Ref.value) {
       return null;
     }
 
-    const roughSvg = rc.value as RoughSVG;
+    const roughSvg = roughSvgRef.value as RoughSVG;
     const point1 = point1Ref.value;
     const point2 = point2Ref.value;
 
@@ -224,13 +223,13 @@ export function useRoughArrow(props: {
       fillStyle: "solid",
     };
     const arrowHead1 = createArrowHeadSvg(
-      rc.value as RoughSVG,
+      roughSvgRef.value as RoughSVG,
       computedArrowHeadSize.value,
       headType,
       arrowHeadOptions,
     );
     const arrowHead2 = createArrowHeadSvg(
-      rc.value as RoughSVG,
+      roughSvgRef.value as RoughSVG,
       computedArrowHeadSize.value,
       headType,
       arrowHeadOptions,
