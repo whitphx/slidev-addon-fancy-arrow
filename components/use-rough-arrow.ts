@@ -263,7 +263,7 @@ export function useRoughArrow(props: {
       return null;
     }
 
-    const arcPath = arcData.value.svgPath.cloneNode() as SVGPathElement;
+    const arcPath = arcData.value.svgPath;
     g.appendChild(arcPath);
 
     const arrowHead1 = arrowHeads.value[0];
