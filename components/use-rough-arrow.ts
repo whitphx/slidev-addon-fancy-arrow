@@ -230,26 +230,6 @@ export function useRoughArrow(props: {
   }
 
   const arrowHeadData = computed(() => {
-    const lineLength = getArrowHeadLineLength();
-    const arrowHeadOptions = {
-      ...baseOptions,
-      stroke: "currentColor",
-      strokeWidth: width,
-      fill: "currentColor",
-      fillStyle: "solid",
-    };
-    const svg = createArrowHeadSvg(
-      roughSvg,
-      lineLength,
-      headType,
-      arrowHeadOptions,
-    );
-    return { svg, lineLength };
-  });
-
-  const arrowSvg = computed(() => {
-    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-
     if (
       arcData.value == null ||
       point1Ref.value == null ||
@@ -258,25 +238,58 @@ export function useRoughArrow(props: {
       return null;
     }
 
-    const arcPath = arcData.value.svgPath;
-    g.appendChild(arcPath);
-
-    const arrowHeadSvg = arrowHeadData.value.svg;
-    const arrowHead1svg = arrowHeadSvg.cloneNode(true) as SVGGElement;
-    const arrowHead2svg = arrowHeadSvg.cloneNode(true) as SVGGElement;
-
-    arrowHead2svg.setAttribute(
+    const lineLength = getArrowHeadLineLength();
+    const arrowHeadOptions = {
+      ...baseOptions,
+      stroke: "currentColor",
+      strokeWidth: width,
+      fill: "currentColor",
+      fillStyle: "solid",
+    };
+    const arrowHeadForwardSvg = createArrowHeadSvg(
+      roughSvg,
+      lineLength,
+      headType,
+      arrowHeadOptions,
+    );
+    arrowHeadForwardSvg.setAttribute(
       "transform",
       `translate(${point2Ref.value.x},${point2Ref.value.y}) rotate(${(arcData.value.angle2 * 180) / Math.PI + (centerPositionParam >= 0 ? 90 : -90)})`,
     );
-    g.appendChild(arrowHead2svg);
+    if (!twoWay) {
+      return { arrowHeadForwardSvg, arrowHeadBackwardSvg: null, lineLength };
+    }
 
-    if (twoWay) {
-      arrowHead1svg.setAttribute(
-        "transform",
-        `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
-      );
-      g.appendChild(arrowHead1svg);
+    const arrowHeadBackwardSvg = createArrowHeadSvg(
+      roughSvg,
+      lineLength,
+      headType,
+      arrowHeadOptions,
+    );
+    arrowHeadBackwardSvg.setAttribute(
+      "transform",
+      `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
+    );
+    return { arrowHeadBackwardSvg, arrowHeadForwardSvg, lineLength };
+  });
+
+  const arrowSvg = computed(() => {
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+    if (arcData.value == null || arrowHeadData.value == null) {
+      return null;
+    }
+
+    const arcPath = arcData.value.svgPath;
+    g.appendChild(arcPath);
+
+    const arrowHeadBackwardSvg = arrowHeadData.value.arrowHeadBackwardSvg;
+    const arrowHeadForwardSvg = arrowHeadData.value.arrowHeadForwardSvg;
+
+    g.appendChild(arrowHeadForwardSvg);
+
+    if (arrowHeadBackwardSvg) {
+      g.appendChild(arrowHeadBackwardSvg);
     }
 
     if (animation) {
@@ -298,6 +311,7 @@ export function useRoughArrow(props: {
 
       function getArrowHeadAnimationSegment(
         arrowHeadG: SVGGElement,
+        length: number,
       ): AnimationSegment {
         const strokedPaths: SVGPathElement[] = [];
         const filledPaths: SVGPathElement[] = [];
@@ -315,12 +329,24 @@ export function useRoughArrow(props: {
         return {
           strokedPaths: strokedPaths,
           filledPaths: filledPaths,
-          length: arrowHeadData.value.lineLength * 2,
+          length,
         };
       }
 
-      segments.push(getArrowHeadAnimationSegment(arrowHead2svg));
-      segments.push(getArrowHeadAnimationSegment(arrowHead1svg));
+      segments.push(
+        getArrowHeadAnimationSegment(
+          arrowHeadForwardSvg,
+          arrowHeadData.value.lineLength * 2,
+        ),
+      );
+      if (arrowHeadBackwardSvg) {
+        segments.push(
+          getArrowHeadAnimationSegment(
+            arrowHeadBackwardSvg,
+            arrowHeadData.value.lineLength * 2,
+          ),
+        );
+      }
 
       const totalLength = segments
         .map((s) => s.length)
