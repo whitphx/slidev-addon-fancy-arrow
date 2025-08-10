@@ -1,10 +1,10 @@
-import { computed, ref, type Ref } from "vue";
+import { computed, type Ref } from "vue";
 import roughjs from "roughjs";
 
 type RoughSVG = ReturnType<typeof roughjs.svg>;
 
 const createArrowHeadSvg = (
-  rc: RoughSVG,
+  roughSvg: RoughSVG,
   arrowSize: number,
   type: "line" | "polygon",
   options: Parameters<RoughSVG["line"]>[4],
@@ -19,11 +19,11 @@ const createArrowHeadSvg = (
   const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
   if (type === "line") {
-    g.appendChild(rc.line(x1, y1, 0, 0, options));
-    g.appendChild(rc.line(x2, y2, 0, 0, options));
+    g.appendChild(roughSvg.line(x1, y1, 0, 0, options));
+    g.appendChild(roughSvg.line(x2, y2, 0, 0, options));
   } else if (type === "polygon") {
     g.appendChild(
-      rc.polygon(
+      roughSvg.polygon(
         [
           [x1, y1],
           [0, 0],
@@ -70,17 +70,15 @@ export function useRoughArrow(props: {
     ...(roughness !== undefined && { roughness }),
     ...(seed !== undefined && { seed }),
   } as const;
-  const svg = ref<SVGSVGElement>(
+  const roughSvg = roughjs.svg(
     document.createElementNS("http://www.w3.org/2000/svg", "svg"),
   );
-  const rc = ref(roughjs.svg(svg.value));
 
   const arcData = computed(() => {
     if (!point1Ref.value || !point2Ref.value) {
       return null;
     }
 
-    const roughSvg = rc.value as RoughSVG;
     const point1 = point1Ref.value;
     const point2 = point2Ref.value;
 
@@ -224,13 +222,13 @@ export function useRoughArrow(props: {
       fillStyle: "solid",
     };
     const arrowHead1 = createArrowHeadSvg(
-      rc.value as RoughSVG,
+      roughSvg,
       computedArrowHeadSize.value,
       headType,
       arrowHeadOptions,
     );
     const arrowHead2 = createArrowHeadSvg(
-      rc.value as RoughSVG,
+      roughSvg,
       computedArrowHeadSize.value,
       headType,
       arrowHeadOptions,
@@ -238,8 +236,8 @@ export function useRoughArrow(props: {
     return [arrowHead1, arrowHead2];
   });
 
-  const arcSvg = computed(() => {
-    svg.value.innerHTML = "";
+  const arrowSvg = computed(() => {
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
     if (
       arcData.value == null ||
@@ -249,7 +247,7 @@ export function useRoughArrow(props: {
       return null;
     }
 
-    svg.value.appendChild(arcData.value.svg);
+    g.appendChild(arcData.value.svg);
 
     const arrowHead1 = arrowHeads.value[0];
     const arrowHead2 = arrowHeads.value[1];
@@ -258,17 +256,17 @@ export function useRoughArrow(props: {
       "transform",
       `translate(${point2Ref.value.x},${point2Ref.value.y}) rotate(${(arcData.value.angle2 * 180) / Math.PI + (centerPositionParam >= 0 ? 90 : -90)})`,
     );
-    svg.value.appendChild(arrowHead2);
+    g.appendChild(arrowHead2);
 
     if (twoWay) {
       arrowHead1.setAttribute(
         "transform",
         `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
       );
-      svg.value.appendChild(arrowHead1);
+      g.appendChild(arrowHead1);
     }
 
-    return svg.value.innerHTML;
+    return g.innerHTML;
   });
 
   const textPosition = computed(() => {
@@ -280,7 +278,7 @@ export function useRoughArrow(props: {
   });
 
   return {
-    arcSvg,
+    arrowSvg,
     textPosition,
   };
 }
