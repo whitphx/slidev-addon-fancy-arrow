@@ -228,7 +228,7 @@ export function useRoughArrow(props: {
       headType,
       arrowHeadOptions,
     );
-    return { svg, lineLength };
+    return { svg };
   });
 
   const arrowSvg = computed(() => {
@@ -244,12 +244,9 @@ export function useRoughArrow(props: {
 
     g.appendChild(arcData.value.svg);
 
-    const arrowHead1svg = arrowHeadData.value.svg.cloneNode(
-      true,
-    ) as SVGGElement;
-    const arrowHead2svg = arrowHeadData.value.svg.cloneNode(
-      true,
-    ) as SVGGElement;
+    const arrowHeadsvg = arrowHeadData.value.svg;
+    const arrowHead1svg = arrowHeadsvg.cloneNode(true) as SVGGElement;
+    const arrowHead2svg = arrowHeadsvg.cloneNode(true) as SVGGElement;
 
     arrowHead2svg.setAttribute(
       "transform",
