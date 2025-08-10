@@ -238,8 +238,8 @@ export function useRoughArrow(props: {
     return [arrowHead1, arrowHead2];
   });
 
-  const arcSvg = computed(() => {
-    svg.value.innerHTML = "";
+  const arrowSvg = computed(() => {
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
     if (
       arcData.value == null ||
@@ -249,7 +249,7 @@ export function useRoughArrow(props: {
       return null;
     }
 
-    svg.value.appendChild(arcData.value.svg);
+    g.appendChild(arcData.value.svg);
 
     const arrowHead1 = arrowHeads.value[0];
     const arrowHead2 = arrowHeads.value[1];
@@ -258,17 +258,17 @@ export function useRoughArrow(props: {
       "transform",
       `translate(${point2Ref.value.x},${point2Ref.value.y}) rotate(${(arcData.value.angle2 * 180) / Math.PI + (centerPositionParam >= 0 ? 90 : -90)})`,
     );
-    svg.value.appendChild(arrowHead2);
+    g.appendChild(arrowHead2);
 
     if (twoWay) {
       arrowHead1.setAttribute(
         "transform",
         `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
       );
-      svg.value.appendChild(arrowHead1);
+      g.appendChild(arrowHead1);
     }
 
-    return svg.value.innerHTML;
+    return g.innerHTML;
   });
 
   const textPosition = computed(() => {
@@ -280,7 +280,7 @@ export function useRoughArrow(props: {
   });
 
   return {
-    arcSvg,
+    arrowSvg,
     textPosition,
   };
 }
