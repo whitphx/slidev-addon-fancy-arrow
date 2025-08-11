@@ -2,7 +2,7 @@
 mdc: true
 ---
 
-# Fancy Arrow
+# Slidev Fancy Arrow
 
 <h2>
 Slidev addon for drawing arrows with<br>
