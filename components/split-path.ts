@@ -1,5 +1,5 @@
 export function splitPathDefinition(d: string): string[] {
-  const segments = d.split(/(?=M)/);
+  const segments = d.split(/(?=M(?![a-z]))/);
   return segments.map((s) => s.trim()).filter((s) => s !== "");
 }
 
