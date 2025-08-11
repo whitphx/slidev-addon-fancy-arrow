@@ -90,18 +90,8 @@ const { arrowSvg, textPosition } = useRoughArrow({
   headSize: props.headSize ? Number(props.headSize) : null,
   roughness: props.roughness ? Number(props.roughness) : undefined,
   seed: props.seed ? Number(props.seed) : undefined,
-  animation: props.animated
-    ? {
-        duration:
-          props.animationDuration != null
-            ? Number(props.animationDuration)
-            : undefined,
-        delay:
-          props.animationDelay != null
-            ? Number(props.animationDelay)
-            : undefined,
-      }
-    : props.animationDuration || props.animationDelay
+  animation:
+    props.animated || props.animationDuration || props.animationDelay
       ? {
           duration:
             props.animationDuration != null
