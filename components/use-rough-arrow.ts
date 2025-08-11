@@ -1,5 +1,6 @@
 import { computed, type Ref } from "vue";
 import roughjs from "roughjs";
+import { splitPath } from "./split-path";
 
 type RoughSVG = ReturnType<typeof roughjs.svg>;
 
@@ -284,7 +285,11 @@ export function useRoughArrow(props: {
     const arrowHeadBackwardSvg = arrowHeadData.value.arrowHeadBackwardSvg;
     const arrowHeadForwardSvg = arrowHeadData.value.arrowHeadForwardSvg;
 
-    g.appendChild(arcPath);
+    // RoughSVG.arc() may generate <path> element whose `d` attribute contains multiple segments like `M... M...`.
+    // Such paths don't be animated as expected, so we split them into multiple <path> elements that only contain `d` with only one `M`
+    // and animate them individually.
+    const splitPaths = splitPath(arcPath);
+    splitPaths.forEach((path) => g.appendChild(path));
     g.appendChild(arrowHeadForwardSvg);
     if (arrowHeadBackwardSvg) {
       g.appendChild(arrowHeadBackwardSvg);
@@ -300,7 +305,7 @@ export function useRoughArrow(props: {
 
       segments.push({
         length: arcData.value.lineLength,
-        strokedPaths: [arcPath],
+        strokedPaths: splitPaths,
         filledPaths: [],
       });
 
