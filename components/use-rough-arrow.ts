@@ -364,6 +364,7 @@ export function useRoughArrow(props: {
           path.style.animation = `${strokeAnimationKeyframeName} ${segmentDuration}ms ease-out ${pathDelay}ms forwards`;
           path.style.strokeDashoffset = `${segment.length}`;
           path.style.strokeDasharray = `${segment.length}`;
+          path.style.visibility = "hidden";
         });
         currentDelay += segmentDuration;
         segment.filledPaths.forEach((path) => {

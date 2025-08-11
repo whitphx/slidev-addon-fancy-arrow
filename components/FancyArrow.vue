@@ -132,6 +132,7 @@ const { arrowSvg, textPosition } = useRoughArrow({
 @keyframes rough-arrow-dash {
   to {
     stroke-dashoffset: 0;
+    visibility: visible;
   }
 }
 @keyframes rough-arrow-fill {
