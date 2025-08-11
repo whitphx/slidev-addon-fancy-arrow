@@ -28,6 +28,9 @@ const props = defineProps<{
   headSize?: number | string;
   roughness?: number | string;
   seed?: number | string;
+  animated?: boolean;
+  animationDuration?: number | string;
+  animationDelay?: number | string;
 }>();
 
 const root = ref<HTMLElement>();
@@ -87,6 +90,21 @@ const { arrowSvg, textPosition } = useRoughArrow({
   headSize: props.headSize ? Number(props.headSize) : null,
   roughness: props.roughness ? Number(props.roughness) : undefined,
   seed: props.seed ? Number(props.seed) : undefined,
+  animation:
+    props.animated || props.animationDuration || props.animationDelay
+      ? {
+          duration:
+            props.animationDuration != null
+              ? Number(props.animationDuration)
+              : undefined,
+          delay:
+            props.animationDelay != null
+              ? Number(props.animationDelay)
+              : undefined,
+        }
+      : undefined,
+  strokeAnimationKeyframeName: "rough-arrow-dash",
+  fillAnimationKeyframeName: "rough-arrow-fill",
 });
 </script>
 
@@ -119,3 +137,25 @@ const { arrowSvg, textPosition } = useRoughArrow({
     </div>
   </div>
 </template>
+
+<style>
+@keyframes rough-arrow-dash {
+  from {
+    /*
+    We set visibility: hidden when constructing the SVG,
+    which is necessary to hide unexpected fragments before starting animation,
+    and we also want to make them visible right after starting animation.
+    */
+    visibility: visible;
+  }
+  to {
+    stroke-dashoffset: 0;
+    visibility: visible;
+  }
+}
+@keyframes rough-arrow-fill {
+  to {
+    visibility: visible;
+  }
+}
+</style>

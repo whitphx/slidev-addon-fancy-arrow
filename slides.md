@@ -560,6 +560,74 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 ---
 
+# Animation
+
+<div grid="~ cols-3 gap-4" mt-6 h-85>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
+
+### Animated
+
+<FancyArrow
+    animated
+    x1="120" y1="200" x2="260" y2="280"
+/>
+
+<div grow-1><!-- Placeholder--></div>
+
+```html {2}
+<FancyArrow
+    animated
+    x1="120" y1="200" x2="260" y2="280"
+/>
+```
+
+</div>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
+
+### Custom duration
+
+<FancyArrow
+    animationDuration="3000"
+    x1="420" y1="200" x2="560" y2="280"
+/>
+
+<div grow-1><!-- Placeholder--></div>
+
+```html {2}
+<FancyArrow
+    animationDuration="3000"
+    x1="420" y1="200" x2="560" y2="280"
+/>
+```
+
+</div>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
+
+### Custom delay
+
+<FancyArrow
+    animationDelay="1000"
+    x1="720" y1="200" x2="860" y2="280"
+/>
+
+<div grow-1><!-- Placeholder--></div>
+
+```html {2}
+<FancyArrow
+    animationDelay="1000"
+    x1="720" y1="200" x2="860" y2="280"
+/>
+```
+
+</div>
+
+</div>
+
+---
+
 # Contents on the arrow
 
 <FancyArrow x1="100" y1="100" x2="200" y2="200" >

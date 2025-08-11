@@ -1,7 +1,10 @@
 import { computed, type Ref } from "vue";
 import roughjs from "roughjs";
+import { splitPath } from "./split-path";
 
 type RoughSVG = ReturnType<typeof roughjs.svg>;
+
+const DEFAULT_ANIMATION_DURATION = 800; // Same as https://github.com/rough-stuff/rough-notation/blob/668ba82ac89c903d6f59c9351b9b85855da9882c/src/model.ts#L3C14-L3C47
 
 const createArrowHeadSvg = (
   roughSvg: RoughSVG,
@@ -18,11 +21,18 @@ const createArrowHeadSvg = (
 
   const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
+  function addAllChildren(anotherGroup: SVGGElement) {
+    // `for (... of anotherGroup.children)` doesn't work well: the second child and the latter will be discarded somehow.
+    for (const child of Array.from(anotherGroup.children)) {
+      g.appendChild(child);
+    }
+  }
+
   if (type === "line") {
-    g.appendChild(roughSvg.line(x1, y1, 0, 0, options));
-    g.appendChild(roughSvg.line(x2, y2, 0, 0, options));
+    addAllChildren(roughSvg.line(x1, y1, 0, 0, options));
+    addAllChildren(roughSvg.line(x2, y2, 0, 0, options));
   } else if (type === "polygon") {
-    g.appendChild(
+    addAllChildren(
       roughSvg.polygon(
         [
           [x1, y1],
@@ -53,6 +63,12 @@ export function useRoughArrow(props: {
   seed?: number;
   twoWay: boolean;
   centerPositionParam: number;
+  animation?: {
+    duration?: number;
+    delay?: number;
+  };
+  strokeAnimationKeyframeName: string;
+  fillAnimationKeyframeName: string;
 }) {
   const {
     point1: point1Ref,
@@ -64,6 +80,9 @@ export function useRoughArrow(props: {
     seed,
     twoWay,
     centerPositionParam,
+    animation,
+    strokeAnimationKeyframeName,
+    fillAnimationKeyframeName,
   } = props;
   const baseOptions = {
     // We don't support the `bowing` param because it's not so effective for arc.
@@ -105,7 +124,7 @@ export function useRoughArrow(props: {
       const angle =
         Math.atan2(point2.y - point1.y, point2.x - point1.x) - Math.PI / 2;
       return {
-        svg,
+        svgPath: svg.getElementsByTagName("path")[0],
         angle1: angle,
         angle2: angle,
         lineLength: Math.hypot(point2.x - point1.x, point2.y - point1.y),
@@ -191,7 +210,7 @@ export function useRoughArrow(props: {
     };
 
     return {
-      svg,
+      svgPath: svg.getElementsByTagName("path")[0],
       angle1,
       angle2,
       lineLength: R * (endAngle - startAngle),
@@ -241,7 +260,7 @@ export function useRoughArrow(props: {
       `translate(${point2Ref.value.x},${point2Ref.value.y}) rotate(${(arcData.value.angle2 * 180) / Math.PI + (centerPositionParam >= 0 ? 90 : -90)})`,
     );
     if (!twoWay) {
-      return { arrowHeadForwardSvg, arrowHeadBackwardSvg: null };
+      return { arrowHeadForwardSvg, arrowHeadBackwardSvg: null, lineLength };
     }
 
     const arrowHeadBackwardSvg = createArrowHeadSvg(
@@ -254,7 +273,7 @@ export function useRoughArrow(props: {
       "transform",
       `translate(${point1Ref.value.x},${point1Ref.value.y}) rotate(${(arcData.value.angle1 * 180) / Math.PI + (centerPositionParam >= 0 ? -90 : 90)})`,
     );
-    return { arrowHeadBackwardSvg, arrowHeadForwardSvg };
+    return { arrowHeadBackwardSvg, arrowHeadForwardSvg, lineLength };
   });
 
   const arrowSvg = computed(() => {
@@ -264,15 +283,98 @@ export function useRoughArrow(props: {
       return null;
     }
 
-    g.appendChild(arcData.value.svg);
-
+    const arcPath = arcData.value.svgPath;
     const arrowHeadBackwardSvg = arrowHeadData.value.arrowHeadBackwardSvg;
     const arrowHeadForwardSvg = arrowHeadData.value.arrowHeadForwardSvg;
 
+    // RoughSVG.arc() may generate <path> element whose `d` attribute contains multiple segments like `M... M...`.
+    // Such paths don't be animated as expected, so we split them into multiple <path> elements that only contain `d` with only one `M`
+    // and animate them individually.
+    const splitPaths = splitPath(arcPath);
+    splitPaths.forEach((path) => g.appendChild(path));
     g.appendChild(arrowHeadForwardSvg);
-
     if (arrowHeadBackwardSvg) {
       g.appendChild(arrowHeadBackwardSvg);
+    }
+
+    if (animation) {
+      interface AnimationSegment {
+        length: number;
+        strokedPaths: SVGPathElement[];
+        filledPaths: SVGPathElement[];
+      }
+      const segments: AnimationSegment[] = [];
+
+      segments.push({
+        length: arcData.value.lineLength,
+        strokedPaths: splitPaths,
+        filledPaths: [],
+      });
+
+      function getArrowHeadAnimationSegment(
+        arrowHeadG: SVGGElement,
+        length: number,
+      ): AnimationSegment {
+        const strokedPaths: SVGPathElement[] = [];
+        const filledPaths: SVGPathElement[] = [];
+        arrowHeadG.childNodes.forEach((child) => {
+          if (child instanceof SVGPathElement) {
+            const stroke = child.getAttribute("stroke");
+            const fill = child.getAttribute("fill");
+            if (stroke && stroke !== "none") {
+              strokedPaths.push(child);
+            } else if (fill && fill !== "none") {
+              filledPaths.push(child);
+            }
+          }
+        });
+        return {
+          strokedPaths: strokedPaths,
+          filledPaths: filledPaths,
+          length,
+        };
+      }
+
+      segments.push(
+        getArrowHeadAnimationSegment(
+          arrowHeadForwardSvg,
+          arrowHeadData.value.lineLength * 2,
+        ),
+      );
+      if (arrowHeadBackwardSvg) {
+        segments.push(
+          getArrowHeadAnimationSegment(
+            arrowHeadBackwardSvg,
+            arrowHeadData.value.lineLength * 2,
+          ),
+        );
+      }
+
+      const totalLength = segments
+        .map((s) => s.length)
+        .reduce((a, b) => a + b, 0);
+
+      const { duration = DEFAULT_ANIMATION_DURATION, delay = 0 } = animation;
+      let currentDelay = delay;
+      // Animation impl inspired by https://github.com/rough-stuff/rough-notation/blob/668ba82ac89c903d6f59c9351b9b85855da9882c/src/render.ts#L222-L235
+      for (const segment of segments) {
+        const segmentDuration = (segment.length / totalLength) * duration;
+        const pathDuration = segmentDuration / segment.strokedPaths.length;
+        segment.strokedPaths.forEach((path, index) => {
+          const pathDelay =
+            currentDelay +
+            (index / segment.strokedPaths.length) * segmentDuration;
+          path.style.animation = `${strokeAnimationKeyframeName} ${pathDuration}ms ease-out ${pathDelay}ms forwards`;
+          path.style.strokeDashoffset = `${segment.length}`;
+          path.style.strokeDasharray = `${segment.length}`;
+          path.style.visibility = "hidden";
+        });
+        currentDelay += segmentDuration;
+        segment.filledPaths.forEach((path) => {
+          path.style.animation = `${fillAnimationKeyframeName} ${segmentDuration}ms ease-out ${currentDelay}ms forwards`;
+          path.style.visibility = "hidden";
+        });
+      }
     }
 
     return g.innerHTML;
