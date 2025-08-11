@@ -349,6 +349,7 @@ export function useRoughArrow(props: {
 
       const { duration = 500, delay = 0 } = animation;
       let currentDelay = delay;
+      // Animation impl inspired by https://github.com/rough-stuff/rough-notation/blob/668ba82ac89c903d6f59c9351b9b85855da9882c/src/render.ts#L222-L235
       for (const segment of segments) {
         const segmentDuration = (segment.length / totalLength) * duration;
         segment.strokedPaths.forEach((path, index) => {
