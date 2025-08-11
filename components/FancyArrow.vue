@@ -7,6 +7,8 @@ import {
 } from "./use-element-position";
 import { useRoughArrow, type AbsolutePosition } from "./use-rough-arrow";
 
+const DEFAULT_ANIMATION_DURATION = 800; // Same as https://github.com/rough-stuff/rough-notation/blob/668ba82ac89c903d6f59c9351b9b85855da9882c/src/model.ts#L3C14-L3C47
+
 const props = defineProps<{
   from?: string; // Shorthand for (q1 and pos1) or (x1 and y1)
   to?: string; // Shorthand for (q2 and pos2) or (x2 and y2)
@@ -90,7 +92,7 @@ const { arrowSvg, textPosition } = useRoughArrow({
   roughness: props.roughness ? Number(props.roughness) : undefined,
   seed: props.seed ? Number(props.seed) : undefined,
   animation: {
-    duration: Number(props.animationDuration ?? 1000),
+    duration: Number(props.animationDuration ?? DEFAULT_ANIMATION_DURATION),
     delay: Number(props.animationDelay ?? 0),
   },
   strokeAnimationKeyframeName: "rough-arrow-dash",
