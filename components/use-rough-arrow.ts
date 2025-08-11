@@ -357,11 +357,12 @@ export function useRoughArrow(props: {
       // Animation impl inspired by https://github.com/rough-stuff/rough-notation/blob/668ba82ac89c903d6f59c9351b9b85855da9882c/src/render.ts#L222-L235
       for (const segment of segments) {
         const segmentDuration = (segment.length / totalLength) * duration;
+        const pathDuration = segmentDuration / segment.strokedPaths.length;
         segment.strokedPaths.forEach((path, index) => {
           const pathDelay =
             currentDelay +
             (index / segment.strokedPaths.length) * segmentDuration;
-          path.style.animation = `${strokeAnimationKeyframeName} ${segmentDuration}ms ease-out ${pathDelay}ms forwards`;
+          path.style.animation = `${strokeAnimationKeyframeName} ${pathDuration}ms ease-out ${pathDelay}ms forwards`;
           path.style.strokeDashoffset = `${segment.length}`;
           path.style.strokeDasharray = `${segment.length}`;
           path.style.visibility = "hidden";
