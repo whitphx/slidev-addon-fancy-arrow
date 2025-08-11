@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.11.0
+
+### Minor Changes
+
+- [#149](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/149) [`d08777a`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/d08777a0c2340b2069538c960e331658669f9483) Thanks [@whitphx](https://github.com/whitphx)! - Animation
+
 ## 0.10.2
 
 ### Patch Changes
