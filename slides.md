@@ -566,10 +566,10 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 <div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
 
-### Duration
+### Animated
 
 <FancyArrow
-    animationDuration="3000"
+    animated
     x1="120" y1="200" x2="260" y2="280"
 />
 
@@ -577,7 +577,7 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 ```html {2}
 <FancyArrow
-    animationDuration="3000"
+    animated
     x1="120" y1="200" x2="260" y2="280"
 />
 ```
@@ -586,10 +586,10 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 <div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
 
-### Delay
+### Custom duration
 
 <FancyArrow
-    animationDelay="1000"
+    animationDuration="3000"
     x1="420" y1="200" x2="560" y2="280"
 />
 
@@ -597,7 +597,7 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 ```html {2}
 <FancyArrow
-    animationDelay="1000"
+    animationDuration="3000"
     x1="420" y1="200" x2="560" y2="280"
 />
 ```
@@ -606,10 +606,10 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 <div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
 
-### No animation
+### Custom delay
 
 <FancyArrow
-    animationDuration="0"
+    animationDelay="1000"
     x1="720" y1="200" x2="860" y2="280"
 />
 
@@ -617,7 +617,7 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 ```html {2}
 <FancyArrow
-    animationDuration="0"
+    animationDelay="1000"
     x1="720" y1="200" x2="860" y2="280"
 />
 ```

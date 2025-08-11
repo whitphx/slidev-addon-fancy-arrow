@@ -30,6 +30,7 @@ const props = defineProps<{
   headSize?: number | string;
   roughness?: number | string;
   seed?: number | string;
+  animated?: boolean;
   animationDuration?: number | string;
   animationDelay?: number | string;
 }>();
@@ -91,10 +92,19 @@ const { arrowSvg, textPosition } = useRoughArrow({
   headSize: props.headSize ? Number(props.headSize) : null,
   roughness: props.roughness ? Number(props.roughness) : undefined,
   seed: props.seed ? Number(props.seed) : undefined,
-  animation: {
-    duration: Number(props.animationDuration ?? DEFAULT_ANIMATION_DURATION),
-    delay: Number(props.animationDelay ?? 0),
-  },
+  animation: props.animated
+    ? {
+        duration: Number(props.animationDuration ?? DEFAULT_ANIMATION_DURATION),
+        delay: Number(props.animationDelay ?? 0),
+      }
+    : props.animationDuration || props.animationDelay
+      ? {
+          duration: Number(
+            props.animationDuration ?? DEFAULT_ANIMATION_DURATION,
+          ),
+          delay: Number(props.animationDelay ?? 0),
+        }
+      : undefined,
   strokeAnimationKeyframeName: "rough-arrow-dash",
   fillAnimationKeyframeName: "rough-arrow-fill",
 });
