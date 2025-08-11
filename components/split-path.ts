@@ -1,9 +1,6 @@
 export function splitPathDefinition(d: string): string[] {
-  const segments = d.split(/(?:^M| M)(?=[-\d])/);
-  return segments
-    .map((s) => s.trim())
-    .filter((s) => s !== "")
-    .map((s) => "M" + s);
+  const segments = d.split(/(?=M)/);
+  return segments.map((s) => s.trim()).filter((s) => s !== "");
 }
 
 export function splitPath(path: SVGPathElement): SVGPathElement[] {
