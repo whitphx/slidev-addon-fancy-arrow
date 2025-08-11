@@ -28,6 +28,8 @@ const props = defineProps<{
   headSize?: number | string;
   roughness?: number | string;
   seed?: number | string;
+  animationDuration?: number | string;
+  animationDelay?: number | string;
 }>();
 
 const root = ref<HTMLElement>();
@@ -88,8 +90,8 @@ const { arrowSvg, textPosition } = useRoughArrow({
   roughness: props.roughness ? Number(props.roughness) : undefined,
   seed: props.seed ? Number(props.seed) : undefined,
   animation: {
-    duration: 1000,
-    delay: 0,
+    duration: Number(props.animationDuration ?? 1000),
+    delay: Number(props.animationDelay ?? 0),
   },
   strokeAnimationKeyframeName: "rough-arrow-dash",
   fillAnimationKeyframeName: "rough-arrow-fill",
