@@ -291,8 +291,6 @@ export function useRoughArrow(props: {
     }
 
     if (animation) {
-      const { duration = 500, delay = 0 } = animation;
-
       interface AnimationSegment {
         length: number;
         strokedPaths: SVGPathElement[];
@@ -349,6 +347,7 @@ export function useRoughArrow(props: {
         .map((s) => s.length)
         .reduce((a, b) => a + b, 0);
 
+      const { duration = 500, delay = 0 } = animation;
       let currentDelay = delay;
       for (const segment of segments) {
         const segmentDuration = (segment.length / totalLength) * duration;
