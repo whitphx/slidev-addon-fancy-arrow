@@ -298,7 +298,6 @@ export function useRoughArrow(props: {
     }
 
     if (animation) {
-      const duration = animation.duration ?? DEFAULT_ANIMATION_DURATION;
       interface AnimationSegment {
         length: number;
         strokedPaths: SVGPathElement[];
