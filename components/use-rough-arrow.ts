@@ -295,7 +295,7 @@ export function useRoughArrow(props: {
       g.appendChild(arrowHeadBackwardSvg);
     }
 
-    if (animation) {
+    if (animation && animation.duration > 0) {
       interface AnimationSegment {
         length: number;
         strokedPaths: SVGPathElement[];
