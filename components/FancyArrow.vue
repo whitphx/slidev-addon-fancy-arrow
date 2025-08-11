@@ -130,6 +130,14 @@ const { arrowSvg, textPosition } = useRoughArrow({
 
 <style>
 @keyframes rough-arrow-dash {
+  from {
+    /*
+    We set visibility: hidden when constructing the SVG,
+    which is necessary to hide unexpected fragments before starting animation,
+    and we also want to make them visible right after starting animation.
+    */
+    visibility: visible;
+  }
   to {
     stroke-dashoffset: 0;
     visibility: visible;
