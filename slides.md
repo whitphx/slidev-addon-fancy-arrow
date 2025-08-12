@@ -34,6 +34,25 @@ Slidev addon for drawing arrows with<br>
 <div absolute w="1px" h="100%" left="800px" top="0" bg="gray" opacity="0.5" translate-x="-50%"></div>
 <div absolute h="1px" w="100%" left="0" top="500px" bg="gray" opacity="0.5" translate-y="-50%"></div>
 
+<div absolute right-10 top="50%" translate-y="-50%" text-6xl data-id="github">
+
+[<octicon-mark-github-24 />](https://github.com/whitphx/slidev-addon-fancy-arrow)
+
+</div>
+
+<FancyArrow from="[data-id=check-out]@bottomright" to="[data-id=github]@topleft" color="gray" arc="0.2" width="3" seed="1" roughness="2" >
+<span text-nowrap v-mark.gray="1">
+the demo and docs!
+</span>
+</FancyArrow>
+
+<div data-id="check-out" absolute right-50 top-20 text-2xl>
+
+[Check out](https://whitphx.github.io/slidev-addon-fancy-arrow/)
+
+</div>
+
+
 ---
 
 # Positioning
