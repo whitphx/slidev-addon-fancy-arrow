@@ -2,4 +2,4 @@
 "slidev-addon-fancy-arrow": minor
 ---
 
-Snapping points specified by position values
+Arrow head positions and snapping points specified by absolute or percentage values
