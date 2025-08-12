@@ -1,4 +1,4 @@
-export const SNAP_POSITIONS = [
+export const SNAP_ANCHOR_POINTS = [
   "center",
   "top",
   "bottom",
@@ -9,7 +9,7 @@ export const SNAP_POSITIONS = [
   "bottomleft",
   "bottomright",
 ] as const;
-export type SnapPosition = (typeof SNAP_POSITIONS)[number];
+export type SnapAnchorPoint = (typeof SNAP_ANCHOR_POINTS)[number];
 
 export interface LengthPercentage {
   value: number;
@@ -22,7 +22,7 @@ export interface Position {
 
 export interface SnapTarget {
   query: string;
-  snapPosition: SnapPosition | Position | undefined;
+  snapPosition: SnapAnchorPoint | Position | undefined;
 }
 
 const positionRegex =
@@ -47,9 +47,9 @@ function parsePosition(positionString: string): Position | undefined {
 
 function parseSnapPosition(
   snapPositionString: string,
-): SnapPosition | Position | undefined {
-  if ((SNAP_POSITIONS as readonly string[]).includes(snapPositionString)) {
-    return snapPositionString as SnapPosition;
+): SnapAnchorPoint | Position | undefined {
+  if ((SNAP_ANCHOR_POINTS as readonly string[]).includes(snapPositionString)) {
+    return snapPositionString as SnapAnchorPoint;
   }
 
   return parsePosition(snapPositionString);
@@ -88,7 +88,7 @@ interface ArrowEndpointProps {
   shorthand?: string;
   q?: string;
   id?: string; // Deprecated
-  pos?: SnapPosition;
+  pos?: SnapAnchorPoint;
   x?: number | string;
   y?: number | string;
 }

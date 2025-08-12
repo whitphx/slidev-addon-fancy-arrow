@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, type Ref } from "vue";
-import { compileArrowEndpointProps, type SnapPosition } from "./parse-option";
+import {
+  compileArrowEndpointProps,
+  type SnapAnchorPoint,
+} from "./parse-option";
 import { useEndpointResolution } from "./use-element-position";
 import { useRoughArrow, type AbsolutePosition } from "./use-rough-arrow";
 
@@ -11,8 +14,8 @@ const props = defineProps<{
   q2?: string;
   id1?: string; // Deprecated
   id2?: string; // Deprecated
-  pos1?: SnapPosition;
-  pos2?: SnapPosition;
+  pos1?: SnapAnchorPoint;
+  pos2?: SnapAnchorPoint;
   x1?: number | string;
   y1?: number | string;
   x2?: number | string;
