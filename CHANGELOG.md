@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.11.1
+
+### Patch Changes
+
+- [`ed982a7`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/ed982a75b6c6721c503643e146d1941ed05f448a) Thanks [@whitphx](https://github.com/whitphx)! - Fix stylesheet not to show unexpected shapes before the animation
+
 ## 0.11.0
 
 ### Minor Changes
