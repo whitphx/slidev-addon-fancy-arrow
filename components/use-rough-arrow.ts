@@ -4,7 +4,7 @@ import { splitPath } from "./split-path";
 
 type RoughSVG = ReturnType<typeof roughjs.svg>;
 
-const DEFAULT_ANIMATION_DURATION = 800; // Same as https://github.com/rough-stuff/rough-notation/blob/668ba82ac89c903d6f59c9351b9b85855da9882c/src/model.ts#L3C14-L3C47
+export const DEFAULT_ANIMATION_DURATION = 800; // Same as https://github.com/rough-stuff/rough-notation/blob/668ba82ac89c903d6f59c9351b9b85855da9882c/src/model.ts#L3C14-L3C47
 
 const createArrowHeadSvg = (
   roughSvg: RoughSVG,
