@@ -1,4 +1,4 @@
-export const SNAP_ANCHOR_POINTS = [
+const SNAP_ANCHOR_POINTS_LIST = [
   "center",
   "top",
   "bottom",
@@ -9,7 +9,8 @@ export const SNAP_ANCHOR_POINTS = [
   "bottomleft",
   "bottomright",
 ] as const;
-export type SnapAnchorPoint = (typeof SNAP_ANCHOR_POINTS)[number];
+export const SNAP_ANCHOR_POINTS = new Set(SNAP_ANCHOR_POINTS_LIST);
+export type SnapAnchorPoint = (typeof SNAP_ANCHOR_POINTS_LIST)[number];
 
 export interface LengthPercentage {
   value: number;
@@ -62,7 +63,7 @@ function parsePosition(positionString: string): Position | undefined {
 function parseSnapPosition(
   snapPositionString: string,
 ): SnapAnchorPoint | Position | undefined {
-  if ((SNAP_ANCHOR_POINTS as readonly string[]).includes(snapPositionString)) {
+  if ((SNAP_ANCHOR_POINTS as Set<string>).has(snapPositionString)) {
     return snapPositionString as SnapAnchorPoint;
   }
 
