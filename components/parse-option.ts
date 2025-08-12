@@ -88,14 +88,18 @@ export function compileArrowEndpointProps(
   if (props.q) {
     return {
       query: props.q,
-      snapPosition: props.pos,
+      snapPosition: props.pos
+        ? (parsePosition(props.pos) ?? props.pos)
+        : undefined,
     };
   }
   if (props.id) {
     // Deprecated
     return {
       query: `#${props.id}`,
-      snapPosition: props.pos,
+      snapPosition: props.pos
+        ? (parsePosition(props.pos) ?? props.pos)
+        : undefined,
     };
   }
 
