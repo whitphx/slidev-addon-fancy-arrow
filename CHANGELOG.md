@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.12.0
+
+### Minor Changes
+
+- [#158](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/158) [`7bc1577`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/7bc15772169355e9ba7e5f972927cfd609d9963b) Thanks [@whitphx](https://github.com/whitphx)! - Arrow head positions and snapping points specified by absolute or percentage values
+
 ## 0.11.1
 
 ### Patch Changes
