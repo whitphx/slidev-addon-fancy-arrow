@@ -51,11 +51,11 @@ function parsePosition(positionString: string): Position | undefined {
   }
 
   const x =
-    parseLengthPercentage(positionMatch.groups!.x) ?? ZERO_LENGTH_PERCENTAGE;
+    parseLengthPercentage(positionMatch.groups?.x ?? "") ??
+    ZERO_LENGTH_PERCENTAGE;
   const y =
-    parseLengthPercentage(positionMatch.groups?.x ?? "") ?? ZERO_LENGTH_PERCENTAGE;
-  const y =
-    parseLengthPercentage(positionMatch.groups?.y ?? "") ?? ZERO_LENGTH_PERCENTAGE;
+    parseLengthPercentage(positionMatch.groups?.y ?? "") ??
+    ZERO_LENGTH_PERCENTAGE;
   return {
     x,
     y,
@@ -92,7 +92,9 @@ export function parseArrowEndpointShorthand(
   if (snapTargetMatch) {
     const query = snapTargetMatch.groups?.query;
     if (!query) {
-      throw new Error(`Invalid arrow endpoint format: missing query group in "${arrowEndpointShorthand}"`);
+      throw new Error(
+        `Invalid arrow endpoint format: missing query group in "${arrowEndpointShorthand}"`,
+      );
     }
     const snapPosition = snapTargetMatch.groups?.snapPosition;
     return {
