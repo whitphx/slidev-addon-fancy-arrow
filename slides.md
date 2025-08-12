@@ -678,9 +678,9 @@ If no snap target or absolute position is specified, the arrow will automaticall
 <img v-click="1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/1280px_Markdown_with_White_Background.png/640px-1280px_Markdown_with_White_Background.png" w-15 data-id="markdown-mark" absolute top-30 right-30 v-motion :initial="{x: +80, y: -80}" :enter="{x: 0, y: 0}"/>
 <img v-click="1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/512px-Vue.js_Logo_2.svg.png" w-10 data-id="vue-mark" absolute bottom-20 right-100 v-motion :initial="{x: +30, y: +80}" :enter="{x: 0, y: 0}"/>
 
-<FancyArrow v-click="1" q1="[data-id=slidev-logo]" pos1="bottom" q2="[data-id=slidev-text]" pos2="bottomleft" color="teal" width="4" roughness="3" arc="-0.3" seed="1" />
-<FancyArrow v-click="1" q1="[data-id=markdown-mark]" pos1="bottom" q2="[data-id=markdown-text]" pos2="bottomright" color="gray" width="4" roughness="2" arc="0.3" seed="1" />
-<FancyArrow v-click="1" q1="[data-id=vue-mark]" pos1="left" q2="[data-id=vue-text]" pos2="bottom" color="cyan" width="4" roughness="2" arc="0.3" seed="1" />
+<FancyArrow v-click="1" q1="[data-id=slidev-logo]" pos1="bottom" q2="[data-id=slidev-text]" pos2="bottomleft" color="cyan" width="4" roughness="3" arc="-0.3" seed="1" animated />
+<FancyArrow v-click="1" q1="[data-id=markdown-mark]" pos1="bottom" q2="[data-id=markdown-text]" pos2="bottomright" color="gray" width="4" roughness="2" arc="0.3" seed="1" animated />
+<FancyArrow v-click="1" q1="[data-id=vue-mark]" pos1="left" q2="[data-id=vue-text]" pos2="bottom" color="teal" width="4" roughness="2" arc="0.3" seed="1" animated />
 
 <div w="2/3" m-auto mt-40>
     <span data-id="slidev-text" v-mark.teal="1">Slidev</span> <sub top--1>(slide + dev, /slaɪdɪv/)</sub> is a web-based slides maker and presenter. It's designed for developers to focus on writing content in <span data-id="markdown-text" v-mark.gray="1">Markdown</span>. With the power of web technologies like <span data-id="vue-text" v-mark.cyan="1">Vue</span>, you are able to deliver pixel-perfect designs with interactive demos to your presentation.
