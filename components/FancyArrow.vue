@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, type Ref } from "vue";
-import { compileArrowEndpointProps } from "./parse-option";
-import {
-  useEndpointResolution,
-  type SnapPosition,
-} from "./use-element-position";
+import { compileArrowEndpointProps, type SnapPosition } from "./parse-option";
+import { useEndpointResolution } from "./use-element-position";
 import { useRoughArrow, type AbsolutePosition } from "./use-rough-arrow";
 
 const props = defineProps<{

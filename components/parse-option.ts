@@ -1,4 +1,15 @@
-import type { SnapPosition } from "./use-element-position";
+export const SNAP_POSITIONS = [
+  "center",
+  "top",
+  "bottom",
+  "left",
+  "right",
+  "topleft",
+  "topright",
+  "bottomleft",
+  "bottomright",
+] as const;
+export type SnapPosition = (typeof SNAP_POSITIONS)[number];
 
 export interface LengthPercentage {
   value: number;
@@ -34,6 +45,16 @@ function parsePosition(positionString: string): Position | undefined {
   };
 }
 
+function parseSnapPosition(
+  snapPositionString: string,
+): SnapPosition | Position | undefined {
+  if ((SNAP_POSITIONS as readonly string[]).includes(snapPositionString)) {
+    return snapPositionString as SnapPosition;
+  }
+
+  return parsePosition(snapPositionString);
+}
+
 /**
  * The `arrowEndpointShorthand` can be in the format of a CSS selector with a snap position,
  * or a position in the format "(x,y)".
@@ -56,9 +77,7 @@ export function parseArrowEndpointShorthand(
     const snapPosition = snapTargetMatch.groups?.snapPosition;
     return {
       query,
-      snapPosition: snapPosition
-        ? (parsePosition(snapPosition) ?? (snapPosition as SnapPosition))
-        : undefined,
+      snapPosition: snapPosition ? parseSnapPosition(snapPosition) : undefined,
     };
   }
 
@@ -88,18 +107,14 @@ export function compileArrowEndpointProps(
   if (props.q) {
     return {
       query: props.q,
-      snapPosition: props.pos
-        ? (parsePosition(props.pos) ?? props.pos)
-        : undefined,
+      snapPosition: props.pos ? parseSnapPosition(props.pos) : undefined,
     };
   }
   if (props.id) {
     // Deprecated
     return {
       query: `#${props.id}`,
-      snapPosition: props.pos
-        ? (parsePosition(props.pos) ?? props.pos)
-        : undefined,
+      snapPosition: props.pos ? parseSnapPosition(props.pos) : undefined,
     };
   }
 

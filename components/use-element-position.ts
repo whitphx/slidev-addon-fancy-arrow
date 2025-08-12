@@ -15,16 +15,6 @@ import {
 import type { AbsolutePosition } from "./use-rough-arrow";
 import type { SnapTarget, Position, LengthPercentage } from "./parse-option";
 
-export type SnapPosition =
-  | "top"
-  | "bottom"
-  | "left"
-  | "right"
-  | "topleft"
-  | "topright"
-  | "bottomleft"
-  | "bottomright";
-
 function getAbsoluteValue(
   lengthPercentage: LengthPercentage,
   total: number,
