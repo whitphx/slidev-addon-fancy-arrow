@@ -90,7 +90,10 @@ export function parseArrowEndpointShorthand(
 
   const snapTargetMatch = arrowEndpointShorthand.match(snapTargetRegex);
   if (snapTargetMatch) {
-    const query = snapTargetMatch.groups!.query;
+    const query = snapTargetMatch.groups?.query;
+    if (!query) {
+      throw new Error(`Invalid arrow endpoint format: missing query group in "${arrowEndpointShorthand}"`);
+    }
     const snapPosition = snapTargetMatch.groups?.snapPosition;
     return {
       query,
