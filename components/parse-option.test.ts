@@ -62,6 +62,48 @@ describe("parsePosition", () => {
       ["#target@left", ["#target", "left"]],
       [".target@left", [".target", "left"]],
       ["[data-id=target]@left", ["[data-id=target]", "left"]],
+      [
+        "#target@(100,200)",
+        [
+          "#target",
+          { x: { value: 100, unit: "px" }, y: { value: 200, unit: "px" } },
+        ],
+      ],
+      [
+        ".target@(100,200)",
+        [
+          ".target",
+          { x: { value: 100, unit: "px" }, y: { value: 200, unit: "px" } },
+        ],
+      ],
+      [
+        "[data-id=target]@(10%,20%)",
+        [
+          "[data-id=target]",
+          { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } },
+        ],
+      ],
+      [
+        "#target@(10%,20%)",
+        [
+          "#target",
+          { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } },
+        ],
+      ],
+      [
+        ".target@(10%,20%)",
+        [
+          ".target",
+          { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } },
+        ],
+      ],
+      [
+        "[data-id=target]@(10%,20%)",
+        [
+          "[data-id=target]",
+          { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } },
+        ],
+      ],
     ] as const
   ).forEach(([optionString, [expectedQuery, expectedSnapPosition]]) => {
     it(`parses string with snap target CSS selector correctly: "${optionString}"`, () => {
