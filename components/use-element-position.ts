@@ -125,15 +125,20 @@ export function useEndpointResolution(
     const width = rect.width / $scale.value;
     const height = rect.height / $scale.value;
 
-    if (snapPosition?.includes("right")) {
-      x += width;
-    } else if (!snapPosition?.includes("left")) {
-      x += width / 2;
-    }
-    if (snapPosition?.includes("bottom")) {
-      y += height;
-    } else if (!snapPosition?.includes("top")) {
-      y += height / 2;
+    if (typeof snapPosition === "string" || snapPosition == null) {
+      if (snapPosition?.includes("right")) {
+        x += width;
+      } else if (!snapPosition?.includes("left")) {
+        x += width / 2;
+      }
+      if (snapPosition?.includes("bottom")) {
+        y += height;
+      } else if (!snapPosition?.includes("top")) {
+        y += height / 2;
+      }
+    } else if (typeof snapPosition === "object") {
+      x += getAbsoluteValue(snapPosition.x, width);
+      y += getAbsoluteValue(snapPosition.y, height);
     }
 
     if (point.value?.x !== x || point.value?.y !== y) {

@@ -1,10 +1,5 @@
 import type { SnapPosition } from "./use-element-position";
 
-export interface SnapTarget {
-  query: string;
-  snapPosition: SnapPosition | undefined;
-}
-
 export interface LengthPercentage {
   value: number;
   unit: "px" | "%";
@@ -14,9 +9,30 @@ export interface Position {
   y: LengthPercentage;
 }
 
+export interface SnapTarget {
+  query: string;
+  snapPosition: SnapPosition | Position | undefined;
+}
+
 const positionRegex =
   /^\(\s*(?<xValue>[+-]?\d+)(?<xUnit>%|px)?\s*,\s*(?<yValue>[+-]?\d+)(?<yUnit>%|px)?\s*\)$/;
-const snapTargetRegex = /^(\S+?)(@(\S+?))?$/;
+const snapTargetRegex = /^(?<query>\S+?)(@(?<snapPosition>\S+?))?$/;
+
+function parsePosition(positionString: string): Position | undefined {
+  const positionMatch = positionString.match(positionRegex);
+  if (!positionMatch) {
+    return undefined;
+  }
+
+  const xValue = parseInt(positionMatch.groups?.xValue ?? "0", 10);
+  const xUnit = (positionMatch.groups?.xUnit ?? "px") as "px" | "%";
+  const yValue = parseInt(positionMatch.groups?.yValue ?? "0", 10);
+  const yUnit = (positionMatch.groups?.yUnit ?? "px") as "px" | "%";
+  return {
+    x: { value: xValue, unit: xUnit },
+    y: { value: yValue, unit: yUnit },
+  };
+}
 
 /**
  * The `arrowEndpointShorthand` can be in the format of a CSS selector with a snap position,
@@ -29,23 +45,21 @@ export function parseArrowEndpointShorthand(
 ): SnapTarget | Position {
   arrowEndpointShorthand = arrowEndpointShorthand.trim();
 
-  const positionMatch = arrowEndpointShorthand.match(positionRegex);
-  if (positionMatch) {
-    const xValue = parseInt(positionMatch.groups?.xValue ?? "0", 10);
-    const xUnit = (positionMatch.groups?.xUnit ?? "px") as "px" | "%";
-    const yValue = parseInt(positionMatch.groups?.yValue ?? "0", 10);
-    const yUnit = (positionMatch.groups?.yUnit ?? "px") as "px" | "%";
-    return {
-      x: { value: xValue, unit: xUnit },
-      y: { value: yValue, unit: yUnit },
-    };
+  const position = parsePosition(arrowEndpointShorthand);
+  if (position) {
+    return position;
   }
 
   const snapTargetMatch = arrowEndpointShorthand.match(snapTargetRegex);
   if (snapTargetMatch) {
-    const query = snapTargetMatch[1];
-    const snapPosition = snapTargetMatch[3] as SnapPosition | undefined;
-    return { query, snapPosition };
+    const query = snapTargetMatch.groups!.query;
+    const snapPosition = snapTargetMatch.groups?.snapPosition;
+    return {
+      query,
+      snapPosition: snapPosition
+        ? (parsePosition(snapPosition) ?? (snapPosition as SnapPosition))
+        : undefined,
+    };
   }
 
   throw new Error(`Invalid arrow endpoint format: ${arrowEndpointShorthand}`);

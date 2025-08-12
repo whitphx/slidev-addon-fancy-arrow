@@ -15,9 +15,10 @@ describe("parsePosition", () => {
       " (100 ,200) ",
       " (100, 200) ",
       " (100 , 200) ",
+      "(+100,+200)",
     ] as const
   ).forEach((optionString) => {
-    it(`parses string with absolute option correctly: "${optionString}"`, () => {
+    it(`parses a string with an absolute position correctly: "${optionString}"`, () => {
       // Assuming parsePosition is a function that processes the options
       const parsed = parseArrowEndpointShorthand(optionString);
       expect(parsed).toEqual({
@@ -26,6 +27,7 @@ describe("parsePosition", () => {
       });
     });
   });
+
   (
     [
       "(10%,20%)",
@@ -39,9 +41,10 @@ describe("parsePosition", () => {
       " (10% ,20%) ",
       " (10%, 20%) ",
       " (10% , 20%) ",
+      "(+10%,+20%)",
     ] as const
   ).forEach((optionString) => {
-    it(`parses string with absolute option correctly: "${optionString}"`, () => {
+    it(`parses a string with a relative option correctly: "${optionString}"`, () => {
       // Assuming parsePosition is a function that processes the options
       const parsed = parseArrowEndpointShorthand(optionString);
       expect(parsed).toEqual({
