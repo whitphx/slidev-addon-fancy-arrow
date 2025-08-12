@@ -25,9 +25,23 @@ export interface SnapTarget {
   snapPosition: SnapAnchorPoint | Position | undefined;
 }
 
-const positionRegex =
-  /^\(\s*(?<xValue>[+-]?\d+)(?<xUnit>%|px)?\s*,\s*(?<yValue>[+-]?\d+)(?<yUnit>%|px)?\s*\)$/;
+const ZERO_LENGTH_PERCENTAGE: LengthPercentage = { value: 0, unit: "px" };
+
+const lengthPercentageRegex = /(?<value>[+-]?\d+)(?<unit>%|px)?/;
+const positionRegex = /^\(\s*(?<x>\S+)\s*,\s*(?<y>\S+)\s*\)$/;
 const snapTargetRegex = /^(?<query>\S+?)(@(?<snapPosition>\S+?))?$/;
+
+function parseLengthPercentage(
+  lengthString: string,
+): LengthPercentage | undefined {
+  const match = lengthString.match(lengthPercentageRegex);
+  if (!match) {
+    return undefined;
+  }
+  const value = parseInt(match.groups?.value ?? "0", 10);
+  const unit = (match.groups?.unit ?? "px") as "px" | "%";
+  return { value, unit };
+}
 
 function parsePosition(positionString: string): Position | undefined {
   const positionMatch = positionString.match(positionRegex);
@@ -35,13 +49,13 @@ function parsePosition(positionString: string): Position | undefined {
     return undefined;
   }
 
-  const xValue = parseInt(positionMatch.groups?.xValue ?? "0", 10);
-  const xUnit = (positionMatch.groups?.xUnit ?? "px") as "px" | "%";
-  const yValue = parseInt(positionMatch.groups?.yValue ?? "0", 10);
-  const yUnit = (positionMatch.groups?.yUnit ?? "px") as "px" | "%";
+  const x =
+    parseLengthPercentage(positionMatch.groups!.x) ?? ZERO_LENGTH_PERCENTAGE;
+  const y =
+    parseLengthPercentage(positionMatch.groups!.y) ?? ZERO_LENGTH_PERCENTAGE;
   return {
-    x: { value: xValue, unit: xUnit },
-    y: { value: yValue, unit: yUnit },
+    x,
+    y,
   };
 }
 
@@ -120,14 +134,18 @@ export function compileArrowEndpointProps(
 
   if (props.x != undefined || props.y != undefined) {
     return {
-      x: {
-        value: Number(props.x ?? 0),
-        unit: "px",
-      },
-      y: {
-        value: Number(props.y ?? 0),
-        unit: "px",
-      },
+      x:
+        typeof props.x === "number"
+          ? { value: props.x, unit: "px" }
+          : typeof props.x === "string"
+            ? (parseLengthPercentage(props.x) ?? ZERO_LENGTH_PERCENTAGE)
+            : ZERO_LENGTH_PERCENTAGE,
+      y:
+        typeof props.y === "number"
+          ? { value: props.y, unit: "px" }
+          : typeof props.y === "string"
+            ? (parseLengthPercentage(props.y) ?? ZERO_LENGTH_PERCENTAGE)
+            : ZERO_LENGTH_PERCENTAGE,
     };
   }
 
