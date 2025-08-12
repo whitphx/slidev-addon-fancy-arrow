@@ -59,3 +59,15 @@ addons:
   to="(300, 400)"
 />
 ```
+
+#### Animation
+
+```html
+<FancyArrow
+  from="(100, 200)"
+  to="(300, 400)"
+  animated
+  animation-duration="1000"
+  animation-delay="500"
+/>
+```
