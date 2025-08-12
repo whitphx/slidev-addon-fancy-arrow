@@ -628,6 +628,52 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 ---
 
+# Specify the snapping point by position values
+
+<div h-40>
+    <img
+        src="https://images.unsplash.com/photo-1513407030348-c983a97b98d8?q=80&w=1920&auto=format&fit=crop"
+        data-id="snapped-image"
+        m-auto
+        max-h="100%"
+    />
+</div>
+
+<span data-id="label-tower" text-6xl absolute left-40 top-30>🗼</span>
+
+<FancyArrow
+    to="[data-id=snapped-image]@(20%,50%)"
+    from="[data-id=label-tower]"
+    arc="0.3"
+    color="red"
+/>
+
+<span data-id="label-house" text-6xl absolute right-40 top-30>🏘️</span>
+
+<FancyArrow
+    to="[data-id=snapped-image]@(100,120)"
+    from="[data-id=label-house]"
+    arc="-0.3"
+    color="purple"
+/>
+
+```html {2,8}
+<FancyArrow
+    to="[data-id=snapped-image]@(20%,50%)"
+    from="[data-id=label-tower]"
+    arc="0.3"
+    color="red"
+/>
+<FancyArrow
+    to="[data-id=snapped-image]@(100,120)"
+    from="[data-id=label-house]"
+    arc="-0.3"
+    color="purple"
+/>
+```
+
+---
+
 # Contents on the arrow
 
 <FancyArrow x1="100" y1="100" x2="200" y2="200" >
