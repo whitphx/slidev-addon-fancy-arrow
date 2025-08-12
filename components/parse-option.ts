@@ -53,7 +53,9 @@ function parsePosition(positionString: string): Position | undefined {
   const x =
     parseLengthPercentage(positionMatch.groups!.x) ?? ZERO_LENGTH_PERCENTAGE;
   const y =
-    parseLengthPercentage(positionMatch.groups!.y) ?? ZERO_LENGTH_PERCENTAGE;
+    parseLengthPercentage(positionMatch.groups?.x ?? "") ?? ZERO_LENGTH_PERCENTAGE;
+  const y =
+    parseLengthPercentage(positionMatch.groups?.y ?? "") ?? ZERO_LENGTH_PERCENTAGE;
   return {
     x,
     y,
