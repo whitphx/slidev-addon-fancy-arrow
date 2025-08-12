@@ -1,32 +1,44 @@
 import type { SnapPosition } from "./use-element-position";
-import type { AbsolutePosition } from "./use-rough-arrow";
 
 export interface SnapTarget {
   query: string;
   snapPosition: SnapPosition | undefined;
 }
 
-const absolutePositionRegex = /^\(\s*(\d+)\s*,\s*(\d+)\s*\)$/;
+export interface LengthPercentage {
+  value: number;
+  unit: "px" | "%";
+}
+export interface Position {
+  x: LengthPercentage;
+  y: LengthPercentage;
+}
+
+const positionRegex =
+  /^\(\s*(?<xValue>[+-]?\d+)(?<xUnit>%|px)?\s*,\s*(?<yValue>[+-]?\d+)(?<yUnit>%|px)?\s*\)$/;
 const snapTargetRegex = /^(\S+?)(@(\S+?))?$/;
 
 /**
  * The `arrowEndpointShorthand` can be in the format of a CSS selector with a snap position,
- * or an absolute position in the format "(x,y)".
+ * or a position in the format "(x,y)".
  * - For example, "[data-id=snap-target]" or "[data-id=snap-target]@left".
- * - Or an absolute position like "(100,200)".
+ * - Or a position like "(100,200)", "(100px,200px)", or (10%,20%).
  */
 export function parseArrowEndpointShorthand(
   arrowEndpointShorthand: string,
-): SnapTarget | AbsolutePosition {
+): SnapTarget | Position {
   arrowEndpointShorthand = arrowEndpointShorthand.trim();
 
-  const absolutePositionMatch = arrowEndpointShorthand.match(
-    absolutePositionRegex,
-  );
-  if (absolutePositionMatch) {
-    const x = parseInt(absolutePositionMatch[1], 10);
-    const y = parseInt(absolutePositionMatch[2], 10);
-    return { x, y };
+  const positionMatch = arrowEndpointShorthand.match(positionRegex);
+  if (positionMatch) {
+    const xValue = parseInt(positionMatch.groups?.xValue ?? "0", 10);
+    const xUnit = (positionMatch.groups?.xUnit ?? "px") as "px" | "%";
+    const yValue = parseInt(positionMatch.groups?.yValue ?? "0", 10);
+    const yUnit = (positionMatch.groups?.yUnit ?? "px") as "px" | "%";
+    return {
+      x: { value: xValue, unit: xUnit },
+      y: { value: yValue, unit: yUnit },
+    };
   }
 
   const snapTargetMatch = arrowEndpointShorthand.match(snapTargetRegex);
@@ -49,7 +61,7 @@ interface ArrowEndpointProps {
 }
 export function compileArrowEndpointProps(
   props: ArrowEndpointProps,
-): SnapTarget | AbsolutePosition | undefined {
+): SnapTarget | Position | undefined {
   if (props.shorthand) {
     try {
       return parseArrowEndpointShorthand(props.shorthand);
@@ -75,8 +87,14 @@ export function compileArrowEndpointProps(
 
   if (props.x != undefined || props.y != undefined) {
     return {
-      x: Number(props.x ?? 0),
-      y: Number(props.y ?? 0),
+      x: {
+        value: Number(props.x ?? 0),
+        unit: "px",
+      },
+      y: {
+        value: Number(props.y ?? 0),
+        unit: "px",
+      },
     };
   }
 

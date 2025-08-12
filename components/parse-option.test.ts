@@ -21,8 +21,32 @@ describe("parsePosition", () => {
       // Assuming parsePosition is a function that processes the options
       const parsed = parseArrowEndpointShorthand(optionString);
       expect(parsed).toEqual({
-        x: 100,
-        y: 200,
+        x: { value: 100, unit: "px" },
+        y: { value: 200, unit: "px" },
+      });
+    });
+  });
+  (
+    [
+      "(10%,20%)",
+      "(10%, 20%)",
+      "(10% ,20%)",
+      "(10% , 20%)",
+      "( 10%,20%)",
+      " (10%,20%)",
+      "(10%,20%) ",
+      " (10%,20%) ",
+      " (10% ,20%) ",
+      " (10%, 20%) ",
+      " (10% , 20%) ",
+    ] as const
+  ).forEach((optionString) => {
+    it(`parses string with absolute option correctly: "${optionString}"`, () => {
+      // Assuming parsePosition is a function that processes the options
+      const parsed = parseArrowEndpointShorthand(optionString);
+      expect(parsed).toEqual({
+        x: { value: 10, unit: "%" },
+        y: { value: 20, unit: "%" },
       });
     });
   });

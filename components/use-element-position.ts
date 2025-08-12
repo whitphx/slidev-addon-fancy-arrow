@@ -6,9 +6,14 @@ import {
   onWatcherCleanup,
   type Ref,
 } from "vue";
-import { useSlideContext, useIsSlideActive } from "@slidev/client";
-import { AbsolutePosition } from "./use-rough-arrow";
-import { SnapTarget } from "./parse-option";
+import {
+  useSlideContext,
+  useIsSlideActive,
+  slideWidth,
+  slideHeight,
+} from "@slidev/client";
+import type { AbsolutePosition } from "./use-rough-arrow";
+import type { SnapTarget, Position, LengthPercentage } from "./parse-option";
 
 export type SnapPosition =
   | "top"
@@ -20,10 +25,24 @@ export type SnapPosition =
   | "bottomleft"
   | "bottomright";
 
+function getAbsoluteValue(
+  lengthPercentage: LengthPercentage,
+  total: number,
+): number {
+  if (lengthPercentage.unit === "px") {
+    return lengthPercentage.value;
+  } else if (lengthPercentage.unit === "%") {
+    return (lengthPercentage.value / 100) * total;
+  } else {
+    console.warn(`Unknown length percentage unit: ${lengthPercentage.unit}`);
+    return 0;
+  }
+}
+
 export function useEndpointResolution(
   slideContainerRef: Ref<Element | undefined>,
   rootElementRef: Ref<SVGSVGElement | undefined>,
-  endpointRef: Ref<AbsolutePosition | SnapTarget | undefined>,
+  endpointRef: Ref<Position | SnapTarget | undefined>,
   fallbackOption: {
     self: Ref<HTMLElement | undefined>;
     direction: "next" | "prev";
@@ -51,7 +70,7 @@ export function useEndpointResolution(
       };
     }
     if (!("query" in endpoint)) {
-      // endpoint is AbsolutePosition
+      // endpoint is of type Position
       // so we don't need to resolve the element.
       return undefined;
     }
@@ -65,7 +84,7 @@ export function useEndpointResolution(
 
   const point = ref<AbsolutePosition | undefined>(undefined);
 
-  // Sync endpointRef -> point in case where endpoint is AbsolutePosition
+  // Sync endpointRef -> point in case where endpoint is Position
   watch(
     endpointRef,
     (endpoint) => {
@@ -73,7 +92,10 @@ export function useEndpointResolution(
         point.value = undefined;
         return;
       } else if ("x" in endpoint) {
-        point.value = { x: endpoint.x, y: endpoint.y };
+        point.value = {
+          x: getAbsoluteValue(endpoint.x, slideWidth.value),
+          y: getAbsoluteValue(endpoint.y, slideHeight.value),
+        };
         return;
       }
     },
@@ -83,7 +105,7 @@ export function useEndpointResolution(
   // Sync snappedElementInfo -> point in case where endpoint is SnapTarget
   const updateSnappedPosition = () => {
     if (!snappedElementInfo.value) {
-      // This case means endpoint is AbsolutePosition
+      // This case means endpoint is of type Position
       // so we don't need to update point in this method
       // as it's done in the watch above.
       return;
