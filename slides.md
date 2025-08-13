@@ -716,9 +716,9 @@ If no snap target or absolute position is specified, the arrow will automaticall
     Animated
 </FancyArrow>
 
-<div mt-40>
+<div mt-40 h-70>
 
-```html {*}{maxHeight: '300px'}
+```html {*}{maxHeight: '100%'}
 <FancyArrow x1="100" y1="100" x2="200" y2="200" >
     Hello
 </FancyArrow>
