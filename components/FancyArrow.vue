@@ -84,6 +84,14 @@ const point2: Ref<AbsolutePosition | undefined> = useEndpointResolution(
   },
 );
 
+const animationEnabled = computed(() => {
+  return (
+    props.animated ||
+    props.animationDuration != null ||
+    props.animationDelay != null
+  );
+});
+
 const { arrowSvg, textPosition } = useRoughArrow({
   point1,
   point2,
@@ -94,19 +102,18 @@ const { arrowSvg, textPosition } = useRoughArrow({
   headSize: props.headSize ? Number(props.headSize) : null,
   roughness: props.roughness ? Number(props.roughness) : undefined,
   seed: props.seed ? Number(props.seed) : undefined,
-  animation:
-    props.animated || props.animationDuration || props.animationDelay
-      ? {
-          duration:
-            props.animationDuration != null
-              ? Number(props.animationDuration)
-              : undefined,
-          delay:
-            props.animationDelay != null
-              ? Number(props.animationDelay)
-              : undefined,
-        }
-      : undefined,
+  animation: animationEnabled.value
+    ? {
+        duration:
+          props.animationDuration != null
+            ? Number(props.animationDuration)
+            : undefined,
+        delay:
+          props.animationDelay != null
+            ? Number(props.animationDelay)
+            : undefined,
+      }
+    : undefined,
   strokeAnimationKeyframeName: "rough-arrow-dash",
   fillAnimationKeyframeName: "rough-arrow-fill",
 });
@@ -135,14 +142,10 @@ const { arrowSvg, textPosition } = useRoughArrow({
         left: `${textPosition.x}px`,
         top: `${textPosition.y}px`,
         transform: 'translate(-50%, -50%)',
-        visibility:
-          props.animated || props.animationDuration || props.animationDelay
-            ? 'hidden'
-            : 'visible',
-        animation:
-          props.animated || props.animationDuration || props.animationDelay
-            ? `rough-arrow-content ${props.animationDuration ?? DEFAULT_ANIMATION_DURATION}ms ease-out ${props.animationDelay ?? 0}ms forwards`
-            : 'none',
+        visibility: animationEnabled ? 'hidden' : 'visible',
+        animation: animationEnabled
+          ? `rough-arrow-content ${props.animationDuration ?? DEFAULT_ANIMATION_DURATION}ms ease-out ${props.animationDelay ?? 0}ms forwards`
+          : 'none',
       }"
     >
       <slot />
