@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.12.1
+
+### Patch Changes
+
+- [#164](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/164) [`83df5ac`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/83df5ac3d7bc181b60b1b8779e796d1a9f878c39) Thanks [@whitphx](https://github.com/whitphx)! - Animate overlay contents
+
 ## 0.12.0
 
 ### Minor Changes
