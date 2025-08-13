@@ -712,9 +712,13 @@ If no snap target or absolute position is specified, the arrow will automaticall
     <img src="https://sli.dev/logo.svg" w-10 m-auto/>
 </FancyArrow>
 
-<div mt-40>
+<FancyArrow x1="500" y1="100" x2="600" y2="200" animated>
+    Animated
+</FancyArrow>
 
-```html
+<div mt-40 h-70>
+
+```html {*}{maxHeight: '100%'}
 <FancyArrow x1="100" y1="100" x2="200" y2="200" >
     Hello
 </FancyArrow>
@@ -730,6 +734,10 @@ If no snap target or absolute position is specified, the arrow will automaticall
 <FancyArrow x1="400" y1="100" x2="500" y2="200" arc="0.3">
     <span text-nowrap>Slidev logo</span>
     <img src="https://sli.dev/logo.svg" w-10 m-auto/>
+</FancyArrow>
+
+<FancyArrow x1="500" y1="100" x2="600" y2="200" animated>
+    Animated
 </FancyArrow>
 ```
 

@@ -5,7 +5,11 @@ import {
   type SnapAnchorPoint,
 } from "./parse-option";
 import { useEndpointResolution } from "./use-element-position";
-import { useRoughArrow, type AbsolutePosition } from "./use-rough-arrow";
+import {
+  useRoughArrow,
+  DEFAULT_ANIMATION_DURATION,
+  type AbsolutePosition,
+} from "./use-rough-arrow";
 
 const props = defineProps<{
   from?: string; // Shorthand for (q1 and pos1) or (x1 and y1)
@@ -80,6 +84,14 @@ const point2: Ref<AbsolutePosition | undefined> = useEndpointResolution(
   },
 );
 
+const animationEnabled = computed(() => {
+  return (
+    props.animated ||
+    props.animationDuration != null ||
+    props.animationDelay != null
+  );
+});
+
 const { arrowSvg, textPosition } = useRoughArrow({
   point1,
   point2,
@@ -90,19 +102,18 @@ const { arrowSvg, textPosition } = useRoughArrow({
   headSize: props.headSize ? Number(props.headSize) : null,
   roughness: props.roughness ? Number(props.roughness) : undefined,
   seed: props.seed ? Number(props.seed) : undefined,
-  animation:
-    props.animated || props.animationDuration || props.animationDelay
-      ? {
-          duration:
-            props.animationDuration != null
-              ? Number(props.animationDuration)
-              : undefined,
-          delay:
-            props.animationDelay != null
-              ? Number(props.animationDelay)
-              : undefined,
-        }
-      : undefined,
+  animation: animationEnabled.value
+    ? {
+        duration:
+          props.animationDuration != null
+            ? Number(props.animationDuration)
+            : undefined,
+        delay:
+          props.animationDelay != null
+            ? Number(props.animationDelay)
+            : undefined,
+      }
+    : undefined,
   strokeAnimationKeyframeName: "rough-arrow-dash",
   fillAnimationKeyframeName: "rough-arrow-fill",
 });
@@ -131,6 +142,10 @@ const { arrowSvg, textPosition } = useRoughArrow({
         left: `${textPosition.x}px`,
         top: `${textPosition.y}px`,
         transform: 'translate(-50%, -50%)',
+        visibility: animationEnabled ? 'hidden' : 'visible',
+        animation: animationEnabled
+          ? `rough-arrow-content ${props.animationDuration ?? DEFAULT_ANIMATION_DURATION}ms ease-out ${props.animationDelay ?? 0}ms forwards`
+          : 'none',
       }"
     >
       <slot />
@@ -155,6 +170,18 @@ const { arrowSvg, textPosition } = useRoughArrow({
 }
 @keyframes rough-arrow-fill {
   to {
+    visibility: visible;
+  }
+}
+
+@keyframes rough-arrow-content {
+  from {
+    visibility: hidden;
+  }
+  99.99% {
+    visibility: hidden;
+  }
+  100% {
     visibility: visible;
   }
 }
