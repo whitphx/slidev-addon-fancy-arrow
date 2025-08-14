@@ -114,8 +114,8 @@ const { arrowSvg, textPosition } = useRoughArrow({
             : undefined,
       }
     : undefined,
-  strokeAnimationClass: "rough-arrow-stroke",
-  fillAnimationClass: "rough-arrow-fill",
+  strokeAnimationClass: "animated-rough-arrow-stroke",
+  fillAnimationClass: "animated-rough-arrow-fill",
 });
 </script>
 
@@ -137,7 +137,7 @@ const { arrowSvg, textPosition } = useRoughArrow({
     </svg>
     <div
       v-if="$slots.default && textPosition"
-      class="rough-arrow-content"
+      :class="{ 'animated-rough-arrow-content': animationEnabled }"
       :style="{
         position: 'absolute',
         left: `${textPosition.x}px`,
@@ -189,22 +189,22 @@ const { arrowSvg, textPosition } = useRoughArrow({
   }
 }
 
-.rough-arrow-stroke {
+.animated-rough-arrow-stroke {
   animation: rough-arrow-dash ease-out forwards;
 }
-.rough-arrow-fill {
+.animated-rough-arrow-fill {
   animation: rough-arrow-fill ease-out forwards;
 }
-.rough-arrow-content {
+.animated-rough-arrow-content {
   animation: rough-arrow-content ease-out forwards;
 }
-.slidev-vclick-target.slidev-vclick-hidden .rough-arrow-stroke {
+.slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-stroke {
   animation: none;
 }
-.slidev-vclick-target.slidev-vclick-hidden .rough-arrow-fill {
+.slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-fill {
   animation: none;
 }
-.slidev-vclick-target.slidev-vclick-hidden .rough-arrow-content {
+.slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-content {
   animation: none;
 }
 </style>
