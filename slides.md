@@ -716,6 +716,10 @@ If no snap target or absolute position is specified, the arrow will automaticall
     Animated
 </FancyArrow>
 
+<FancyArrow x1="600" y1="100" x2="700" y2="200" animated v-click>
+    Animated with v-click
+</FancyArrow>
+
 <div mt-40 h-70>
 
 ```html {*}{maxHeight: '100%'}
@@ -738,6 +742,10 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 <FancyArrow x1="500" y1="100" x2="600" y2="200" animated>
     Animated
+</FancyArrow>
+
+<FancyArrow x1="600" y1="100" x2="700" y2="200" animated v-click>
+    Animated with v-click
 </FancyArrow>
 ```
 

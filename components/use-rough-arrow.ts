@@ -67,8 +67,8 @@ export function useRoughArrow(props: {
     duration?: number;
     delay?: number;
   };
-  strokeAnimationKeyframeName: string;
-  fillAnimationKeyframeName: string;
+  strokeAnimationClass: string;
+  fillAnimationClass: string;
 }) {
   const {
     point1: point1Ref,
@@ -81,8 +81,8 @@ export function useRoughArrow(props: {
     twoWay,
     centerPositionParam,
     animation,
-    strokeAnimationKeyframeName,
-    fillAnimationKeyframeName,
+    strokeAnimationClass,
+    fillAnimationClass,
   } = props;
   const baseOptions = {
     // We don't support the `bowing` param because it's not so effective for arc.
@@ -364,14 +364,18 @@ export function useRoughArrow(props: {
           const pathDelay =
             currentDelay +
             (index / segment.strokedPaths.length) * segmentDuration;
-          path.style.animation = `${strokeAnimationKeyframeName} ${pathDuration}ms ease-out ${pathDelay}ms forwards`;
+          path.classList.add(strokeAnimationClass);
+          path.style.animationDuration = `${pathDuration}ms`;
+          path.style.animationDelay = `${pathDelay}ms`;
           path.style.strokeDashoffset = `${segment.length}`;
           path.style.strokeDasharray = `${segment.length}`;
           path.style.visibility = "hidden";
         });
         currentDelay += segmentDuration;
         segment.filledPaths.forEach((path) => {
-          path.style.animation = `${fillAnimationKeyframeName} ${segmentDuration}ms ease-out ${currentDelay}ms forwards`;
+          path.classList.add(fillAnimationClass);
+          path.style.animationDuration = `${segmentDuration}ms`;
+          path.style.animationDelay = `${currentDelay}ms`;
           path.style.visibility = "hidden";
         });
       }
