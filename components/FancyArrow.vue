@@ -114,8 +114,8 @@ const { arrowSvg, textPosition } = useRoughArrow({
             : undefined,
       }
     : undefined,
-  strokeAnimationKeyframeName: "rough-arrow-dash",
-  fillAnimationKeyframeName: "rough-arrow-fill",
+  strokeAnimationClass: "animated-rough-arrow-stroke",
+  fillAnimationClass: "animated-rough-arrow-fill",
 });
 </script>
 
@@ -137,15 +137,17 @@ const { arrowSvg, textPosition } = useRoughArrow({
     </svg>
     <div
       v-if="$slots.default && textPosition"
+      :class="{ 'animated-rough-arrow-content': animationEnabled }"
       :style="{
         position: 'absolute',
         left: `${textPosition.x}px`,
         top: `${textPosition.y}px`,
         transform: 'translate(-50%, -50%)',
-        visibility: animationEnabled ? 'hidden' : 'visible',
-        animation: animationEnabled
-          ? `rough-arrow-content ${props.animationDuration ?? DEFAULT_ANIMATION_DURATION}ms ease-out ${props.animationDelay ?? 0}ms forwards`
-          : 'none',
+        ...(animationEnabled && {
+          animationDuration: `${props.animationDuration ?? DEFAULT_ANIMATION_DURATION}ms`,
+          animationDelay: `${props.animationDelay ?? 0}ms`,
+          visibility: 'hidden',
+        }),
       }"
     >
       <slot />
@@ -168,6 +170,7 @@ const { arrowSvg, textPosition } = useRoughArrow({
     visibility: visible;
   }
 }
+
 @keyframes rough-arrow-fill {
   to {
     visibility: visible;
@@ -184,5 +187,24 @@ const { arrowSvg, textPosition } = useRoughArrow({
   100% {
     visibility: visible;
   }
+}
+
+.animated-rough-arrow-stroke {
+  animation: rough-arrow-dash ease-out forwards;
+}
+.animated-rough-arrow-fill {
+  animation: rough-arrow-fill ease-out forwards;
+}
+.animated-rough-arrow-content {
+  animation: rough-arrow-content ease-out forwards;
+}
+.slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-stroke {
+  animation: none;
+}
+.slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-fill {
+  animation: none;
+}
+.slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-content {
+  animation: none;
 }
 </style>
