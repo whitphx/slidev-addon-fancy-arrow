@@ -755,9 +755,9 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 # Demo: animated arrows
 
-<img v-click="1" src="https://sli.dev/logo.svg" w-30 data-id="slidev-logo" absolute top-25 left-10 v-motion :initial="{x: -80, y: -80}" :enter="{x: 0, y: 0}" />
-<img v-click="1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/1280px_Markdown_with_White_Background.png/640px-1280px_Markdown_with_White_Background.png" w-45 data-id="markdown-mark" absolute top-30 right-20 v-motion :initial="{x: +80, y: -80}" :enter="{x: 0, y: 0}"/>
-<img v-click="1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/512px-Vue.js_Logo_2.svg.png" w-30 data-id="vue-mark" absolute bottom-10 right-120 v-motion :initial="{x: +30, y: +80}" :enter="{x: 0, y: 0}"/>
+<img v-click="1" src="https://sli.dev/logo.svg" w-20 data-id="slidev-logo" absolute top-25 left-20 v-motion :initial="{x: -80, y: -80}" :enter="{x: 0, y: 0}" />
+<img v-click="1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/1280px_Markdown_with_White_Background.png/640px-1280px_Markdown_with_White_Background.png" w-30 data-id="markdown-mark" absolute top-30 right-25 v-motion :initial="{x: +80, y: -80}" :enter="{x: 0, y: 0}"/>
+<img v-click="1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/512px-Vue.js_Logo_2.svg.png" w-20 data-id="vue-mark" absolute bottom-10 right-120 v-motion :initial="{x: +30, y: +80}" :enter="{x: 0, y: 0}"/>
 
 <FancyArrow v-click="1" q1="[data-id=slidev-logo]" pos1="bottom" q2="[data-id=slidev-text]" pos2="bottomleft" color="cyan" width="4" roughness="3" arc="-0.3" seed="1" animated />
 <FancyArrow v-click="1" q1="[data-id=markdown-mark]" pos1="bottom" q2="[data-id=markdown-text]" pos2="bottomright" color="gray" width="4" roughness="2" arc="0.3" seed="1" animated />
