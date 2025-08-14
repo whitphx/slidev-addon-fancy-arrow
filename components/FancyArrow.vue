@@ -143,9 +143,11 @@ const { arrowSvg, textPosition } = useRoughArrow({
         left: `${textPosition.x}px`,
         top: `${textPosition.y}px`,
         transform: 'translate(-50%, -50%)',
-        animationDuration: `${props.animationDuration ?? DEFAULT_ANIMATION_DURATION}ms`,
-        animationDelay: `${props.animationDelay ?? 0}ms`,
-        visibility: animationEnabled ? 'hidden' : 'visible',
+        ...(animationEnabled && {
+          animationDuration: `${props.animationDuration ?? DEFAULT_ANIMATION_DURATION}ms`,
+          animationDelay: `${props.animationDelay ?? 0}ms`,
+          visibility: 'hidden',
+        }),
       }"
     >
       <slot />
