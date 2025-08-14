@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.12.2
+
+### Patch Changes
+
+- [#167](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/167) [`8a295d2`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/8a295d29f50d79d963bec0f71b6008226d88c1f9) Thanks [@whitphx](https://github.com/whitphx)! - Animation works well with v-click
+
 ## 0.12.1
 
 ### Patch Changes
