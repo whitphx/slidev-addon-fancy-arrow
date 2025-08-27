@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "roughjs": "^4.6.6",
-    "vue": "^3.5.18"
+    "vue": "^3.5.20"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.1",
