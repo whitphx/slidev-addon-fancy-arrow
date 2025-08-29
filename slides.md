@@ -15,7 +15,7 @@ Slidev addon for drawing arrows with<br>
 
 </div>
 
-<FancyArrow from="[data-id=rough-js]@top" to="[data-id=fancy-styles]@bottom" color="orange" width="3" arc="-0.3" seed="1" roughness="2" animated animationDuration="500" animationDelay="0" />
+<FancyArrow from="[data-id=rough-js]@top" to="[data-id=fancy-styles]@bottom" color="orange" width="3" arc="-0.3" seed="1" roughness="2" animationDuration="500" animationDelay="0" />
 
 <div absolute left-80 top-90>
 <p>
@@ -27,9 +27,9 @@ Slidev addon for drawing arrows with<br>
 </p>
 </div>
 
-<FancyArrow from="[data-id=intuitive-positioning]@bottom" to="[data-id=snap-sample]@top" color="green" width="3" arc="-0.3" seed="1" roughness="2" animated animationDuration="500" animationDelay="500" />
+<FancyArrow from="[data-id=intuitive-positioning]@bottom" to="[data-id=snap-sample]@top" color="green" width="3" arc="-0.3" seed="1" roughness="2" animationDuration="500" animationDelay="500" />
 
-<FancyArrow from="[data-id=abspos-sample]@topright" to="(800,500)" color="blue" width="3" arc="0.3" seed="1" roughness="2" animated animationDuration="500" animationDelay="1000" />
+<FancyArrow from="[data-id=abspos-sample]@topright" to="(800,500)" color="blue" width="3" arc="0.3" seed="1" roughness="2" animationDuration="500" animationDelay="1000" />
 
 <div absolute w="1px" h="100%" left="800px" top="0" bg="gray" opacity="0.5" translate-x="-50%"></div>
 <div absolute h="1px" w="100%" left="0" top="500px" bg="gray" opacity="0.5" translate-y="-50%"></div>
@@ -585,10 +585,10 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 <div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
 
-### Animated
+### No animation
 
 <FancyArrow
-    animated
+    static
     x1="120" y1="200" x2="260" y2="280"
 />
 
@@ -596,7 +596,7 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 ```html {2}
 <FancyArrow
-    animated
+    static
     x1="120" y1="200" x2="260" y2="280"
 />
 ```
@@ -712,12 +712,12 @@ If no snap target or absolute position is specified, the arrow will automaticall
     <img src="https://sli.dev/logo.svg" w-10 m-auto/>
 </FancyArrow>
 
-<FancyArrow x1="500" y1="100" x2="600" y2="200" animated>
-    Animated
+<FancyArrow x1="500" y1="100" x2="600" y2="200" static>
+    Static
 </FancyArrow>
 
-<FancyArrow x1="600" y1="100" x2="700" y2="200" animated v-click>
-    Animated with v-click
+<FancyArrow x1="600" y1="100" x2="700" y2="200" v-click>
+    <span text-nowrap>v-click</span>
 </FancyArrow>
 
 <div mt-40 h-70>
@@ -740,12 +740,12 @@ If no snap target or absolute position is specified, the arrow will automaticall
     <img src="https://sli.dev/logo.svg" w-10 m-auto/>
 </FancyArrow>
 
-<FancyArrow x1="500" y1="100" x2="600" y2="200" animated>
-    Animated
+<FancyArrow x1="500" y1="100" x2="600" y2="200" static>
+    Static
 </FancyArrow>
 
-<FancyArrow x1="600" y1="100" x2="700" y2="200" animated v-click>
-    Animated with v-click
+<FancyArrow x1="600" y1="100" x2="700" y2="200" v-click>
+    v-click
 </FancyArrow>
 ```
 
@@ -759,9 +759,9 @@ If no snap target or absolute position is specified, the arrow will automaticall
 <img v-click="1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/1280px_Markdown_with_White_Background.png/640px-1280px_Markdown_with_White_Background.png" w-30 data-id="markdown-mark" absolute top-30 right-25 v-motion :initial="{x: +80, y: -80}" :enter="{x: 0, y: 0}"/>
 <img v-click="1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/512px-Vue.js_Logo_2.svg.png" w-20 data-id="vue-mark" absolute bottom-10 right-120 v-motion :initial="{x: +30, y: +80}" :enter="{x: 0, y: 0}"/>
 
-<FancyArrow v-click="1" q1="[data-id=slidev-logo]" pos1="bottom" q2="[data-id=slidev-text]" pos2="bottomleft" color="cyan" width="4" roughness="3" arc="-0.3" seed="1" animated />
-<FancyArrow v-click="1" q1="[data-id=markdown-mark]" pos1="bottom" q2="[data-id=markdown-text]" pos2="bottomright" color="gray" width="4" roughness="2" arc="0.3" seed="1" animated />
-<FancyArrow v-click="1" q1="[data-id=vue-mark]" pos1="top" q2="[data-id=vue-text]" pos2="bottom" color="teal" width="4" roughness="2" arc="0.3" seed="1" animated />
+<FancyArrow v-click="1" q1="[data-id=slidev-logo]" pos1="bottom" q2="[data-id=slidev-text]" pos2="bottomleft" color="cyan" width="4" roughness="3" arc="-0.3" seed="1" />
+<FancyArrow v-click="1" q1="[data-id=markdown-mark]" pos1="bottom" q2="[data-id=markdown-text]" pos2="bottomright" color="gray" width="4" roughness="2" arc="0.3" seed="1" />
+<FancyArrow v-click="1" q1="[data-id=vue-mark]" pos1="top" q2="[data-id=vue-text]" pos2="bottom" color="teal" width="4" roughness="2" arc="0.3" seed="1" />
 
 <div w="2/3" m-auto mt-40>
     <span data-id="slidev-text" v-mark.cyan="1">Slidev</span> <sub top--1>(slide + dev, /slaɪdɪv/)</sub> is a web-based slides maker and presenter. It's designed for developers to focus on writing content in <span data-id="markdown-text" v-mark.gray="1">Markdown</span>. With the power of web technologies like <span data-id="vue-text" v-mark.teal="1">Vue</span>, you are able to deliver pixel-perfect designs with interactive demos to your presentation.
@@ -801,4 +801,4 @@ clicks: 4
 <div absolute left="50%" top="50%" translate-x="-50%" translate-y="-50%" data-id="center-anchor"></div>
 <div absolute right-10 top="50%" translate-x="-50%" translate-y="-50%" data-id="right-anchor">Anchor</div>
 
-<FancyArrow q1="[data-id=center-anchor]" :x2="$clicks % 2 === 0 ? 100 : 900" :y2="$clicks / 2 < 1 ? 100 : 500" :q2="$clicks > 3 ? '[data-id=right-anchor]' : undefined" />
+<FancyArrow q1="[data-id=center-anchor]" :x2="$clicks % 2 === 0 ? 100 : 900" :y2="$clicks / 2 < 1 ? 100 : 500" :q2="$clicks > 3 ? '[data-id=right-anchor]' : undefined" static />
