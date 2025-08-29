@@ -2506,8 +2506,8 @@ packages:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
 
-  mermaid@11.9.0:
-    resolution: {integrity: sha512-YdPXn9slEwO0omQfQIsW6vS84weVQftIyyTGAZCwM//MGhPzL1+l6vO6bkf0wnP4tHigH1alZ5Ooy3HXI2gOag==}
+  mermaid@11.10.1:
+    resolution: {integrity: sha512-0PdeADVWURz7VMAX0+MiMcgfxFKY4aweSGsjgFihe3XlMKNqmai/cugMrqTd3WNHM93V+K+AZL6Wu6tB5HmxRw==}
 
   micromark-core-commonmark@2.0.3:
     resolution: {integrity: sha512-RDBrHEMSxVFLg6xvnXmb1Ayr2WzLAWjeSATAoxwKYJV94TeNavgoIdA0a9ytzDSVzBy2YKFK+emCPOEibLeCrg==}
@@ -4551,7 +4551,7 @@ snapshots:
       fuse.js: 7.1.0
       katex: 0.16.22
       lz-string: 1.5.0
-      mermaid: 11.9.0
+      mermaid: 11.10.1
       monaco-editor: 0.52.2
       nanotar: 0.2.0
       pptxgenjs: 4.0.1
@@ -4620,7 +4620,7 @@ snapshots:
       '@vitejs/plugin-vue': 6.0.1(vite@7.0.6(@types/node@22.16.5)(jiti@2.5.1)(yaml@2.8.0))(vue@3.5.20(typescript@5.8.3))
       '@vitejs/plugin-vue-jsx': 5.0.1(vite@7.0.6(@types/node@22.16.5)(jiti@2.5.1)(yaml@2.8.0))(vue@3.5.20(typescript@5.8.3))
       katex: 0.16.22
-      mermaid: 11.9.0
+      mermaid: 11.10.1
       monaco-editor: 0.52.2
       shiki: 3.8.1
       unocss: 66.3.3(postcss@8.5.6)(vite@7.0.6(@types/node@22.16.5)(jiti@2.5.1)(yaml@2.8.0))(vue@3.5.20(typescript@5.8.3))
@@ -6649,7 +6649,7 @@ snapshots:
 
   merge2@1.4.1: {}
 
-  mermaid@11.9.0:
+  mermaid@11.10.1:
     dependencies:
       '@braintree/sanitize-url': 7.1.1
       '@iconify/utils': 2.3.0
