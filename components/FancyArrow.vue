@@ -32,7 +32,7 @@ const props = defineProps<{
   headSize?: number | string;
   roughness?: number | string;
   seed?: number | string;
-  animated?: boolean;
+  static?: boolean;
   animationDuration?: number | string;
   animationDelay?: number | string;
 }>();
@@ -85,11 +85,7 @@ const point2: Ref<AbsolutePosition | undefined> = useEndpointResolution(
 );
 
 const animationEnabled = computed(() => {
-  return (
-    props.animated ||
-    props.animationDuration != null ||
-    props.animationDelay != null
-  );
+  return props.static !== true;
 });
 
 const { arrowSvg, textPosition } = useRoughArrow({
