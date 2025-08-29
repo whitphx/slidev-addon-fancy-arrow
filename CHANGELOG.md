@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.13.0
+
+### Minor Changes
+
+- [#182](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/182) [`770bcfe`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/770bcfea8020c5b107b26edd0958798fa7bf7bcb) Thanks [@whitphx](https://github.com/whitphx)! - Animation is enabled by default and the `animated` prop is deleted. `static` prop is added instead to disable animation.
+
 ## 0.12.2
 
 ### Patch Changes
