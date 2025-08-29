@@ -2,7 +2,7 @@
 
 Slidev addon for adding fancy arrows to your slides, powered by [Rough.js](https://roughjs.com/).
 
-![NPM Version](https://img.shields.io/npm/v/slidev-addon-fancy-arrow)
+[![NPM Version](https://img.shields.io/npm/v/slidev-addon-fancy-arrow)](https://www.npmjs.com/package/slidev-addon-fancy-arrow)
 
 [![Cover image](./assets/cover.png)](https://whitphx.github.io/slidev-addon-fancy-arrow/)
 
