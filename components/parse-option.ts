@@ -30,7 +30,7 @@ const ZERO_LENGTH_PERCENTAGE: LengthPercentage = { value: 0, unit: "px" };
 
 const lengthPercentageRegex = /(?<value>[+-]?\d+)(?<unit>%|px)?/;
 const positionRegex = /^\(\s*(?<x>\S+)\s*,\s*(?<y>\S+)\s*\)$/;
-const snapTargetRegex = /^(?<query>\S+?)(@(?<snapPosition>\S+?))?$/;
+const snapTargetRegex = /^(?<query>[^@]+?)(@\s*(?<snapPosition>\S+?))?$/;
 
 function parseLengthPercentage(
   lengthString: string,
@@ -98,7 +98,7 @@ export function parseArrowEndpointShorthand(
     }
     const snapPosition = snapTargetMatch.groups?.snapPosition;
     return {
-      query,
+      query: query.trim(),
       snapPosition: snapPosition ? parseSnapPosition(snapPosition) : undefined,
     };
   }

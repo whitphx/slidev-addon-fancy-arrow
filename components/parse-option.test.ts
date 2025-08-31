@@ -104,6 +104,14 @@ describe("parsePosition", () => {
           { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } },
         ],
       ],
+      [
+        "[data-id=target] > .target-child:nth-child(2)",
+        ["[data-id=target] > .target-child:nth-child(2)", undefined],
+      ],
+      [
+        "[data-id=target] > .target-child:nth-child(2) @ left",
+        ["[data-id=target] > .target-child:nth-child(2)", "left"],
+      ],
     ] as const
   ).forEach(([optionString, [expectedQuery, expectedSnapPosition]]) => {
     it(`parses string with snap target CSS selector correctly: "${optionString}"`, () => {
