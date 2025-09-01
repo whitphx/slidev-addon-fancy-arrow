@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.13.1
+
+### Patch Changes
+
+- [#185](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/185) [`8557f57`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/8557f5798998dcd64f18c54f85e52fba9eb7d9f3) Thanks [@whitphx](https://github.com/whitphx)! - Allow CSS selector including white spaces and special characters
+
 ## 0.13.0
 
 ### Minor Changes
