@@ -66,6 +66,9 @@ export function useEndpointResolution(
     }
     const element =
       slideContainerRef.value?.querySelector(endpoint.query) ?? null;
+    if (element == null) {
+      console.warn(`Element not found for query: ${endpoint.query}`);
+    }
     return {
       element,
       snapPosition: endpoint.snapPosition,

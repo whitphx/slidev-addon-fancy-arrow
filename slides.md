@@ -753,6 +753,56 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 ---
 
+# Demo: Snapped to a line in a code block
+
+<div grid="~ cols-2" gap-4>
+
+<div>
+
+```js {*}{'data-id':'code-block'}
+for(let i = 1; i <= 100; i++) {
+  if(i % 15 === 0) {
+    console.log( "FizzBuzz" );
+  } else if (i % 5 === 0) {
+    console.log("Buzz");
+  } else if ( i % 3 === 0 ) {
+    console.log("Fizz");
+  } else {
+    console.log(i);
+  }
+}
+```
+</div>
+
+<div>
+
+<div data-id="description-loop" p-2>Loop `i` from `1` to `100`</div>
+<div data-id="description-15" p-2>Print "FizzBuzz" if `i` is divided by `3` and `5`</div>
+<div data-id="description-5" p-2>Print "Buzz" if `i` is divided by `5`</div>
+<div data-id="description-3" p-2>Print "Fizz" if `i` is divided by `3`</div>
+<div data-id="description-else" p-2>Otherwise, print `i`</div>
+
+</div>
+
+</div>
+
+<FancyArrow from="[data-id=description-loop]@left" to="[data-id=code-block] .line:nth-child(1) @ right" />
+<FancyArrow from="[data-id=description-15]@left" to="[data-id=code-block] .line:nth-child(3) @ right" color="orange" />
+<FancyArrow from="[data-id=description-5]@left" to="[data-id=code-block] .line:nth-child(5) @ right" color="yellow" />
+<FancyArrow from="[data-id=description-3]@left" to="[data-id=code-block] .line:nth-child(7) @ right" color="green" />
+<FancyArrow from="[data-id=description-else]@left" to="[data-id=code-block] .line:nth-child(9) @ right" color="cyan" />
+
+
+```html
+<FancyArrow to="[data-id=code-block] .line:nth-child(1) @ right" from="[data-id=description-loop]@left" />
+<FancyArrow to="[data-id=code-block] .line:nth-child(3) @ right" from="[data-id=description-15]@left" color="orange" />
+<FancyArrow to="[data-id=code-block] .line:nth-child(5) @ right" from="[data-id=description-5]@left" color="yellow" />
+<FancyArrow to="[data-id=code-block] .line:nth-child(7) @ right" from="[data-id=description-3]@left" color="green" />
+<FancyArrow to="[data-id=code-block] .line:nth-child(9) @ right" from="[data-id=description-else]@left" color="cyan" />
+```
+
+---
+
 # Demo: animated arrows
 
 <img v-click="1" src="https://sli.dev/logo.svg" w-20 data-id="slidev-logo" absolute top-25 left-20 v-motion :initial="{x: -80, y: -80}" :enter="{x: 0, y: 0}" />
