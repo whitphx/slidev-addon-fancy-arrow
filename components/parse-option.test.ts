@@ -105,6 +105,20 @@ describe("parsePosition", () => {
         ],
       ],
       [
+        " #target @ ( 100 , 200 ) ",
+        [
+          "#target",
+          { x: { value: 100, unit: "px" }, y: { value: 200, unit: "px" } },
+        ],
+      ],
+      [
+        " #target @ ( 10% , 20% ) ",
+        [
+          "#target",
+          { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } },
+        ],
+      ],
+      [
         "[data-id=target] > .target-child:nth-child(2)",
         ["[data-id=target] > .target-child:nth-child(2)", undefined],
       ],
