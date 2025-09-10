@@ -5,6 +5,7 @@
     "type": "git",
     "url": "git+https://github.com/whitphx/slidev-addon-fancy-arrow.git"
   },
+  "license": "MIT",
   "publishConfig": {
     "provenance": true
   },
