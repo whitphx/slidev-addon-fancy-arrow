@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.13.8
+
+### Patch Changes
+
+- [#211](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/211) [`5a41195`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/5a411955d45c7355b1325050ea205d09a299fc78) Thanks [@whitphx](https://github.com/whitphx)! - Stop animation during slide transitions to avoid flickering
+
 ## 0.13.7
 
 ### Patch Changes
