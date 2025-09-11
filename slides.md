@@ -1,7 +1,5 @@
 ---
-mdc: true
 ---
-
 # Slidev Fancy Arrow
 
 <h2>
@@ -802,6 +800,8 @@ for(let i = 1; i <= 100; i++) {
 ```
 
 ---
+transition: slide-left
+---
 
 # Demo: animated arrows
 
@@ -816,6 +816,24 @@ for(let i = 1; i <= 100; i++) {
 <div w="2/3" m-auto mt-40>
     <span data-id="slidev-text" v-mark.cyan="1">Slidev</span> <sub top--1>(slide + dev, /slaɪdɪv/)</sub> is a web-based slides maker and presenter. It's designed for developers to focus on writing content in <span data-id="markdown-text" v-mark.gray="1">Markdown</span>. With the power of web technologies like <span data-id="vue-text" v-mark.teal="1">Vue</span>, you are able to deliver pixel-perfect designs with interactive demos to your presentation.
 </div>
+
+---
+
+# Demo: works with slide transitions
+
+<span data-id="demo-text" absolute top-50 left-80>
+Lorem ipsum dolor sit amet
+</span>
+
+<FancyArrow
+from="(100,100)"
+to="(200,200)"
+/>
+
+<FancyArrow
+from="(200,100)"
+to="[data-id=demo-text]"
+/>
 
 ---
 
