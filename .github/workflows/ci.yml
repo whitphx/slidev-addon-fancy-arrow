@@ -97,7 +97,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      id-token: write # Necessary for provenance: https://docs.npmjs.com/generating-provenance-statements#publishing-packages-with-provenance-via-github-actions
+      id-token: write  # Required for OIDC, https://docs.npmjs.com/trusted-publishers#github-actions-configuration
 
     runs-on: ubuntu-latest
     steps:
@@ -116,12 +116,12 @@ jobs:
           cache: "pnpm"
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install dependencies
-        run: pnpm install
-
       # Ensure npm 11.5.1 or later is installed for trusted publishing
       - name: Update npm
-        run: pnpm install -g npm@latest
+        run: npm install -g npm@latest
+
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Package and Publish
         id: changesets
