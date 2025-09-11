@@ -11,7 +11,8 @@
   },
   "type": "module",
   "files": [
-    "components"
+    "components",
+    "!**/*.test.*"
   ],
   "scripts": {
     "build": "slidev build",
