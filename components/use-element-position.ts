@@ -42,6 +42,10 @@ export function useEndpointResolution(
   const isSlideActive = useIsSlideActive();
 
   const snappedElementInfo = computed(() => {
+    if (!isSlideActive.value) {
+      return undefined;
+    }
+
     const endpoint = endpointRef.value;
     if (endpoint == null) {
       // If endpoint is undefined, we try to use the next or previous element
@@ -105,7 +109,7 @@ export function useEndpointResolution(
     }
 
     const { element, snapPosition } = snappedElementInfo.value;
-    if (!isSlideActive.value || !rootElementRef.value || !element) {
+    if (!rootElementRef.value || !element) {
       point.value = undefined;
       return;
     }
