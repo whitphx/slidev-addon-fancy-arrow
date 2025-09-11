@@ -30,7 +30,7 @@ const ZERO_LENGTH_PERCENTAGE: LengthPercentage = { value: 0, unit: "px" };
 
 const lengthPercentageRegex = /(?<value>[+-]?\d+)(?<unit>%|px)?/;
 const positionRegex = /^\(\s*(?<x>\S+)\s*,\s*(?<y>\S+)\s*\)$/;
-const snapTargetRegex = /^(?<query>[^@]+?)(@\s*(?<snapPosition>\S+?))?$/;
+const snapTargetRegex = /^(?<query>[^@]+?)(@\s*(?<snapPosition>.+?))?$/;
 
 function parseLengthPercentage(
   lengthString: string,
