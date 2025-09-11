@@ -40,8 +40,8 @@ jobs:
       - name: Format check
         run: pnpm format --check
 
-      # - name: Test
-      #   run: pnpm test
+      - name: Test
+        run: pnpm test
 
   build-demo:
     needs: [test]
