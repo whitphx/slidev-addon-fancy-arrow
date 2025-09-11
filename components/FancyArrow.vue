@@ -198,6 +198,8 @@ const { arrowSvg, textPosition } = useRoughArrow({
 .animated-rough-arrow-content {
   animation: rough-arrow-content ease-out forwards;
 }
+
+/* Stop animation when this element is hidden due to v-click */
 .slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-stroke {
   animation: none;
 }
@@ -205,6 +207,22 @@ const { arrowSvg, textPosition } = useRoughArrow({
   animation: none;
 }
 .slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-content {
+  animation: none;
+}
+
+/*
+Stop animation during slide transitions.
+Slidev uses Vue Transition for the slide transitions (https://sli.dev/guide/animations#custom-transitions),
+and Vue Transition adds class names `<prefix>-(enter|leave)-(from|active|to)` to the slide elements `.slidev-page`.
+The animation should stop when the parent slide element (`.slidev-page`) has the `<prefix>-enter-active` class.
+*/
+.slidev-page[class*="-enter-active"] .animated-rough-arrow-stroke {
+  animation: none;
+}
+.slidev-page[class*="-enter-active"] .animated-rough-arrow-fill {
+  animation: none;
+}
+.slidev-page[class*="-enter-active"] .animated-rough-arrow-content {
   animation: none;
 }
 </style>
