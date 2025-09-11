@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.13.9
+
+### Patch Changes
+
+- [#214](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/214) [`bd6c5ea`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/bd6c5eaead277d94434df34ad033f4c87e5b6716) Thanks [@whitphx](https://github.com/whitphx)! - Stop element retrieval in inactive slides
+
 ## 0.13.8
 
 ### Patch Changes
