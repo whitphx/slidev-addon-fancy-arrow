@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.13.10
+
+### Patch Changes
+
+- [#216](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/216) [`41ffc1c`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/41ffc1c027be6bf41197ddbdb5478b1e5b9dc593) Thanks [@whitphx](https://github.com/whitphx)! - Remove test files from the NPM package
+
 ## 0.13.9
 
 ### Patch Changes
