@@ -118,6 +118,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      # Ensure npm 11.5.1 or later is installed for trusted publishing
+      - name: Update npm
+        run: pnpm install -g npm@latest
+
       - name: Package and Publish
         id: changesets
         uses: changesets/action@v1
