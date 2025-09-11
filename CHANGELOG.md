@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.13.7
+
+### Patch Changes
+
+- [#197](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/197) [`6b75f0c`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/6b75f0c7abec185bb3d6f4c91351d7c2d21f3547) Thanks [@whitphx](https://github.com/whitphx)! - Fix the shorthand parser to ignore white spaces in the location part
+
 ## 0.13.6
 
 ### Patch Changes
