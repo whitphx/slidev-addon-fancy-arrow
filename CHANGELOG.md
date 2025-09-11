@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.13.4
+
+### Patch Changes
+
+- [`5e31bc5`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/5e31bc5152f272287554062a9fc28f3dead7da0e) Thanks [@whitphx](https://github.com/whitphx)! - Fix trusted publishing workflow
+
 ## 0.13.3
 
 ### Patch Changes
