@@ -116,7 +116,10 @@ const { arrowSvg, textPosition } = useRoughArrow({
 </script>
 
 <template>
-  <div ref="root" style="position: absolute; top: 0; left: 0">
+  <div
+    ref="root"
+    style="position: absolute; top: 0; left: 0"
+  >
     <svg
       ref="svgContainer"
       :class="props.color ? `text-${props.color}` : ''"
@@ -129,6 +132,7 @@ const { arrowSvg, textPosition } = useRoughArrow({
         overflow: visible;
       "
     >
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <g v-html="arrowSvg" />
     </svg>
     <div
