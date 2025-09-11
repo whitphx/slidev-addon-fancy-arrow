@@ -1,5 +1,15 @@
 # slidev-addon-fancy-arrow
 
+## 0.13.2
+
+### Patch Changes
+
+- [#198](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/198) [`5b7202c`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/5b7202cda0f876eda61820e2c2d8bb09e5a6a116) Thanks [@whitphx](https://github.com/whitphx)! - Add MIT license
+
+- [#201](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/201) [`369de80`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/369de806a07d51ae9bb39c44089bd86ec1d7abd1) Thanks [@whitphx](https://github.com/whitphx)! - Fix ESLint config
+
+- [#200](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/200) [`b5232ba`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/b5232ba2aaf406e94d8da31e593434a72855238b) Thanks [@whitphx](https://github.com/whitphx)! - Set license in package.json
+
 ## 0.13.1
 
 ### Patch Changes
