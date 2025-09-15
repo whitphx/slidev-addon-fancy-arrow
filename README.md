@@ -16,6 +16,8 @@ npm install slidev-addon-fancy-arrow
 
 ## Slidev configuration
 
+Add the `addons` option in your [headmatter](https://sli.dev/custom/#headmatter) with `fancy-arrow`:
+
 ```yml
 ---
 addons:
