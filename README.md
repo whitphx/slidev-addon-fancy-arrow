@@ -25,6 +25,8 @@ addons:
 ---
 ```
 
+See also: https://sli.dev/guide/theme-addon#use-addon
+
 ## Usage
 
 [👉 Check out the demo and docs](https://whitphx.github.io/slidev-addon-fancy-arrow/).
