@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.13.11
+
+### Patch Changes
+
+- [#219](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/219) [`ca207cf`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/ca207cf7ce69eb8460a81e143eda9ff2add485b4) Thanks [@whitphx](https://github.com/whitphx)! - Update README.md about setting the addon config
+
 ## 0.13.10
 
 ### Patch Changes
