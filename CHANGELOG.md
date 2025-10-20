@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.13.12
+
+### Patch Changes
+
+- [#243](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/243) [`1efc18c`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/1efc18ce76ddd490d41ff44618db9e765cce1fc7) Thanks [@whitphx](https://github.com/whitphx)! - Fix to render arrows snapped to elements in the print mode
+
 ## 0.13.11
 
 ### Patch Changes
