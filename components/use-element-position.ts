@@ -9,6 +9,7 @@ import {
 import {
   useSlideContext,
   useIsSlideActive,
+  useNav,
   slideWidth,
   slideHeight,
 } from "@slidev/client";
@@ -39,10 +40,14 @@ export function useEndpointResolution(
   },
 ): Ref<AbsolutePosition | undefined> {
   const { $scale } = useSlideContext();
+  const { isPrintMode } = useNav();
   const isSlideActive = useIsSlideActive();
 
   const snappedElementInfo = computed(() => {
-    if (!isSlideActive.value) {
+    if (
+      !isPrintMode.value && // In print mode, isSlideActive doesn't matter because all slides are rendered.
+      !isSlideActive.value // In the normal mode, we only resolve the snap target on the active slide because other slides may not be rendered.
+    ) {
       return undefined;
     }
 
