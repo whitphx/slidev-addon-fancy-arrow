@@ -35,7 +35,7 @@
     "@iconify-json/octicon": "^1.2.17",
     "@slidev/cli": "^52.6.0",
     "@slidev/theme-default": "latest",
-    "eslint": "^9.38.0",
+    "eslint": "^9.39.1",
     "eslint-plugin-vue": "^9.33.0",
     "globals": "^16.4.0",
     "husky": "^9.1.7",
