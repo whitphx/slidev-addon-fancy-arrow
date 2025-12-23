@@ -315,6 +315,36 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 ---
 
+# `tail` and `head` slots
+
+<div>
+    <FancyArrow>
+        <template #tail>
+            <span absolute left-30 top-30>Head</span>
+        </template>
+        <template #head>
+            <span absolute right-30 bottom-30>Tail</span>
+        </template>
+    </FancyArrow>
+</div>
+
+<div mt-24>
+
+```html
+<FancyArrow>
+    <template #tail>
+        <span absolute left-30 top-30>Head</span>
+    </template>
+    <template #head>
+        <span absolute right-30 bottom-30>Tail</span>
+    </template>
+</FancyArrow>
+```
+
+</div>
+
+---
+
 # Auto-snap
 
 <div>
