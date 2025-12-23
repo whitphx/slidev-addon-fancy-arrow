@@ -59,8 +59,7 @@ const wrapperRef = useTemplateRef("wrapper");
 watchEffect(() => {
   if (shouldWrap.value) {
     emit("firstChildElementMounted", wrapperRef.value);
-  }
-  if (firstChildElementRef.value instanceof HTMLElement) {
+  } else if (firstChildElementRef.value instanceof HTMLElement) {
     emit("firstChildElementMounted", firstChildElementRef.value);
   }
 });
