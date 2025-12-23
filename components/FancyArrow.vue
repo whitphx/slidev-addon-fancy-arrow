@@ -202,10 +202,7 @@ const { arrowSvg, textPosition } = useRoughArrow({
 </script>
 
 <template>
-  <div
-    ref="root"
-    style="position: absolute; top: 0; left: 0"
-  >
+  <div ref="root">
     <svg
       ref="svgContainer"
       :class="props.color ? `text-${props.color}` : ''"
