@@ -202,7 +202,15 @@ const { arrowSvg, textPosition } = useRoughArrow({
 </script>
 
 <template>
-  <div ref="root">
+  <div
+    ref="root"
+    style="display: contents"
+  >
+    <!--
+    "display: contents" ensures the root element doesn't affect the layout
+    so that the positions of the elements injected into the slots are not
+    affected by the root element.
+  -->
     <svg
       ref="svgContainer"
       :class="props.color ? `text-${props.color}` : ''"
