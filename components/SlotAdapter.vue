@@ -6,7 +6,6 @@ import {
   onMounted,
   isVNode,
   watchEffect,
-  type VNode,
   type RendererElement,
 } from "vue";
 
@@ -22,7 +21,11 @@ onMounted(() => {
     return;
   }
   if (Array.isArray(children)) {
-    const slot = children[0] as VNode;
+    const slot = children[0];
+    if (!isVNode(slot)) {
+      return;
+    }
+
     const slotContents = slot.children;
 
     const firstChildNode = Array.isArray(slotContents)
