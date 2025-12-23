@@ -2,6 +2,7 @@
 import { ref, computed, useSlots, type Ref } from "vue";
 import {
   compileArrowEndpointProps,
+  SnapTargetQuery,
   type SnapAnchorPoint,
 } from "./parse-option";
 import { useIsSlideActive, useNav } from "@slidev/client";
@@ -56,9 +57,6 @@ function onHeadElementMounted(element: HTMLElement | null) {
   headElementRef.value = element ?? undefined;
 }
 
-const { isPrintMode } = useNav();
-const isSlideActive = useIsSlideActive();
-
 const tail = computed(() => {
   const useTailSlot = slots.tail != null;
   if (useTailSlot) {
@@ -92,25 +90,7 @@ const tail = computed(() => {
     return tailConfig;
   }
 
-  // Resolve the element from the query.
-  if (
-    !isPrintMode.value && // In print mode, isSlideActive doesn't matter because all slides are rendered.
-    !isSlideActive.value // In the normal mode, we only resolve the snap target on the active slide because other slides may not be rendered.
-  ) {
-    return undefined;
-  }
-
-  const element =
-    slideContainer.value?.querySelector(tailConfig.query) ?? undefined;
-  if (element == null) {
-    console.warn(`Element not found for query: ${tailConfig.query}`);
-  }
-
-  const snapTarget: SnapTarget = {
-    element,
-    snapPosition: tailConfig.snapPosition,
-  };
-  return snapTarget;
+  return getSnapTarget(tailConfig);
 });
 
 const head = computed(() => {
@@ -146,7 +126,14 @@ const head = computed(() => {
     return headConfig;
   }
 
-  // Resolve the element from the query.
+  return getSnapTarget(headConfig);
+});
+
+const { isPrintMode } = useNav();
+const isSlideActive = useIsSlideActive();
+function getSnapTarget(
+  snapTargetQuery: SnapTargetQuery,
+): SnapTarget | undefined {
   if (
     !isPrintMode.value && // In print mode, isSlideActive doesn't matter because all slides are rendered.
     !isSlideActive.value // In the normal mode, we only resolve the snap target on the active slide because other slides may not be rendered.
@@ -155,17 +142,17 @@ const head = computed(() => {
   }
 
   const element =
-    slideContainer.value?.querySelector(headConfig.query) ?? undefined;
+    slideContainer.value?.querySelector(snapTargetQuery.query) ?? undefined;
   if (element == null) {
-    console.warn(`Element not found for query: ${headConfig.query}`);
+    console.warn(`Element not found for query: ${snapTargetQuery.query}`);
   }
 
   const snapTarget: SnapTarget = {
     element,
-    snapPosition: headConfig.snapPosition,
+    snapPosition: snapTargetQuery.snapPosition,
   };
   return snapTarget;
-});
+}
 
 const tailPoint: Ref<AbsolutePosition | undefined> = useEndpointResolution(
   svgContainer,
