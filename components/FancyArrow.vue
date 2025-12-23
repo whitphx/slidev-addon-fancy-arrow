@@ -62,10 +62,11 @@ const isSlideActive = useIsSlideActive();
 const tail = computed(() => {
   const useTailSlot = slots.tail != null;
   if (useTailSlot) {
-    return {
+    const snapTarget: SnapTarget = {
       element: tailElementRef.value,
       snapPosition: undefined,
-    } as SnapTarget;
+    };
+    return snapTarget;
   }
 
   const tailConfig = compileArrowEndpointProps({
@@ -79,10 +80,11 @@ const tail = computed(() => {
 
   if (tailConfig == null) {
     // Try to use the next or previous element as fallback snap target.
-    return {
+    const snapTarget: SnapTarget = {
       element: root.value?.previousElementSibling ?? undefined,
       snapPosition: undefined,
-    } as SnapTarget;
+    };
+    return snapTarget;
   }
 
   if (!("query" in tailConfig)) {
@@ -104,19 +106,21 @@ const tail = computed(() => {
     console.warn(`Element not found for query: ${tailConfig.query}`);
   }
 
-  return {
+  const snapTarget: SnapTarget = {
     element,
     snapPosition: tailConfig.snapPosition,
-  } as SnapTarget;
+  };
+  return snapTarget;
 });
 
 const head = computed(() => {
   const useHeadSlot = slots.head != null;
   if (useHeadSlot) {
-    return {
+    const snapTarget: SnapTarget = {
       element: headElementRef.value,
       snapPosition: undefined,
-    } satisfies SnapTarget;
+    };
+    return snapTarget;
   }
 
   const headConfig = compileArrowEndpointProps({
@@ -130,10 +134,11 @@ const head = computed(() => {
 
   if (headConfig == null) {
     // Try to use the next or previous element as fallback snap target.
-    return {
+    const snapTarget: SnapTarget = {
       element: root.value?.nextElementSibling ?? undefined,
       snapPosition: undefined,
-    } satisfies SnapTarget;
+    };
+    return snapTarget;
   }
 
   if (!("query" in headConfig)) {
@@ -155,10 +160,11 @@ const head = computed(() => {
     console.warn(`Element not found for query: ${headConfig.query}`);
   }
 
-  return {
+  const snapTarget: SnapTarget = {
     element,
     snapPosition: headConfig.snapPosition,
-  } satisfies SnapTarget;
+  };
+  return snapTarget;
 });
 
 const tailPoint: Ref<AbsolutePosition | undefined> = useEndpointResolution(
