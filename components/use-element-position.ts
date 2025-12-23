@@ -38,6 +38,11 @@ export function useEndpointResolution(
     self: Ref<HTMLElement | undefined>;
     direction: "next" | "prev";
   },
+  attachOption:
+    | {
+        element: Ref<HTMLElement | undefined>;
+      }
+    | undefined,
 ): Ref<AbsolutePosition | undefined> {
   const { $scale } = useSlideContext();
   const { isPrintMode } = useNav();
@@ -49,6 +54,13 @@ export function useEndpointResolution(
       !isSlideActive.value // In the normal mode, we only resolve the snap target on the active slide because other slides may not be rendered.
     ) {
       return undefined;
+    }
+
+    if (attachOption) {
+      return {
+        element: attachOption.element.value,
+        snapPosition: undefined,
+      };
     }
 
     const endpoint = endpointRef.value;

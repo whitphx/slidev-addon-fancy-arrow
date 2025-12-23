@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, type Ref } from "vue";
+import { ref, computed, useSlots, type Ref } from "vue";
 import {
   compileArrowEndpointProps,
   type SnapAnchorPoint,
@@ -10,6 +10,7 @@ import {
   DEFAULT_ANIMATION_DURATION,
   type AbsolutePosition,
 } from "./use-rough-arrow";
+import SlotAdapter from "./SlotAdapter.vue";
 
 const props = defineProps<{
   from?: string; // Shorthand for (q1 and pos1) or (x1 and y1)
@@ -44,6 +45,16 @@ const slideContainer = computed(() => {
 
 const svgContainer = ref<SVGSVGElement>();
 
+const slots = useSlots();
+const tailElementRef = ref<HTMLElement>();
+const headElementRef = ref<HTMLElement>();
+function onTailElementMounted(element: HTMLElement | null) {
+  tailElementRef.value = element ?? undefined;
+}
+function onHeadElementMounted(element: HTMLElement | null) {
+  headElementRef.value = element ?? undefined;
+}
+
 const endpoint1 = computed(() =>
   compileArrowEndpointProps({
     shorthand: props.from,
@@ -73,6 +84,7 @@ const point1: Ref<AbsolutePosition | undefined> = useEndpointResolution(
     self: root,
     direction: "prev",
   },
+  slots.tail ? { element: tailElementRef } : undefined,
 );
 const point2: Ref<AbsolutePosition | undefined> = useEndpointResolution(
   slideContainer,
@@ -82,6 +94,7 @@ const point2: Ref<AbsolutePosition | undefined> = useEndpointResolution(
     self: root,
     direction: "next",
   },
+  slots.head ? { element: headElementRef } : undefined,
 );
 
 const animationEnabled = computed(() => {
@@ -153,6 +166,19 @@ const { arrowSvg, textPosition } = useRoughArrow({
       <slot />
     </div>
   </div>
+
+  <SlotAdapter
+    v-if="$slots.tail"
+    @first-child-element-mounted="onTailElementMounted"
+  >
+    <slot name="tail" />
+  </SlotAdapter>
+  <SlotAdapter
+    v-if="$slots.head"
+    @first-child-element-mounted="onHeadElementMounted"
+  >
+    <slot name="head" />
+  </SlotAdapter>
 </template>
 
 <style>
