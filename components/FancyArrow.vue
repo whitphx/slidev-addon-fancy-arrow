@@ -165,20 +165,20 @@ const { arrowSvg, textPosition } = useRoughArrow({
     >
       <slot />
     </div>
-  </div>
 
-  <SlotAdapter
-    v-if="$slots.tail"
-    @first-child-element-mounted="onTailElementMounted"
-  >
-    <slot name="tail" />
-  </SlotAdapter>
-  <SlotAdapter
-    v-if="$slots.head"
-    @first-child-element-mounted="onHeadElementMounted"
-  >
-    <slot name="head" />
-  </SlotAdapter>
+    <SlotAdapter
+      v-if="$slots.tail"
+      @first-child-element-mounted="onTailElementMounted"
+    >
+      <slot name="tail" />
+    </SlotAdapter>
+    <SlotAdapter
+      v-if="$slots.head"
+      @first-child-element-mounted="onHeadElementMounted"
+    >
+      <slot name="head" />
+    </SlotAdapter>
+  </div>
 </template>
 
 <style>
