@@ -9,12 +9,15 @@ import {
 import {
   useSlideContext,
   useIsSlideActive,
-  useNav,
   slideWidth,
   slideHeight,
 } from "@slidev/client";
 import type { AbsolutePosition } from "./use-rough-arrow";
-import type { SnapTarget, Position, LengthPercentage } from "./parse-option";
+import type {
+  Position,
+  LengthPercentage,
+  SnapAnchorPoint,
+} from "./parse-option";
 
 function getAbsoluteValue(
   lengthPercentage: LengthPercentage,
@@ -30,70 +33,23 @@ function getAbsoluteValue(
   }
 }
 
+export interface SnapTarget {
+  element: Element | undefined;
+  snapPosition: SnapAnchorPoint | Position | undefined;
+}
+
 export function useEndpointResolution(
-  slideContainerRef: Ref<Element | undefined>,
   rootElementRef: Ref<SVGSVGElement | undefined>,
   endpointRef: Ref<Position | SnapTarget | undefined>,
-  fallbackOption: {
-    self: Ref<HTMLElement | undefined>;
-    direction: "next" | "prev";
-  },
-  attachOption:
-    | {
-        element: Ref<HTMLElement | undefined>;
-      }
-    | undefined,
 ): Ref<AbsolutePosition | undefined> {
   const { $scale } = useSlideContext();
-  const { isPrintMode } = useNav();
   const isSlideActive = useIsSlideActive();
 
   const snappedElementInfo = computed(() => {
-    if (
-      !isPrintMode.value && // In print mode, isSlideActive doesn't matter because all slides are rendered.
-      !isSlideActive.value // In the normal mode, we only resolve the snap target on the active slide because other slides may not be rendered.
-    ) {
-      return undefined;
+    if (endpointRef.value && "element" in endpointRef.value) {
+      return endpointRef.value;
     }
-
-    if (attachOption) {
-      return {
-        element: attachOption.element.value,
-        snapPosition: undefined,
-      };
-    }
-
-    const endpoint = endpointRef.value;
-    if (endpoint == null) {
-      // If endpoint is undefined, we try to use the next or previous element
-      // as fallback snap target.
-      const selfElem = fallbackOption.self.value;
-      if (!selfElem) {
-        return undefined;
-      }
-      const element =
-        fallbackOption.direction === "next"
-          ? selfElem.nextElementSibling
-          : selfElem.previousElementSibling;
-      return {
-        element,
-        snapPosition: undefined,
-      };
-    }
-    if (!("query" in endpoint)) {
-      // endpoint is of type Position
-      // so we don't need to resolve the element.
-      return undefined;
-    }
-    const element =
-      slideContainerRef.value?.querySelector(endpoint.query) ?? null;
-    if (element == null) {
-      console.warn(`Element not found for query: ${endpoint.query}`);
-    }
-    return {
-      element,
-      snapPosition: endpoint.snapPosition,
-    };
+    return undefined;
   });
 
   const point = ref<AbsolutePosition | undefined>(undefined);
