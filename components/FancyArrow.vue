@@ -238,13 +238,13 @@ const { arrowSvg, textPosition } = useRoughArrow({
     </div>
 
     <SlotAdapter
-      v-if="$slots.tail"
+      v-if="slots.tail"
       @first-child-element-mounted="onTailElementMounted"
     >
       <slot name="tail" />
     </SlotAdapter>
     <SlotAdapter
-      v-if="$slots.head"
+      v-if="slots.head"
       @first-child-element-mounted="onHeadElementMounted"
     >
       <slot name="head" />
