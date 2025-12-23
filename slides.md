@@ -320,10 +320,10 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 <div>
     <FancyArrow>
         <template #tail>
-            <span absolute left-30 top-30>Head</span>
+            <span absolute left-30 top-30>Tail</span>
         </template>
         <template #head>
-            <span absolute right-30 bottom-30>Tail</span>
+            <span absolute right-30 bottom-30>Head</span>
         </template>
     </FancyArrow>
 </div>
@@ -333,10 +333,10 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 ```html
 <FancyArrow>
     <template #tail>
-        <span absolute left-30 top-30>Head</span>
+        <span absolute left-30 top-30>Tail</span>
     </template>
     <template #head>
-        <span absolute right-30 bottom-30>Tail</span>
+        <span absolute right-30 bottom-30>Head</span>
     </template>
 </FancyArrow>
 ```
