@@ -22,6 +22,7 @@
     "format": "prettier . --write",
     "test": "vitest",
     "prepare": "husky",
+    "changeset": "changeset",
     "ci:publish": "changeset publish"
   },
   "dependencies": {
