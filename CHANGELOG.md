@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.15.1
+
+### Patch Changes
+
+- [#293](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/293) [`f6abc5e`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/f6abc5e9490b087e560175c6a0b4c9ace15ce990) Thanks [@whitphx](https://github.com/whitphx)! - Internal fix for reactivity of the animation state flag
+
 ## 0.15.0
 
 ### Minor Changes
