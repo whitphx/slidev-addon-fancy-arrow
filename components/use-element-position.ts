@@ -163,32 +163,37 @@ export function computeEndpointPosition(
           // Auto snap to the point that is on the edge of the rectangle and closest to the center of the other element
           const c1x = rect.x + rect.width / 2;
           const c1y = rect.y + rect.height / 2;
-          const c2x =
-            anotherBoxPosition.value.rect.x +
-            anotherBoxPosition.value.rect.width / 2;
-          const c2y =
-            anotherBoxPosition.value.rect.y +
-            anotherBoxPosition.value.rect.height / 2;
-          const dx = c2x - c1x;
-          const dy = c2y - c1y;
-          if (Math.abs(dx / dy) > rect.width / rect.height) {
-            if (dx > 0) {
-              x = rect.x + rect.width;
-            } else {
-              x = rect.x;
-            }
-            // Relationship between the ratios of side lengths of similar figures in geometry.
-            // y - c1y : dy = x - c1x : dx
-            y = c1y + ((x - c1x) * dy) / dx;
+          if (rect.width === 0 || rect.height === 0) {
+            x = c1x;
+            y = c1y;
           } else {
-            if (dy > 0) {
-              y = rect.y + rect.height;
+            const c2x =
+              anotherBoxPosition.value.rect.x +
+              anotherBoxPosition.value.rect.width / 2;
+            const c2y =
+              anotherBoxPosition.value.rect.y +
+              anotherBoxPosition.value.rect.height / 2;
+            const dx = c2x - c1x;
+            const dy = c2y - c1y;
+            if (Math.abs(dx / dy) > rect.width / rect.height) {
+              if (dx > 0) {
+                x = rect.x + rect.width;
+              } else {
+                x = rect.x;
+              }
+              // Relationship between the ratios of side lengths of similar figures in geometry.
+              // y - c1y : dy = x - c1x : dx
+              y = c1y + ((x - c1x) * dy) / dx;
             } else {
-              y = rect.y;
+              if (dy > 0) {
+                y = rect.y + rect.height;
+              } else {
+                y = rect.y;
+              }
+              // Relationship between the ratios of side lengths of similar figures in geometry.
+              // x - c1x : dx = y - c1y : dy
+              x = c1x + ((y - c1y) * dx) / dy;
             }
-            // Relationship between the ratios of side lengths of similar figures in geometry.
-            // x - c1x : dx = y - c1y : dy
-            x = c1x + ((y - c1y) * dx) / dy;
           }
         }
       }
