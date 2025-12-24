@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ref, computed, useSlots, type Ref } from "vue";
+import { ref, computed, useSlots } from "vue";
 import {
   compileArrowEndpointProps,
   SnapTargetQuery,
   type SnapAnchorPoint,
 } from "./parse-option";
 import { useIsSlideActive, useNav } from "@slidev/client";
-import { SnapTarget, useEndpointResolution } from "./use-element-position";
 import {
-  useRoughArrow,
-  DEFAULT_ANIMATION_DURATION,
-  type AbsolutePosition,
-} from "./use-rough-arrow";
+  resolveSnapTargetPosition,
+  SnapTarget,
+  computeEndpointPosition,
+} from "./position";
+import { useRoughArrow, DEFAULT_ANIMATION_DURATION } from "./use-rough-arrow";
 import ChildElementPicker from "./ChildElementPicker.vue";
 
 const props = defineProps<{
@@ -154,22 +154,19 @@ function getSnapTarget(
   return snapTarget;
 }
 
-const tailPoint: Ref<AbsolutePosition | undefined> = useEndpointResolution(
-  svgContainer,
-  tail,
-);
-const headPoint: Ref<AbsolutePosition | undefined> = useEndpointResolution(
-  svgContainer,
-  head,
-);
+const tailPosition = resolveSnapTargetPosition(svgContainer, tail);
+const headPosition = resolveSnapTargetPosition(svgContainer, head);
+
+const tailAbsPos = computeEndpointPosition(tailPosition, headPosition);
+const headAbsPos = computeEndpointPosition(headPosition, tailPosition);
 
 const animationEnabled = computed(() => {
   return props.static !== true;
 });
 
 const { arrowSvg, textPosition } = useRoughArrow({
-  point1: tailPoint,
-  point2: headPoint,
+  point1: tailAbsPos,
+  point2: headAbsPos,
   width: Number(props.width ?? 2),
   twoWay: props.twoWay ?? false,
   centerPositionParam: Number(props.arc ?? 0),

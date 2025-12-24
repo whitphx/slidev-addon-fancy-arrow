@@ -331,7 +331,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
         Tail text
     </template>
     <template #head>
-        <svg viewBox="0 0 100 100" absolute left-30 bottom-20 w-20 h-20>
+        <svg viewBox="0 0 100 100" absolute left-30 bottom-10 w-20 h-20>
             <circle cx="50" cy="50" r="50" fill="red" />
         </svg>
     </template>
@@ -345,7 +345,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
         Tail text
     </template>
     <template #head>
-        <svg viewBox="0 0 100 100" absolute left-30 bottom-20 w-20 h-20>
+        <svg viewBox="0 0 100 100" absolute left-30 bottom-10 w-20 h-20>
             <circle cx="50" cy="50" r="50" fill="red" />
         </svg>
     </template>
@@ -373,18 +373,18 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 If no snap target or absolute position is specified, the arrow will automatically snap to the next or previous element in the slide.
 </div>
 
-<div p-8 flex justify-center>Prev</div>
+<div m-8 flex justify-center>Prev</div>
 
 <FancyArrow />
 
-<div p-8 flex justify-center>Next</div>
+<div m-8 flex justify-center>Next</div>
 
 ```html
-<div p-8 flex justify-center>Prev</div>
+<div m-8 flex justify-center>Prev</div>
 
 <FancyArrow />
 
-<div p-8 flex justify-center>Next</div>
+<div m-8 flex justify-center>Next</div>
 ```
 
 ---
