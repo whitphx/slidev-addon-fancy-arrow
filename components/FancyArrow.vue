@@ -161,6 +161,9 @@ const tailAbsPos = computeEndpointPosition(tailPosition, headPosition);
 const headAbsPos = computeEndpointPosition(headPosition, tailPosition);
 
 const animationEnabled = computed(() => {
+  if (isPrintMode.value) {
+    return false;
+  }
   return props.static !== true;
 });
 
