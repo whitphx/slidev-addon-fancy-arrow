@@ -164,10 +164,12 @@ const headPosition = resolveSnapTarget(svgContainer, head);
 const tailPoint: Ref<AbsolutePosition | undefined> = computeEndpointPosition(
   tailPosition.position,
   tailPosition.boxPosition,
+  headPosition.boxPosition,
 );
 const headPoint: Ref<AbsolutePosition | undefined> = computeEndpointPosition(
   headPosition.position,
   headPosition.boxPosition,
+  tailPosition.boxPosition,
 );
 
 const animationEnabled = computed(() => {

@@ -146,6 +146,7 @@ export function resolveSnapTarget(
 export function computeEndpointPosition(
   position: Ref<Position | undefined>,
   boxPosition: Ref<BoxPosition | undefined>,
+  anotherBoxPosition: Ref<BoxPosition | undefined>,
 ): Ref<AbsolutePosition | undefined> {
   return computed<AbsolutePosition | undefined>((previous) => {
     if (position.value) {
@@ -157,15 +158,49 @@ export function computeEndpointPosition(
       const { snapPosition, rect } = boxPosition.value;
       let x = rect.x;
       let y = rect.y;
-      if (typeof snapPosition === "string" || snapPosition == null) {
-        if (snapPosition?.includes("right")) {
+      if (snapPosition == null) {
+        if (anotherBoxPosition.value) {
+          // Auto snap to the point that is on the edge of the rectangle and closest to the center of the other element
+          const c1x = rect.x + rect.width / 2;
+          const c1y = rect.y + rect.height / 2;
+          const c2x =
+            anotherBoxPosition.value.rect.x +
+            anotherBoxPosition.value.rect.width / 2;
+          const c2y =
+            anotherBoxPosition.value.rect.y +
+            anotherBoxPosition.value.rect.height / 2;
+          const dx = c2x - c1x;
+          const dy = c2y - c1y;
+          if (Math.abs(dx / dy) > rect.width / rect.height) {
+            if (dx > 0) {
+              x = rect.x + rect.width;
+            } else {
+              x = rect.x;
+            }
+            // Relationship between the ratios of side lengths of similar figures in geometry.
+            // y - c1y : dy = x - c1x : dx
+            y = c1y + ((x - c1x) * dy) / dx;
+          } else {
+            if (dy > 0) {
+              y = rect.y + rect.height;
+            } else {
+              y = rect.y;
+            }
+            // Relationship between the ratios of side lengths of similar figures in geometry.
+            // x - c1x : dx = y - c1y : dy
+            x = c1x + ((y - c1y) * dx) / dy;
+          }
+        }
+      }
+      if (typeof snapPosition === "string") {
+        if (snapPosition.includes("right")) {
           x += rect.width;
-        } else if (!snapPosition?.includes("left")) {
+        } else if (!snapPosition.includes("left")) {
           x += rect.width / 2;
         }
-        if (snapPosition?.includes("bottom")) {
+        if (snapPosition.includes("bottom")) {
           y += rect.height;
-        } else if (!snapPosition?.includes("top")) {
+        } else if (!snapPosition.includes("top")) {
           y += rect.height / 2;
         }
       } else if (typeof snapPosition === "object") {
