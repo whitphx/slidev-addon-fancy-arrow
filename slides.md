@@ -373,18 +373,18 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 If no snap target or absolute position is specified, the arrow will automatically snap to the next or previous element in the slide.
 </div>
 
-<div p-8 flex justify-center>Prev</div>
+<div m-8 flex justify-center>Prev</div>
 
 <FancyArrow />
 
-<div p-8 flex justify-center>Next</div>
+<div m-8 flex justify-center>Next</div>
 
 ```html
-<div p-8 flex justify-center>Prev</div>
+<div m-8 flex justify-center>Prev</div>
 
 <FancyArrow />
 
-<div p-8 flex justify-center>Next</div>
+<div m-8 flex justify-center>Next</div>
 ```
 
 ---
