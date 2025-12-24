@@ -38,6 +38,11 @@ export interface SnapTarget {
   snapPosition: SnapAnchorPoint | Position | undefined;
 }
 
+export interface BoxPosition {
+  rect: DOMRect;
+  snapPosition: SnapAnchorPoint | Position | undefined;
+}
+
 export function useEndpointResolution(
   rootElementRef: Ref<SVGSVGElement | undefined>,
   endpointRef: Ref<Position | SnapTarget | undefined>,
@@ -52,27 +57,8 @@ export function useEndpointResolution(
     return undefined;
   });
 
-  const point = ref<AbsolutePosition | undefined>(undefined);
-
-  // Sync endpointRef -> point in case where endpoint is Position
-  watch(
-    endpointRef,
-    (endpoint) => {
-      if (endpoint == null) {
-        point.value = undefined;
-        return;
-      } else if ("x" in endpoint) {
-        point.value = {
-          x: getAbsoluteValue(endpoint.x, slideWidth.value),
-          y: getAbsoluteValue(endpoint.y, slideHeight.value),
-        };
-        return;
-      }
-    },
-    { immediate: true },
-  );
-
-  // Sync snappedElementInfo -> point in case where endpoint is SnapTarget
+  // Sync snappedElementInfo -> boxPosition in case where endpoint is SnapTarget
+  const boxPosition = ref<BoxPosition | undefined>(undefined);
   const updateSnappedPosition = () => {
     if (!snappedElementInfo.value) {
       // This case means endpoint is of type Position
@@ -83,40 +69,22 @@ export function useEndpointResolution(
 
     const { element, snapPosition } = snappedElementInfo.value;
     if (!rootElementRef.value || !element) {
-      point.value = undefined;
+      boxPosition.value = undefined;
       return;
     }
 
     const rect = element.getBoundingClientRect();
     const rootRect = rootElementRef.value.getBoundingClientRect();
 
-    let x = (rect.left - rootRect.left) / $scale.value;
-    let y = (rect.top - rootRect.top) / $scale.value;
+    const x = (rect.left - rootRect.left) / $scale.value;
+    const y = (rect.top - rootRect.top) / $scale.value;
     const width = rect.width / $scale.value;
     const height = rect.height / $scale.value;
 
-    if (typeof snapPosition === "string" || snapPosition == null) {
-      if (snapPosition?.includes("right")) {
-        x += width;
-      } else if (!snapPosition?.includes("left")) {
-        x += width / 2;
-      }
-      if (snapPosition?.includes("bottom")) {
-        y += height;
-      } else if (!snapPosition?.includes("top")) {
-        y += height / 2;
-      }
-    } else if (typeof snapPosition === "object") {
-      x += getAbsoluteValue(snapPosition.x, width);
-      y += getAbsoluteValue(snapPosition.y, height);
-    }
-
-    if (point.value?.x !== x || point.value?.y !== y) {
-      // This if-condition is important.
-      // If the position/size of the element doesn't change,
-      // we must not update the point ref to avoid unnecessary re-renders.
-      point.value = { x, y };
-    }
+    boxPosition.value = {
+      rect: new DOMRect(x, y, width, height),
+      snapPosition,
+    };
   };
 
   watch(isSlideActive, () => {
@@ -151,6 +119,47 @@ export function useEndpointResolution(
     }, 100);
 
     return () => clearInterval(interval);
+  });
+
+  const point = computed<AbsolutePosition | undefined>((previous) => {
+    if (endpointRef.value == null) {
+      return undefined;
+    } else if ("x" in endpointRef.value) {
+      return {
+        x: getAbsoluteValue(endpointRef.value.x, slideWidth.value),
+        y: getAbsoluteValue(endpointRef.value.y, slideHeight.value),
+      };
+    } else if (boxPosition.value) {
+      const { snapPosition, rect } = boxPosition.value;
+      let x = rect.x;
+      let y = rect.y;
+      if (typeof snapPosition === "string" || snapPosition == null) {
+        if (snapPosition?.includes("right")) {
+          x += rect.width;
+        } else if (!snapPosition?.includes("left")) {
+          x += rect.width / 2;
+        }
+        if (snapPosition?.includes("bottom")) {
+          y += rect.height;
+        } else if (!snapPosition?.includes("top")) {
+          y += rect.height / 2;
+        }
+      } else if (typeof snapPosition === "object") {
+        x += getAbsoluteValue(snapPosition.x, rect.width);
+        y += getAbsoluteValue(snapPosition.y, rect.height);
+      }
+
+      if (previous?.x === x && previous?.y === y) {
+        // This if-condition is important.
+        // If the position/size of the element doesn't change,
+        // we must not update the computed ref to avoid unnecessary re-renders.
+        return previous;
+      }
+
+      return { x, y };
+    }
+
+    return undefined;
   });
 
   return point;
