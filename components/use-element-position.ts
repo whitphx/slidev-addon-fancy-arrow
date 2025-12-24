@@ -130,7 +130,7 @@ export function useEndpointResolution(
     return () => clearInterval(interval);
   });
 
-  const point = computed<AbsolutePosition | undefined>((previous) => {
+  return computed<AbsolutePosition | undefined>((previous) => {
     if (endpointRef.value == null) {
       return undefined;
     } else if ("x" in endpointRef.value) {
@@ -170,6 +170,4 @@ export function useEndpointResolution(
 
     return undefined;
   });
-
-  return point;
 }
