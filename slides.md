@@ -331,7 +331,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
         Tail text
     </template>
     <template #head>
-        <svg viewBox="0 0 100 100" absolute left-30 bottom-20 w-20 h-20>
+        <svg viewBox="0 0 100 100" absolute left-30 bottom-10 w-20 h-20>
             <circle cx="50" cy="50" r="50" fill="red" />
         </svg>
     </template>
@@ -345,7 +345,7 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
         Tail text
     </template>
     <template #head>
-        <svg viewBox="0 0 100 100" absolute left-30 bottom-20 w-20 h-20>
+        <svg viewBox="0 0 100 100" absolute left-30 bottom-10 w-20 h-20>
             <circle cx="50" cy="50" r="50" fill="red" />
         </svg>
     </template>
