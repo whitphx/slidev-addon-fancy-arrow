@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.14.0
+
+### Minor Changes
+
+- [#280](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/280) [`b102847`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/b1028475acdede4e3b45150498053a528ae2c979) Thanks [@whitphx](https://github.com/whitphx)! - Support "tail" and "head" named slots
+
 ## 0.13.13
 
 ### Patch Changes
