@@ -177,18 +177,20 @@ const { arrowSvg, textPosition } = useRoughArrow({
   headSize: props.headSize ? Number(props.headSize) : null,
   roughness: props.roughness ? Number(props.roughness) : undefined,
   seed: props.seed ? Number(props.seed) : undefined,
-  animation: animationEnabled.value
-    ? {
-        duration:
-          props.animationDuration != null
-            ? Number(props.animationDuration)
-            : undefined,
-        delay:
-          props.animationDelay != null
-            ? Number(props.animationDelay)
-            : undefined,
-      }
-    : undefined,
+  animation: computed(() =>
+    animationEnabled.value
+      ? {
+          duration:
+            props.animationDuration != null
+              ? Number(props.animationDuration)
+              : undefined,
+          delay:
+            props.animationDelay != null
+              ? Number(props.animationDelay)
+              : undefined,
+        }
+      : undefined,
+  ),
   strokeAnimationClass: "animated-rough-arrow-stroke",
   fillAnimationClass: "animated-rough-arrow-fill",
 });
