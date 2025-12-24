@@ -50,24 +50,24 @@ export function useEndpointResolution(
   const { $scale } = useSlideContext();
   const isSlideActive = useIsSlideActive();
 
-  const snappedElementInfo = computed(() => {
+  const snapTarget = computed(() => {
     if (endpointRef.value && "element" in endpointRef.value) {
       return endpointRef.value;
     }
     return undefined;
   });
 
-  // Sync snappedElementInfo -> boxPosition in case where endpoint is SnapTarget
+  // Sync snapTarget -> boxPosition in case where endpoint is SnapTarget
   const boxPosition = ref<BoxPosition | undefined>(undefined);
   const updateSnappedPosition = () => {
-    if (!snappedElementInfo.value) {
+    if (!snapTarget.value) {
       // This case means endpoint is of type Position
       // so we don't need to update point in this method
       // as it's done in the watch above.
       return;
     }
 
-    const { element, snapPosition } = snappedElementInfo.value;
+    const { element, snapPosition } = snapTarget.value;
     if (!rootElementRef.value || !element) {
       boxPosition.value = undefined;
       return;
@@ -95,7 +95,7 @@ export function useEndpointResolution(
   });
 
   watch(
-    snappedElementInfo,
+    snapTarget,
     (newVal) => {
       if (newVal?.element) {
         const observer = new MutationObserver(updateSnappedPosition);
