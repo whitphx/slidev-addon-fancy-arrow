@@ -315,6 +315,58 @@ Use `pos1` and `pos2` to specify the anchor point on the snapped elements.
 
 ---
 
+# `tail` and `head` slots
+
+<FancyArrow>
+    <template #tail>
+        <span absolute left-30 top-30>Tail</span>
+    </template>
+    <template #head>
+        <span absolute right-30 bottom-30>Head</span>
+    </template>
+</FancyArrow>
+
+<FancyArrow>
+    <template #tail>
+        Tail text
+    </template>
+    <template #head>
+        <svg viewBox="0 0 100 100" absolute left-30 bottom-20 w-20 h-20>
+            <circle cx="50" cy="50" r="50" fill="red" />
+        </svg>
+    </template>
+</FancyArrow>
+
+<div mt-12 grid="~ cols-2 gap-4">
+
+```html
+<FancyArrow>
+    <template #tail>
+        Tail text
+    </template>
+    <template #head>
+        <svg viewBox="0 0 100 100" absolute left-30 bottom-20 w-20 h-20>
+            <circle cx="50" cy="50" r="50" fill="red" />
+        </svg>
+    </template>
+</FancyArrow>
+```
+
+```html
+<FancyArrow>
+    <template #tail>
+        <span absolute left-30 top-30>Tail</span>
+    </template>
+    <template #head>
+        <span absolute right-30 bottom-30>Head</span>
+    </template>
+</FancyArrow>
+```
+
+</div>
+
+---
+
 # Auto-snap
 
 <div>

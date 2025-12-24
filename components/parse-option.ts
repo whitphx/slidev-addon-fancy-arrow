@@ -21,7 +21,7 @@ export interface Position {
   y: LengthPercentage;
 }
 
-export interface SnapTarget {
+export interface SnapTargetQuery {
   query: string;
   snapPosition: SnapAnchorPoint | Position | undefined;
 }
@@ -80,7 +80,7 @@ function parseSnapPosition(
  */
 export function parseArrowEndpointShorthand(
   arrowEndpointShorthand: string,
-): SnapTarget | Position {
+): SnapTargetQuery | Position {
   arrowEndpointShorthand = arrowEndpointShorthand.trim();
 
   const position = parsePosition(arrowEndpointShorthand);
@@ -116,7 +116,7 @@ interface ArrowEndpointProps {
 }
 export function compileArrowEndpointProps(
   props: ArrowEndpointProps,
-): SnapTarget | Position | undefined {
+): SnapTargetQuery | Position | undefined {
   if (props.shorthand) {
     try {
       return parseArrowEndpointShorthand(props.shorthand);

@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import { ref, computed, type Ref } from "vue";
+import { ref, computed, useSlots, type Ref } from "vue";
 import {
   compileArrowEndpointProps,
+  SnapTargetQuery,
   type SnapAnchorPoint,
 } from "./parse-option";
-import { useEndpointResolution } from "./use-element-position";
+import { useIsSlideActive, useNav } from "@slidev/client";
+import { SnapTarget, useEndpointResolution } from "./use-element-position";
 import {
   useRoughArrow,
   DEFAULT_ANIMATION_DURATION,
   type AbsolutePosition,
 } from "./use-rough-arrow";
+import ChildElementPicker from "./ChildElementPicker.vue";
 
 const props = defineProps<{
   from?: string; // Shorthand for (q1 and pos1) or (x1 and y1)
@@ -44,44 +47,120 @@ const slideContainer = computed(() => {
 
 const svgContainer = ref<SVGSVGElement>();
 
-const endpoint1 = computed(() =>
-  compileArrowEndpointProps({
+const slots = useSlots();
+const tailElementRef = ref<Element>();
+const headElementRef = ref<Element>();
+function onTailElementMounted(element: Element | null) {
+  tailElementRef.value = element ?? undefined;
+}
+function onHeadElementMounted(element: Element | null) {
+  headElementRef.value = element ?? undefined;
+}
+
+const tail = computed(() => {
+  const useTailSlot = slots.tail != null;
+  if (useTailSlot) {
+    const snapTarget: SnapTarget = {
+      element: tailElementRef.value,
+      snapPosition: undefined,
+    };
+    return snapTarget;
+  }
+
+  const tailConfig = compileArrowEndpointProps({
     shorthand: props.from,
     q: props.q1,
     id: props.id1,
     pos: props.pos1,
     x: props.x1,
     y: props.y1,
-  }),
-);
-const endpoint2 = computed(() =>
-  compileArrowEndpointProps({
+  });
+
+  if (tailConfig == null) {
+    // Try to use the next or previous element as fallback snap target.
+    const snapTarget: SnapTarget = {
+      element: root.value?.previousElementSibling ?? undefined,
+      snapPosition: undefined,
+    };
+    return snapTarget;
+  }
+
+  if (!("query" in tailConfig)) {
+    // tailConfig is of type Position. Return it as is.
+    return tailConfig;
+  }
+
+  return getSnapTarget(tailConfig);
+});
+
+const head = computed(() => {
+  const useHeadSlot = slots.head != null;
+  if (useHeadSlot) {
+    const snapTarget: SnapTarget = {
+      element: headElementRef.value,
+      snapPosition: undefined,
+    };
+    return snapTarget;
+  }
+
+  const headConfig = compileArrowEndpointProps({
     shorthand: props.to,
     q: props.q2,
     id: props.id2,
     pos: props.pos2,
     x: props.x2,
     y: props.y2,
-  }),
-);
+  });
 
-const point1: Ref<AbsolutePosition | undefined> = useEndpointResolution(
-  slideContainer,
+  if (headConfig == null) {
+    // Try to use the next or previous element as fallback snap target.
+    const snapTarget: SnapTarget = {
+      element: root.value?.nextElementSibling ?? undefined,
+      snapPosition: undefined,
+    };
+    return snapTarget;
+  }
+
+  if (!("query" in headConfig)) {
+    // headConfig is of type Position. Return it as is.
+    return headConfig;
+  }
+
+  return getSnapTarget(headConfig);
+});
+
+const { isPrintMode } = useNav();
+const isSlideActive = useIsSlideActive();
+function getSnapTarget(
+  snapTargetQuery: SnapTargetQuery,
+): SnapTarget | undefined {
+  if (
+    !isPrintMode.value && // In print mode, isSlideActive doesn't matter because all slides are rendered.
+    !isSlideActive.value // In the normal mode, we only resolve the snap target on the active slide because other slides may not be rendered.
+  ) {
+    return undefined;
+  }
+
+  const element =
+    slideContainer.value?.querySelector(snapTargetQuery.query) ?? undefined;
+  if (element == null) {
+    console.warn(`Element not found for query: ${snapTargetQuery.query}`);
+  }
+
+  const snapTarget: SnapTarget = {
+    element,
+    snapPosition: snapTargetQuery.snapPosition,
+  };
+  return snapTarget;
+}
+
+const tailPoint: Ref<AbsolutePosition | undefined> = useEndpointResolution(
   svgContainer,
-  endpoint1,
-  {
-    self: root,
-    direction: "prev",
-  },
+  tail,
 );
-const point2: Ref<AbsolutePosition | undefined> = useEndpointResolution(
-  slideContainer,
+const headPoint: Ref<AbsolutePosition | undefined> = useEndpointResolution(
   svgContainer,
-  endpoint2,
-  {
-    self: root,
-    direction: "next",
-  },
+  head,
 );
 
 const animationEnabled = computed(() => {
@@ -89,8 +168,8 @@ const animationEnabled = computed(() => {
 });
 
 const { arrowSvg, textPosition } = useRoughArrow({
-  point1,
-  point2,
+  point1: tailPoint,
+  point2: headPoint,
   width: Number(props.width ?? 2),
   twoWay: props.twoWay ?? false,
   centerPositionParam: Number(props.arc ?? 0),
@@ -118,8 +197,31 @@ const { arrowSvg, textPosition } = useRoughArrow({
 <template>
   <div
     ref="root"
-    style="position: absolute; top: 0; left: 0"
+    style="display: contents"
   >
+    <!--
+    "display: contents" ensures the root element doesn't affect the layout
+    so that the positions of the elements injected into the slots are not
+    affected by the root element.
+  -->
+
+    <!--
+    Place these slots before the main SVG arrow
+    so that the SVG arrow is placed in front of the elements in the slots.
+    -->
+    <ChildElementPicker
+      v-if="slots.tail"
+      @first-child-element-mounted="onTailElementMounted"
+    >
+      <slot name="tail" />
+    </ChildElementPicker>
+    <ChildElementPicker
+      v-if="slots.head"
+      @first-child-element-mounted="onHeadElementMounted"
+    >
+      <slot name="head" />
+    </ChildElementPicker>
+
     <svg
       ref="svgContainer"
       :class="props.color ? `text-${props.color}` : ''"
