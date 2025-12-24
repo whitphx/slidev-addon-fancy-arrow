@@ -10,7 +10,7 @@ import {
   resolveSnapTargetPosition,
   SnapTarget,
   computeEndpointPosition,
-} from "./use-element-position";
+} from "./position";
 import { useRoughArrow, DEFAULT_ANIMATION_DURATION } from "./use-rough-arrow";
 import ChildElementPicker from "./ChildElementPicker.vue";
 
