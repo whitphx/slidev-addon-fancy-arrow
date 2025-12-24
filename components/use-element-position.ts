@@ -143,6 +143,37 @@ export function resolveSnapTarget(
   };
 }
 
+export function getClosestEdgePoint(
+  rect: DOMRect,
+  anotherPoint: { x: number; y: number },
+): { x: number; y: number } {
+  const c1x = rect.x + rect.width / 2;
+  const c1y = rect.y + rect.height / 2;
+  if (rect.width === 0 || rect.height === 0) {
+    return { x: c1x, y: c1y };
+  }
+
+  const dx = anotherPoint.x - c1x;
+  const dy = anotherPoint.y - c1y;
+  if (dx === 0 && dy === 0) {
+    return { x: c1x, y: c1y };
+  }
+
+  if (Math.abs(dx / dy) > rect.width / rect.height) {
+    const x = dx > 0 ? rect.x + rect.width : rect.x;
+    // Relationship between the ratios of side lengths of similar figures in geometry.
+    // y - c1y : dy = x - c1x : dx
+    const y = c1y + ((x - c1x) * dy) / dx;
+    return { x, y };
+  } else {
+    const y = dy > 0 ? rect.y + rect.height : rect.y;
+    // Relationship between the ratios of side lengths of similar figures in geometry.
+    // x - c1x : dx = y - c1y : dy
+    const x = c1x + ((y - c1y) * dx) / dy;
+    return { x, y };
+  }
+}
+
 export function computeEndpointPosition(
   position: Ref<Position | undefined>,
   boxPosition: Ref<BoxPosition | undefined>,
@@ -161,40 +192,15 @@ export function computeEndpointPosition(
       if (snapPosition == null) {
         if (anotherBoxPosition.value) {
           // Auto snap to the point that is on the edge of the rectangle and closest to the center of the other element
-          const c1x = rect.x + rect.width / 2;
-          const c1y = rect.y + rect.height / 2;
-          if (rect.width === 0 || rect.height === 0) {
-            x = c1x;
-            y = c1y;
-          } else {
-            const c2x =
-              anotherBoxPosition.value.rect.x +
-              anotherBoxPosition.value.rect.width / 2;
-            const c2y =
-              anotherBoxPosition.value.rect.y +
-              anotherBoxPosition.value.rect.height / 2;
-            const dx = c2x - c1x;
-            const dy = c2y - c1y;
-            if (Math.abs(dx / dy) > rect.width / rect.height) {
-              if (dx > 0) {
-                x = rect.x + rect.width;
-              } else {
-                x = rect.x;
-              }
-              // Relationship between the ratios of side lengths of similar figures in geometry.
-              // y - c1y : dy = x - c1x : dx
-              y = c1y + ((x - c1x) * dy) / dx;
-            } else {
-              if (dy > 0) {
-                y = rect.y + rect.height;
-              } else {
-                y = rect.y;
-              }
-              // Relationship between the ratios of side lengths of similar figures in geometry.
-              // x - c1x : dx = y - c1y : dy
-              x = c1x + ((y - c1y) * dx) / dy;
-            }
-          }
+          const c2x =
+            anotherBoxPosition.value.rect.x +
+            anotherBoxPosition.value.rect.width / 2;
+          const c2y =
+            anotherBoxPosition.value.rect.y +
+            anotherBoxPosition.value.rect.height / 2;
+          const closestPoint = getClosestEdgePoint(rect, { x: c2x, y: c2y });
+          x = closestPoint.x;
+          y = closestPoint.y;
         }
       }
       if (typeof snapPosition === "string") {
