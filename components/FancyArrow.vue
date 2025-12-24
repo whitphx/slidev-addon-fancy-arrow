@@ -6,7 +6,11 @@ import {
   type SnapAnchorPoint,
 } from "./parse-option";
 import { useIsSlideActive, useNav } from "@slidev/client";
-import { SnapTarget, useEndpointResolution } from "./use-element-position";
+import {
+  resolveSnapTarget,
+  SnapTarget,
+  computeEndpointPosition,
+} from "./use-element-position";
 import {
   useRoughArrow,
   DEFAULT_ANIMATION_DURATION,
@@ -154,13 +158,16 @@ function getSnapTarget(
   return snapTarget;
 }
 
-const tailPoint: Ref<AbsolutePosition | undefined> = useEndpointResolution(
-  svgContainer,
-  tail,
+const tailPosition = resolveSnapTarget(svgContainer, tail);
+const headPosition = resolveSnapTarget(svgContainer, head);
+
+const tailPoint: Ref<AbsolutePosition | undefined> = computeEndpointPosition(
+  tailPosition.position,
+  tailPosition.boxPosition,
 );
-const headPoint: Ref<AbsolutePosition | undefined> = useEndpointResolution(
-  svgContainer,
-  head,
+const headPoint: Ref<AbsolutePosition | undefined> = computeEndpointPosition(
+  headPosition.position,
+  headPosition.boxPosition,
 );
 
 const animationEnabled = computed(() => {

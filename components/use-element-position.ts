@@ -43,10 +43,17 @@ export interface BoxPosition {
   snapPosition: SnapAnchorPoint | Position | undefined;
 }
 
-export function useEndpointResolution(
+export function resolveSnapTarget(
   rootElementRef: Ref<SVGSVGElement | undefined>,
   endpointRef: Ref<Position | SnapTarget | undefined>,
-): Ref<AbsolutePosition | undefined> {
+) {
+  const position = computed(() => {
+    if (endpointRef.value && "x" in endpointRef.value) {
+      return endpointRef.value;
+    }
+    return undefined;
+  });
+
   const { $scale } = useSlideContext();
   const isSlideActive = useIsSlideActive();
 
@@ -130,13 +137,21 @@ export function useEndpointResolution(
     return () => clearInterval(interval);
   });
 
+  return {
+    position,
+    boxPosition,
+  };
+}
+
+export function computeEndpointPosition(
+  position: Ref<Position | undefined>,
+  boxPosition: Ref<BoxPosition | undefined>,
+): Ref<AbsolutePosition | undefined> {
   return computed<AbsolutePosition | undefined>((previous) => {
-    if (endpointRef.value == null) {
-      return undefined;
-    } else if ("x" in endpointRef.value) {
+    if (position.value) {
       return {
-        x: getAbsoluteValue(endpointRef.value.x, slideWidth.value),
-        y: getAbsoluteValue(endpointRef.value.y, slideHeight.value),
+        x: getAbsoluteValue(position.value.x, slideWidth.value),
+        y: getAbsoluteValue(position.value.y, slideHeight.value),
       };
     } else if (boxPosition.value) {
       const { snapPosition, rect } = boxPosition.value;
