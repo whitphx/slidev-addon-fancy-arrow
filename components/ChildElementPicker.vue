@@ -12,7 +12,7 @@ import {
 } from "vue";
 
 const emit = defineEmits<{
-  firstChildElementMounted: [element: HTMLElement | null];
+  firstChildElementMounted: [element: Element | null];
 }>();
 
 // Trick to get the reference to the element injected to the slot.
@@ -57,14 +57,14 @@ const shouldWrap = computed(() => {
     return false;
   }
 
-  return !(firstChildElementRef.value instanceof HTMLElement);
+  return !(firstChildElementRef.value instanceof Element);
 });
 
 const wrapperRef = useTemplateRef("wrapper");
 watchEffect(() => {
   if (shouldWrap.value) {
     emit("firstChildElementMounted", wrapperRef.value);
-  } else if (firstChildElementRef.value instanceof HTMLElement) {
+  } else if (firstChildElementRef.value instanceof Element) {
     emit("firstChildElementMounted", firstChildElementRef.value);
   }
 });

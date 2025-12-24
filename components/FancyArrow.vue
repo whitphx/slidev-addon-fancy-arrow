@@ -48,12 +48,12 @@ const slideContainer = computed(() => {
 const svgContainer = ref<SVGSVGElement>();
 
 const slots = useSlots();
-const tailElementRef = ref<HTMLElement>();
-const headElementRef = ref<HTMLElement>();
-function onTailElementMounted(element: HTMLElement | null) {
+const tailElementRef = ref<Element>();
+const headElementRef = ref<Element>();
+function onTailElementMounted(element: Element | null) {
   tailElementRef.value = element ?? undefined;
 }
-function onHeadElementMounted(element: HTMLElement | null) {
+function onHeadElementMounted(element: Element | null) {
   headElementRef.value = element ?? undefined;
 }
 
@@ -204,6 +204,24 @@ const { arrowSvg, textPosition } = useRoughArrow({
     so that the positions of the elements injected into the slots are not
     affected by the root element.
   -->
+
+    <!--
+    Place these slots before the main SVG arrow
+    so that the SVG arrow is placed in front of the elements in the slots.
+    -->
+    <ChildElementPicker
+      v-if="slots.tail"
+      @first-child-element-mounted="onTailElementMounted"
+    >
+      <slot name="tail" />
+    </ChildElementPicker>
+    <ChildElementPicker
+      v-if="slots.head"
+      @first-child-element-mounted="onHeadElementMounted"
+    >
+      <slot name="head" />
+    </ChildElementPicker>
+
     <svg
       ref="svgContainer"
       :class="props.color ? `text-${props.color}` : ''"
@@ -236,19 +254,6 @@ const { arrowSvg, textPosition } = useRoughArrow({
     >
       <slot />
     </div>
-
-    <ChildElementPicker
-      v-if="slots.tail"
-      @first-child-element-mounted="onTailElementMounted"
-    >
-      <slot name="tail" />
-    </ChildElementPicker>
-    <ChildElementPicker
-      v-if="slots.head"
-      @first-child-element-mounted="onHeadElementMounted"
-    >
-      <slot name="head" />
-    </ChildElementPicker>
   </div>
 </template>
 
