@@ -47,36 +47,27 @@ export function resolveSnapTarget(
   rootElementRef: Ref<SVGSVGElement | undefined>,
   endpointRef: Ref<Position | SnapTarget | undefined>,
 ) {
-  const position = computed(() => {
-    if (endpointRef.value && "x" in endpointRef.value) {
-      return endpointRef.value;
-    }
-    return undefined;
-  });
-
   const { $scale } = useSlideContext();
   const isSlideActive = useIsSlideActive();
 
-  const snapTarget = computed(() => {
-    if (endpointRef.value && "element" in endpointRef.value) {
-      return endpointRef.value;
-    }
-    return undefined;
-  });
-
-  // Sync snapTarget -> boxPosition in case where endpoint is SnapTarget
-  const boxPosition = ref<BoxPosition | undefined>(undefined);
+  // Sync SnapTarget -> BoxPosition in case where endpoint is SnapTarget
+  const position = ref<Position | BoxPosition | undefined>(undefined);
   const updateSnappedPosition = () => {
-    if (!snapTarget.value) {
-      // This case means endpoint is of type Position
+    if (endpointRef.value == null) {
+      return;
+    }
+    if ("x" in endpointRef.value) {
+      // Endpoint is of type Position
       // so we don't need to update point in this method
-      // as it's done in the watch above.
+      // as it's done in the watch below.
       return;
     }
 
-    const { element, snapPosition } = snapTarget.value;
+    const snapTarget = endpointRef.value;
+
+    const { element, snapPosition } = snapTarget;
     if (!rootElementRef.value || !element) {
-      boxPosition.value = undefined;
+      position.value = undefined;
       return;
     }
 
@@ -89,15 +80,17 @@ export function resolveSnapTarget(
     const height = rect.height / $scale.value;
 
     if (
-      boxPosition.value?.rect.x === x &&
-      boxPosition.value?.rect.y === y &&
-      boxPosition.value?.rect.width === width &&
-      boxPosition.value?.rect.height === height
+      position.value &&
+      "rect" in position.value &&
+      position.value.rect.x === x &&
+      position.value.rect.y === y &&
+      position.value.rect.width === width &&
+      position.value.rect.height === height
     ) {
       // Avoid unnecessary re-renders
       return;
     }
-    boxPosition.value = {
+    position.value = {
       rect: new DOMRect(x, y, width, height),
       snapPosition,
     };
@@ -111,9 +104,15 @@ export function resolveSnapTarget(
   });
 
   watch(
-    snapTarget,
+    endpointRef,
     (newVal) => {
-      if (newVal?.element) {
+      if (newVal == null) {
+        return;
+      }
+      if ("x" in newVal) {
+        // Sync Position -> Position
+        position.value = newVal;
+      } else if (newVal.element) {
         const observer = new MutationObserver(updateSnappedPosition);
         observer.observe(newVal.element, { attributes: true });
 
@@ -137,10 +136,7 @@ export function resolveSnapTarget(
     return () => clearInterval(interval);
   });
 
-  return {
-    position,
-    boxPosition,
-  };
+  return position;
 }
 
 export function getClosestEdgePoint(
@@ -175,29 +171,35 @@ export function getClosestEdgePoint(
 }
 
 export function computeEndpointPosition(
-  position: Ref<Position | undefined>,
-  boxPosition: Ref<BoxPosition | undefined>,
-  anotherBoxPosition: Ref<BoxPosition | undefined>,
+  position: Ref<Position | BoxPosition | undefined>,
+  anotherPosition: Ref<Position | BoxPosition | undefined>,
 ): Ref<AbsolutePosition | undefined> {
   return computed<AbsolutePosition | undefined>((previous) => {
-    if (position.value) {
+    if (position.value == null) {
+      return undefined;
+    }
+    if ("x" in position.value) {
       return {
         x: getAbsoluteValue(position.value.x, slideWidth.value),
         y: getAbsoluteValue(position.value.y, slideHeight.value),
       };
-    } else if (boxPosition.value) {
-      const { snapPosition, rect } = boxPosition.value;
+    } else {
+      const { snapPosition, rect } = position.value;
       let x = rect.x;
       let y = rect.y;
       if (snapPosition == null) {
-        if (anotherBoxPosition.value) {
+        if (anotherPosition.value) {
           // Auto snap to the point that is on the edge of the rectangle and closest to the center of the other element
           const c2x =
-            anotherBoxPosition.value.rect.x +
-            anotherBoxPosition.value.rect.width / 2;
+            "x" in anotherPosition.value
+              ? getAbsoluteValue(anotherPosition.value.x, slideWidth.value)
+              : anotherPosition.value.rect.x +
+                anotherPosition.value.rect.width / 2;
           const c2y =
-            anotherBoxPosition.value.rect.y +
-            anotherBoxPosition.value.rect.height / 2;
+            "y" in anotherPosition.value
+              ? getAbsoluteValue(anotherPosition.value.y, slideHeight.value)
+              : anotherPosition.value.rect.y +
+                anotherPosition.value.rect.height / 2;
           const closestPoint = getClosestEdgePoint(rect, { x: c2x, y: c2y });
           x = closestPoint.x;
           y = closestPoint.y;
@@ -228,7 +230,5 @@ export function computeEndpointPosition(
 
       return { x, y };
     }
-
-    return undefined;
   });
 }
