@@ -81,6 +81,15 @@ export function useEndpointResolution(
     const width = rect.width / $scale.value;
     const height = rect.height / $scale.value;
 
+    if (
+      boxPosition.value?.rect.x === x &&
+      boxPosition.value?.rect.y === y &&
+      boxPosition.value?.rect.width === width &&
+      boxPosition.value?.rect.height === height
+    ) {
+      // Avoid unnecessary re-renders
+      return;
+    }
     boxPosition.value = {
       rect: new DOMRect(x, y, width, height),
       snapPosition,
