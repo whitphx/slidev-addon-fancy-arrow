@@ -31,15 +31,15 @@ See also: https://sli.dev/guide/theme-addon#use-addon
 
 [👉 Check out the demo and docs](https://whitphx.github.io/slidev-addon-fancy-arrow/).
 
-### Basic Examples
-
-#### Absolute positions
+### Absolute positions
 
 ```html
 <FancyArrow from="(10, 20)" to="(30, 40)" />
 ```
 
-#### Snapped to elements
+### Snapped to elements
+
+#### Bind to elements via selectors
 
 ```html
 <div data-id="anchor1" m-8>anchor1</div>
@@ -48,7 +48,20 @@ See also: https://sli.dev/guide/theme-addon#use-addon
 <FancyArrow from="[data-id=anchor1]@bottom" to="[data-id=anchor2]@top" />
 ```
 
-#### Configure the styles
+#### Define the snapped elements via `tail` and `head` slots
+
+```html
+<FancyArrow>
+  <template #tail>
+    <span m-8>Tail</span>
+  </template>
+  <template #head>
+    <span m-8>Head</span>
+  </template>
+</FancyArrow>
+```
+
+### Configure the styles
 
 ```html
 <FancyArrow
@@ -66,9 +79,9 @@ See also: https://sli.dev/guide/theme-addon#use-addon
 />
 ```
 
-#### Animation
+### Animation
 
-##### Animation properties
+#### Animation properties
 
 ```html
 <FancyArrow
@@ -79,7 +92,7 @@ See also: https://sli.dev/guide/theme-addon#use-addon
 />
 ```
 
-##### Disable animation
+#### Disable animation
 
 ```html
 <FancyArrow from="(100, 200)" to="(300, 400)" static />
