@@ -43,10 +43,10 @@ export interface BoxPosition {
   snapPosition: SnapAnchorPoint | Position | undefined;
 }
 
-export function resolveSnapTarget(
+export function resolveSnapTargetPosition(
   rootElementRef: Ref<SVGSVGElement | undefined>,
   endpointRef: Ref<Position | SnapTarget | undefined>,
-) {
+): Ref<Position | BoxPosition | undefined> {
   const { $scale } = useSlideContext();
   const isSlideActive = useIsSlideActive();
 

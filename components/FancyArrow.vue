@@ -7,7 +7,7 @@ import {
 } from "./parse-option";
 import { useIsSlideActive, useNav } from "@slidev/client";
 import {
-  resolveSnapTarget,
+  resolveSnapTargetPosition,
   SnapTarget,
   computeEndpointPosition,
 } from "./use-element-position";
@@ -154,8 +154,8 @@ function getSnapTarget(
   return snapTarget;
 }
 
-const tailPosition = resolveSnapTarget(svgContainer, tail);
-const headPosition = resolveSnapTarget(svgContainer, head);
+const tailPosition = resolveSnapTargetPosition(svgContainer, tail);
+const headPosition = resolveSnapTargetPosition(svgContainer, head);
 
 const tailAbsPos = computeEndpointPosition(tailPosition, headPosition);
 const headAbsPos = computeEndpointPosition(headPosition, tailPosition);
