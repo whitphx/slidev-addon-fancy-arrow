@@ -12,7 +12,7 @@ import {
   DEFAULT_ANIMATION_DURATION,
   type AbsolutePosition,
 } from "./use-rough-arrow";
-import SlotAdapter from "./SlotAdapter.vue";
+import ChildElementPicker from "./ChildElementPicker.vue";
 
 const props = defineProps<{
   from?: string; // Shorthand for (q1 and pos1) or (x1 and y1)
@@ -237,18 +237,18 @@ const { arrowSvg, textPosition } = useRoughArrow({
       <slot />
     </div>
 
-    <SlotAdapter
+    <ChildElementPicker
       v-if="slots.tail"
       @first-child-element-mounted="onTailElementMounted"
     >
       <slot name="tail" />
-    </SlotAdapter>
-    <SlotAdapter
+    </ChildElementPicker>
+    <ChildElementPicker
       v-if="slots.head"
       @first-child-element-mounted="onHeadElementMounted"
     >
       <slot name="head" />
-    </SlotAdapter>
+    </ChildElementPicker>
   </div>
 </template>
 
