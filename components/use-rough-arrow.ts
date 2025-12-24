@@ -63,10 +63,13 @@ export function useRoughArrow(props: {
   seed?: number;
   twoWay: boolean;
   centerPositionParam: number;
-  animation?: {
-    duration?: number;
-    delay?: number;
-  };
+  animation: Ref<
+    | {
+        duration?: number;
+        delay?: number;
+      }
+    | undefined
+  >;
   strokeAnimationClass: string;
   fillAnimationClass: string;
 }) {
@@ -297,7 +300,9 @@ export function useRoughArrow(props: {
       g.appendChild(arrowHeadBackwardSvg);
     }
 
-    if (animation) {
+    if (animation.value) {
+      const animationValue = animation.value;
+
       interface AnimationSegment {
         length: number;
         strokedPaths: SVGPathElement[];
@@ -354,7 +359,8 @@ export function useRoughArrow(props: {
         .map((s) => s.length)
         .reduce((a, b) => a + b, 0);
 
-      const { duration = DEFAULT_ANIMATION_DURATION, delay = 0 } = animation;
+      const { duration = DEFAULT_ANIMATION_DURATION, delay = 0 } =
+        animationValue;
       let currentDelay = delay;
       // Animation impl inspired by https://github.com/rough-stuff/rough-notation/blob/668ba82ac89c903d6f59c9351b9b85855da9882c/src/render.ts#L222-L235
       for (const segment of segments) {
