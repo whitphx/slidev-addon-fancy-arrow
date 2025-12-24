@@ -1,5 +1,15 @@
 # slidev-addon-fancy-arrow
 
+## 0.15.0
+
+### Minor Changes
+
+- [#289](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/289) [`be2f4fb`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/be2f4fb22260135ed6b30277bad12e43bef931e9) Thanks [@whitphx](https://github.com/whitphx)! - Calculate the snapping position on the rect edge when not specified
+
+### Patch Changes
+
+- [#292](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/292) [`b6e5ed0`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/b6e5ed03a9e6ee61a6d370f560d6c12f5dcd1e89) Thanks [@whitphx](https://github.com/whitphx)! - Disable animation in print mode
+
 ## 0.14.0
 
 ### Minor Changes
