@@ -84,12 +84,7 @@ See also: https://sli.dev/guide/theme-addon#use-addon
 #### Animation properties
 
 ```html
-<FancyArrow
-  from="(100, 200)"
-  to="(300, 400)"
-  animation-duration="1000"
-  animation-delay="500"
-/>
+<FancyArrow from="(100, 200)" to="(300, 400)" duration="1000" delay="500" />
 ```
 
 #### Disable animation
