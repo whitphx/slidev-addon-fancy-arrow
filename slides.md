@@ -13,7 +13,7 @@ Slidev addon for drawing arrows with<br>
 
 </div>
 
-<FancyArrow from="[data-id=rough-js]@top" to="[data-id=fancy-styles]@bottom" color="orange" width="3" arc="-0.3" seed="1" roughness="2" animationDuration="500" animationDelay="0" />
+<FancyArrow from="[data-id=rough-js]@top" to="[data-id=fancy-styles]@bottom" color="orange" width="3" arc="-0.3" seed="1" roughness="2" duration="500" delay="0" />
 
 <div absolute left-80 top-90>
 <p>
@@ -25,9 +25,9 @@ Slidev addon for drawing arrows with<br>
 </p>
 </div>
 
-<FancyArrow from="[data-id=intuitive-positioning]@bottom" to="[data-id=snap-sample]@top" color="green" width="3" arc="-0.3" seed="1" roughness="2" animationDuration="500" animationDelay="500" />
+<FancyArrow from="[data-id=intuitive-positioning]@bottom" to="[data-id=snap-sample]@top" color="green" width="3" arc="-0.3" seed="1" roughness="2" duration="500" delay="500" />
 
-<FancyArrow from="[data-id=abspos-sample]@topright" to="(800,500)" color="blue" width="3" arc="0.3" seed="1" roughness="2" animationDuration="500" animationDelay="1000" />
+<FancyArrow from="[data-id=abspos-sample]@topright" to="(800,500)" color="blue" width="3" arc="0.3" seed="1" roughness="2" duration="500" delay="1000" />
 
 <div absolute w="1px" h="100%" left="800px" top="0" bg="gray" opacity="0.5" translate-x="-50%"></div>
 <div absolute h="1px" w="100%" left="0" top="500px" bg="gray" opacity="0.5" translate-y="-50%"></div>
@@ -658,7 +658,7 @@ If no snap target or absolute position is specified, the arrow will automaticall
 ### Custom duration
 
 <FancyArrow
-    animationDuration="3000"
+    duration="3000"
     x1="420" y1="200" x2="560" y2="280"
 />
 
@@ -666,7 +666,7 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 ```html {2}
 <FancyArrow
-    animationDuration="3000"
+    duration="3000"
     x1="420" y1="200" x2="560" y2="280"
 />
 ```
@@ -678,7 +678,7 @@ If no snap target or absolute position is specified, the arrow will automaticall
 ### Custom delay
 
 <FancyArrow
-    animationDelay="1000"
+    delay="1000"
     x1="720" y1="200" x2="860" y2="280"
 />
 
@@ -686,7 +686,7 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 ```html {2}
 <FancyArrow
-    animationDelay="1000"
+    delay="1000"
     x1="720" y1="200" x2="860" y2="280"
 />
 ```
