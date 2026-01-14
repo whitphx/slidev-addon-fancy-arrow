@@ -36,9 +36,16 @@ const props = defineProps<{
   roughness?: number | string;
   seed?: number | string;
   static?: boolean;
+  duration?: number | string;
+  delay?: number | string;
+  /** @deprecated Use `duration` instead */
   animationDuration?: number | string;
+  /** @deprecated Use `delay` instead */
   animationDelay?: number | string;
 }>();
+
+const duration = computed(() => props.duration ?? props.animationDuration);
+const delay = computed(() => props.delay ?? props.animationDelay);
 
 const root = ref<HTMLElement>();
 const slideContainer = computed(() => {
@@ -180,14 +187,8 @@ const { arrowSvg, textPosition } = useRoughArrow({
   animation: computed(() =>
     animationEnabled.value
       ? {
-          duration:
-            props.animationDuration != null
-              ? Number(props.animationDuration)
-              : undefined,
-          delay:
-            props.animationDelay != null
-              ? Number(props.animationDelay)
-              : undefined,
+          duration: duration.value != null ? Number(duration.value) : undefined,
+          delay: delay.value != null ? Number(delay.value) : undefined,
         }
       : undefined,
   ),
@@ -248,8 +249,8 @@ const { arrowSvg, textPosition } = useRoughArrow({
         top: `${textPosition.y}px`,
         transform: 'translate(-50%, -50%)',
         ...(animationEnabled && {
-          animationDuration: `${props.animationDuration ?? DEFAULT_ANIMATION_DURATION}ms`,
-          animationDelay: `${props.animationDelay ?? 0}ms`,
+          animationDuration: `${duration ?? DEFAULT_ANIMATION_DURATION}ms`,
+          animationDelay: `${delay ?? 0}ms`,
           visibility: 'hidden',
         }),
       }"
