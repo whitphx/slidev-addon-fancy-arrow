@@ -34,7 +34,7 @@
     "@changesets/cli": "^2.29.8",
     "@eslint/js": "^9.39.2",
     "@iconify-json/octicon": "^1.2.19",
-    "@slidev/cli": "^52.6.0",
+    "@slidev/cli": "^52.11.3",
     "@slidev/theme-default": "latest",
     "eslint": "^9.39.2",
     "eslint-plugin-vue": "^9.33.0",
