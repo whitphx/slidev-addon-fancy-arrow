@@ -33,7 +33,7 @@
     "@changesets/changelog-github": "^0.5.2",
     "@changesets/cli": "^2.29.8",
     "@eslint/js": "^9.39.2",
-    "@iconify-json/octicon": "^1.2.19",
+    "@iconify-json/octicon": "^1.2.20",
     "@slidev/cli": "^52.6.0",
     "@slidev/theme-default": "latest",
     "eslint": "^9.39.2",
