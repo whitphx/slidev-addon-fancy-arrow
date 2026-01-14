@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.16.0
+
+### Minor Changes
+
+- [#305](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/305) [`62b3be7`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/62b3be7360b858f2ef14b2f032acd057c6a863dd) Thanks [@whitphx](https://github.com/whitphx)! - Add shorter `duration` and `delay` props as alternatives to `animationDuration` and `animationDelay`. The original props are deprecated but still supported for backward compatibility.
+
 ## 0.15.1
 
 ### Patch Changes
