@@ -69,3 +69,9 @@ The addon integrates with Slidev via `@slidev/client` imports for:
 - `useNav()` - Detect print mode to disable animations
 - `$scale` - Account for slide scaling when calculating positions
 - `slideWidth`/`slideHeight` - Convert percentage positions to pixels
+
+## Documentation
+
+When modifying the `<FancyArrow>` component interface (props, slots, usage patterns), update:
+- `README.md` - User-facing documentation with usage examples
+- `slides.md` - Live demo slides that also serve as documentation
