@@ -1,26 +1,9 @@
-name: Setup
-description: Set up pnpm, Node.js, and Aikido Safe Chain so that subsequent package-manager commands are protected against malicious packages.
-
-inputs:
-  registry-url:
-    description: Optional npm registry URL to configure via actions/setup-node (used for publishing).
-    required: false
-    default: ""
+name: Install Aikido Safe Chain
+description: Install Aikido Safe Chain from a pinned release so that subsequent package-manager commands are guarded against malicious packages.
 
 runs:
   using: composite
   steps:
-    - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
-      with:
-        version: latest
-        run_install: false
-
-    - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-      with:
-        node-version-file: .nvmrc
-        cache: "pnpm"
-        registry-url: ${{ inputs.registry-url }}
-
     - name: Install Aikido Safe Chain
       shell: bash
       env:
