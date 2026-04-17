@@ -31,6 +31,8 @@ jobs:
           node-version-file: .nvmrc
           cache: "pnpm"
 
+      - uses: ./.github/actions/install-safe-chain
+
       - name: Install dependencies
         run: pnpm install
 
@@ -61,6 +63,8 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: "pnpm"
+
+      - uses: ./.github/actions/install-safe-chain
 
       - name: Install dependencies
         run: pnpm install
@@ -115,6 +119,8 @@ jobs:
           node-version-file: .nvmrc
           cache: "pnpm"
           registry-url: 'https://registry.npmjs.org'
+
+      - uses: ./.github/actions/install-safe-chain
 
       # Ensure npm 11.5.1 or later is installed for trusted publishing
       - name: Update npm
