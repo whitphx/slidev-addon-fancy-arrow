@@ -1,29 +1,10 @@
-import {
-  ref,
-  onMounted,
-  computed,
-  watch,
-  onWatcherCleanup,
-  type Ref,
-} from "vue";
-import {
-  useSlideContext,
-  useIsSlideActive,
-  slideWidth,
-  slideHeight,
-} from "@slidev/client";
+import { ref, onMounted, computed, watch, onWatcherCleanup, type Ref } from "vue";
+import { useSlideContext, useIsSlideActive, slideWidth, slideHeight } from "@slidev/client";
 import type { AbsolutePosition } from "./use-rough-arrow";
-import type {
-  Position,
-  LengthPercentage,
-  SnapAnchorPoint,
-} from "./parse-option";
+import type { Position, LengthPercentage, SnapAnchorPoint } from "./parse-option";
 import { getClosestEdgePoint } from "./closest-edge-point";
 
-function getAbsoluteValue(
-  lengthPercentage: LengthPercentage,
-  total: number,
-): number {
+function getAbsoluteValue(lengthPercentage: LengthPercentage, total: number): number {
   if (lengthPercentage.unit === "px") {
     return lengthPercentage.value;
   } else if (lengthPercentage.unit === "%") {
@@ -163,13 +144,11 @@ export function computeEndpointPosition(
           const c2x =
             "x" in anotherPosition.value
               ? getAbsoluteValue(anotherPosition.value.x, slideWidth.value)
-              : anotherPosition.value.rect.x +
-                anotherPosition.value.rect.width / 2;
+              : anotherPosition.value.rect.x + anotherPosition.value.rect.width / 2;
           const c2y =
             "y" in anotherPosition.value
               ? getAbsoluteValue(anotherPosition.value.y, slideHeight.value)
-              : anotherPosition.value.rect.y +
-                anotherPosition.value.rect.height / 2;
+              : anotherPosition.value.rect.y + anotherPosition.value.rect.height / 2;
           const closestPoint = getClosestEdgePoint(rect, { x: c2x, y: c2y });
           x = closestPoint.x;
           y = closestPoint.y;

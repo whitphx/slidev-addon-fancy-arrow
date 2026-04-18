@@ -32,9 +32,7 @@ const lengthPercentageRegex = /(?<value>[+-]?\d+)(?<unit>%|px)?/;
 const positionRegex = /^\(\s*(?<x>\S+)\s*,\s*(?<y>\S+)\s*\)$/;
 const snapTargetRegex = /^(?<query>[^@]+?)(@\s*(?<snapPosition>.+?))?$/;
 
-function parseLengthPercentage(
-  lengthString: string,
-): LengthPercentage | undefined {
+function parseLengthPercentage(lengthString: string): LengthPercentage | undefined {
   const match = lengthString.match(lengthPercentageRegex);
   if (!match) {
     return undefined;
@@ -50,21 +48,15 @@ function parsePosition(positionString: string): Position | undefined {
     return undefined;
   }
 
-  const x =
-    parseLengthPercentage(positionMatch.groups?.x ?? "") ??
-    ZERO_LENGTH_PERCENTAGE;
-  const y =
-    parseLengthPercentage(positionMatch.groups?.y ?? "") ??
-    ZERO_LENGTH_PERCENTAGE;
+  const x = parseLengthPercentage(positionMatch.groups?.x ?? "") ?? ZERO_LENGTH_PERCENTAGE;
+  const y = parseLengthPercentage(positionMatch.groups?.y ?? "") ?? ZERO_LENGTH_PERCENTAGE;
   return {
     x,
     y,
   };
 }
 
-function parseSnapPosition(
-  snapPositionString: string,
-): SnapAnchorPoint | Position | undefined {
+function parseSnapPosition(snapPositionString: string): SnapAnchorPoint | Position | undefined {
   if ((SNAP_ANCHOR_POINTS as Set<string>).has(snapPositionString)) {
     return snapPositionString as SnapAnchorPoint;
   }

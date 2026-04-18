@@ -1,19 +1,19 @@
 {
   "name": "slidev-addon-fancy-arrow",
   "version": "0.16.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/whitphx/slidev-addon-fancy-arrow.git"
   },
-  "license": "MIT",
-  "publishConfig": {
-    "provenance": true
-  },
-  "type": "module",
   "files": [
     "components",
     "!**/*.test.*"
   ],
+  "type": "module",
+  "publishConfig": {
+    "provenance": true
+  },
   "scripts": {
     "build": "slidev build",
     "dev": "slidev --open",

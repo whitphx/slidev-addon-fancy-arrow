@@ -92,9 +92,7 @@ export function useRoughArrow(props: {
     ...(roughness !== undefined && { roughness }),
     ...(seed !== undefined && { seed }),
   } as const;
-  const roughSvg = roughjs.svg(
-    document.createElementNS("http://www.w3.org/2000/svg", "svg"),
-  );
+  const roughSvg = roughjs.svg(document.createElementNS("http://www.w3.org/2000/svg", "svg"));
 
   const arcData = computed(() => {
     if (!point1Ref.value || !point2Ref.value) {
@@ -117,15 +115,8 @@ export function useRoughArrow(props: {
     if (centerPositionParam === 0) {
       // Straight line.
       // This can be interpreted as the arc's center is at infinity.
-      const svg = roughSvg.line(
-        point1.x,
-        point1.y,
-        point2.x,
-        point2.y,
-        lineOptions,
-      );
-      const angle =
-        Math.atan2(point2.y - point1.y, point2.x - point1.x) - Math.PI / 2;
+      const svg = roughSvg.line(point1.x, point1.y, point2.x, point2.y, lineOptions);
+      const angle = Math.atan2(point2.y - point1.y, point2.x - point1.x) - Math.PI / 2;
       return {
         svgPath: svg.getElementsByTagName("path")[0],
         angle1: angle,
@@ -162,8 +153,7 @@ export function useRoughArrow(props: {
     // R = offset + centerPositionParam * chordLength / 2 (from the condition above)
     // R^2 = offset^2 + (chordLength / 2)^2 (Pythagorean theorem)
     const offset =
-      ((1 - Math.pow(centerPositionParam, 2)) * chordLength) /
-      (4 * centerPositionParam);
+      ((1 - Math.pow(centerPositionParam, 2)) * chordLength) / (4 * centerPositionParam);
 
     // The arc's center is obtained by offsetting the midpoint in the direction of n.
     const center = {
@@ -198,8 +188,7 @@ export function useRoughArrow(props: {
     // const D = 2 * R;
     // const svg = roughSvg.arc(center.x, center.y, D, D, startAngle, endAngle, false, lineOptions);
     // So we use .path() instead as below.
-    const largeArcFlag =
-      centerPositionParam < -1 || 1 < centerPositionParam ? 1 : 0;
+    const largeArcFlag = centerPositionParam < -1 || 1 < centerPositionParam ? 1 : 0;
     const sweepFlag = centerPositionParam > 0 ? 1 : 0;
     const svg = roughSvg.path(
       `M${point1.x} ${point1.y} A${R} ${R} 0 ${largeArcFlag} ${sweepFlag} ${point2.x} ${point2.y}`,
@@ -236,11 +225,7 @@ export function useRoughArrow(props: {
   }
 
   const arrowHeadData = computed(() => {
-    if (
-      arcData.value == null ||
-      point1Ref.value == null ||
-      point2Ref.value == null
-    ) {
+    if (arcData.value == null || point1Ref.value == null || point2Ref.value == null) {
       return null;
     }
 
@@ -341,35 +326,24 @@ export function useRoughArrow(props: {
       }
 
       segments.push(
-        getArrowHeadAnimationSegment(
-          arrowHeadForwardSvg,
-          arrowHeadData.value.lineLength * 2,
-        ),
+        getArrowHeadAnimationSegment(arrowHeadForwardSvg, arrowHeadData.value.lineLength * 2),
       );
       if (arrowHeadBackwardSvg) {
         segments.push(
-          getArrowHeadAnimationSegment(
-            arrowHeadBackwardSvg,
-            arrowHeadData.value.lineLength * 2,
-          ),
+          getArrowHeadAnimationSegment(arrowHeadBackwardSvg, arrowHeadData.value.lineLength * 2),
         );
       }
 
-      const totalLength = segments
-        .map((s) => s.length)
-        .reduce((a, b) => a + b, 0);
+      const totalLength = segments.map((s) => s.length).reduce((a, b) => a + b, 0);
 
-      const { duration = DEFAULT_ANIMATION_DURATION, delay = 0 } =
-        animationValue;
+      const { duration = DEFAULT_ANIMATION_DURATION, delay = 0 } = animationValue;
       let currentDelay = delay;
       // Animation impl inspired by https://github.com/rough-stuff/rough-notation/blob/668ba82ac89c903d6f59c9351b9b85855da9882c/src/render.ts#L222-L235
       for (const segment of segments) {
         const segmentDuration = (segment.length / totalLength) * duration;
         const pathDuration = segmentDuration / segment.strokedPaths.length;
         segment.strokedPaths.forEach((path, index) => {
-          const pathDelay =
-            currentDelay +
-            (index / segment.strokedPaths.length) * segmentDuration;
+          const pathDelay = currentDelay + (index / segment.strokedPaths.length) * segmentDuration;
           path.classList.add(strokeAnimationClass);
           path.style.animationDuration = `${pathDuration}ms`;
           path.style.animationDelay = `${pathDelay}ms`;
