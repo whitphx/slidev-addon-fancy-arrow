@@ -1,4 +1,0 @@
-dist
-pnpm-lock.yaml
-*.md
-!README.md

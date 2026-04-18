@@ -1,5 +1,5 @@
 {
-  "*.{js,ts,jsx,tsx,vue}": ["prettier --write", "eslint --fix"],
-  "*.css": ["prettier --write"],
-  "README.md": ["prettier --write"]
+  "*.{js,ts,jsx,tsx,vue}": ["oxfmt", "oxlint --fix"],
+  "*.css": ["oxfmt"],
+  "README.md": ["oxfmt"]
 }

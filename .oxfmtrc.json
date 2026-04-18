@@ -1,0 +1,3 @@
+{
+  "ignorePatterns": [".vscode/**", "dist/**", "*.md", "!README.md"]
+}
