@@ -34,7 +34,9 @@ const handleDomUpdate = () => {
 
     const slotContents = slot.children;
 
-    const firstChildNode = Array.isArray(slotContents) ? slotContents[0] : slotContents;
+    const firstChildNode = Array.isArray(slotContents)
+      ? slotContents[0]
+      : slotContents;
     if (!isVNode(firstChildNode)) {
       return;
     }

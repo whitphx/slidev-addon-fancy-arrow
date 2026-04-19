@@ -64,35 +64,59 @@ describe("parsePosition", () => {
       ["[data-id=target]@left", ["[data-id=target]", "left"]],
       [
         "#target@(100,200)",
-        ["#target", { x: { value: 100, unit: "px" }, y: { value: 200, unit: "px" } }],
+        [
+          "#target",
+          { x: { value: 100, unit: "px" }, y: { value: 200, unit: "px" } },
+        ],
       ],
       [
         ".target@(100,200)",
-        [".target", { x: { value: 100, unit: "px" }, y: { value: 200, unit: "px" } }],
+        [
+          ".target",
+          { x: { value: 100, unit: "px" }, y: { value: 200, unit: "px" } },
+        ],
       ],
       [
         "[data-id=target]@(10%,20%)",
-        ["[data-id=target]", { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } }],
+        [
+          "[data-id=target]",
+          { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } },
+        ],
       ],
       [
         "#target@(10%,20%)",
-        ["#target", { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } }],
+        [
+          "#target",
+          { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } },
+        ],
       ],
       [
         ".target@(10%,20%)",
-        [".target", { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } }],
+        [
+          ".target",
+          { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } },
+        ],
       ],
       [
         "[data-id=target]@(10%,20%)",
-        ["[data-id=target]", { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } }],
+        [
+          "[data-id=target]",
+          { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } },
+        ],
       ],
       [
         " #target @ ( 100 , 200 ) ",
-        ["#target", { x: { value: 100, unit: "px" }, y: { value: 200, unit: "px" } }],
+        [
+          "#target",
+          { x: { value: 100, unit: "px" }, y: { value: 200, unit: "px" } },
+        ],
       ],
       [
         " #target @ ( 10% , 20% ) ",
-        ["#target", { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } }],
+        [
+          "#target",
+          { x: { value: 10, unit: "%" }, y: { value: 20, unit: "%" } },
+        ],
       ],
       [
         "[data-id=target] > .target-child:nth-child(2)",

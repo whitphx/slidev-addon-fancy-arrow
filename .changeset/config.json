@@ -1,6 +1,9 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.1.0/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "whitphx/slidev-addon-fancy-arrow" }],
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "whitphx/slidev-addon-fancy-arrow" }
+  ],
   "commit": false,
   "fixed": [],
   "linked": [],

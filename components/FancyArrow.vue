@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import { ref, computed, useSlots } from "vue";
-import { compileArrowEndpointProps, SnapTargetQuery, type SnapAnchorPoint } from "./parse-option";
+import {
+  compileArrowEndpointProps,
+  SnapTargetQuery,
+  type SnapAnchorPoint,
+} from "./parse-option";
 import { useIsSlideActive, useNav } from "@slidev/client";
-import { resolveSnapTargetPosition, SnapTarget, computeEndpointPosition } from "./position";
+import {
+  resolveSnapTargetPosition,
+  SnapTarget,
+  computeEndpointPosition,
+} from "./position";
 import { useRoughArrow, DEFAULT_ANIMATION_DURATION } from "./use-rough-arrow";
 import ChildElementPicker from "./ChildElementPicker.vue";
 
@@ -130,7 +138,9 @@ const head = computed(() => {
 
 const { isPrintMode } = useNav();
 const isSlideActive = useIsSlideActive();
-function getSnapTarget(snapTargetQuery: SnapTargetQuery): SnapTarget | undefined {
+function getSnapTarget(
+  snapTargetQuery: SnapTargetQuery,
+): SnapTarget | undefined {
   if (
     !isPrintMode.value && // In print mode, isSlideActive doesn't matter because all slides are rendered.
     !isSlideActive.value // In the normal mode, we only resolve the snap target on the active slide because other slides may not be rendered.
@@ -138,7 +148,8 @@ function getSnapTarget(snapTargetQuery: SnapTargetQuery): SnapTarget | undefined
     return undefined;
   }
 
-  const element = slideContainer.value?.querySelector(snapTargetQuery.query) ?? undefined;
+  const element =
+    slideContainer.value?.querySelector(snapTargetQuery.query) ?? undefined;
   if (element == null) {
     console.warn(`Element not found for query: ${snapTargetQuery.query}`);
   }
@@ -198,17 +209,30 @@ const { arrowSvg, textPosition } = useRoughArrow({
     Place these slots before the main SVG arrow
     so that the SVG arrow is placed in front of the elements in the slots.
     -->
-    <ChildElementPicker v-if="slots.tail" @first-child-element-mounted="onTailElementMounted">
+    <ChildElementPicker
+      v-if="slots.tail"
+      @first-child-element-mounted="onTailElementMounted"
+    >
       <slot name="tail" />
     </ChildElementPicker>
-    <ChildElementPicker v-if="slots.head" @first-child-element-mounted="onHeadElementMounted">
+    <ChildElementPicker
+      v-if="slots.head"
+      @first-child-element-mounted="onHeadElementMounted"
+    >
       <slot name="head" />
     </ChildElementPicker>
 
     <svg
       ref="svgContainer"
       :class="props.color ? `text-${props.color}` : ''"
-      style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; overflow: visible"
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 1px;
+        overflow: visible;
+      "
     >
       <!-- eslint-disable-next-line vue/no-v-html -->
       <g v-html="arrowSvg" />
