@@ -72,10 +72,7 @@ watchEffect(() => {
 
 <template>
   <slot v-if="!shouldWrap" />
-  <span
-    v-else
-    ref="wrapper"
-  >
+  <span v-else ref="wrapper">
     <slot />
   </span>
 </template>

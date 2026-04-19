@@ -101,7 +101,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      id-token: write  # Required for OIDC, https://docs.npmjs.com/trusted-publishers#github-actions-configuration
+      id-token: write # Required for OIDC, https://docs.npmjs.com/trusted-publishers#github-actions-configuration
 
     runs-on: ubuntu-latest
     steps:
@@ -118,7 +118,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: "pnpm"
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
 
       - uses: ./.github/actions/install-safe-chain
 

@@ -29,7 +29,9 @@ function getAbsoluteValue(
   } else if (lengthPercentage.unit === "%") {
     return (lengthPercentage.value / 100) * total;
   } else {
-    console.warn(`Unknown length percentage unit: ${lengthPercentage.unit}`);
+    console.warn(
+      `Unknown length percentage unit: ${String(lengthPercentage.unit)}`,
+    );
     return 0;
   }
 }
