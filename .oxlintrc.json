@@ -5,5 +5,8 @@
     "correctness": "error",
     "suspicious": "warn"
   },
-  "plugins": ["typescript", "vue"]
+  "plugins": ["typescript", "vue"],
+  "options": {
+    "typeAware": true
+  }
 }
