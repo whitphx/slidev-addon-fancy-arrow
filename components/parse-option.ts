@@ -38,7 +38,7 @@ function parseLengthPercentage(lengthString: string): LengthPercentage | undefin
     return undefined;
   }
   const value = parseInt(match.groups?.value ?? "0", 10);
-  const unit = (match.groups?.unit ?? "px") as "px" | "%";
+  const unit: "px" | "%" = match.groups?.unit === "%" ? "%" : "px";
   return { value, unit };
 }
 
@@ -56,9 +56,13 @@ function parsePosition(positionString: string): Position | undefined {
   };
 }
 
+function isSnapAnchorPoint(s: string): s is SnapAnchorPoint {
+  return (SNAP_ANCHOR_POINTS_LIST as readonly string[]).includes(s);
+}
+
 function parseSnapPosition(snapPositionString: string): SnapAnchorPoint | Position | undefined {
-  if ((SNAP_ANCHOR_POINTS as Set<string>).has(snapPositionString)) {
-    return snapPositionString as SnapAnchorPoint;
+  if (isSnapAnchorPoint(snapPositionString)) {
+    return snapPositionString;
   }
 
   return parsePosition(snapPositionString);

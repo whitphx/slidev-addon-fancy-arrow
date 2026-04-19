@@ -10,8 +10,11 @@ export function splitPath(path: SVGPathElement): SVGPathElement[] {
     return [];
   }
   return splitPathDefinition(d).map((segment) => {
-    const newPath = path.cloneNode() as SVGPathElement;
-    newPath.setAttribute("d", segment);
-    return newPath;
+    const cloned = path.cloneNode();
+    if (!(cloned instanceof SVGPathElement)) {
+      throw new Error("Expected cloneNode() to return an SVGPathElement");
+    }
+    cloned.setAttribute("d", segment);
+    return cloned;
   });
 }

@@ -103,7 +103,7 @@ export function useRoughArrow(props: {
     const point2 = point2Ref.value;
 
     if (point1.x === point2.x && point1.y === point2.y) {
-      return;
+      return null;
     }
 
     const lineOptions = {
