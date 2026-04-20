@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.16.1
+
+### Patch Changes
+
+- [#366](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/366) [`ab59650`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/ab596501e5818dd841588cc65d017f00f1d4b000) Thanks [@whitphx](https://github.com/whitphx)! - Replace ESLint and Prettier with the Oxc toolchain (oxlint + oxfmt) for linting and formatting, and enable oxlint's type-aware rules. A few internal refactors were made to clear the new type-aware warnings (safer cast removals, a runtime instanceof check in splitPath, consistent early returns), none of which change runtime behavior.
+
 ## 0.16.0
 
 ### Minor Changes
