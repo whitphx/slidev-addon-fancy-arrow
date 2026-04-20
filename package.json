@@ -33,7 +33,7 @@
     "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.30.0",
     "@iconify-json/octicon": "^1.2.22",
-    "@slidev/cli": "^52.6.0",
+    "@slidev/cli": "^52.14.2",
     "@slidev/theme-default": "latest",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
