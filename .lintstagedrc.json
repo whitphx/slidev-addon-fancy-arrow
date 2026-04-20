@@ -1,5 +1,6 @@
 {
   "*.{js,ts,jsx,tsx,vue}": ["oxfmt", "oxlint --fix"],
   "*.css": ["oxfmt"],
+  "*.{yml,yaml}": ["oxfmt"],
   "README.md": ["oxfmt"]
 }
