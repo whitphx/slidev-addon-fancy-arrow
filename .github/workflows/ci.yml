@@ -124,7 +124,12 @@ jobs:
 
       # Ensure npm 11.5.1 or later is installed for trusted publishing
       - name: Update npm
-        run: npm install -g npm@latest
+        # Incremental upgrade of npm through 11.10.0 is needed
+        # to avoid the error occurring when directly installing a later version of npm,
+        # as reported in https://github.com/npm/cli/issues/9151
+        run: |
+          npm install -g npm@~11.10.0
+          npm install -g npm@latest
 
       - name: Install dependencies
         run: pnpm install
