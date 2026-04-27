@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.6.0",
-    "@changesets/cli": "^2.30.0",
+    "@changesets/cli": "^2.31.0",
     "@iconify-json/octicon": "^1.2.22",
     "@slidev/cli": "^52.6.0",
     "@slidev/theme-default": "latest",
