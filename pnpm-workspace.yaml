@@ -1,2 +1,7 @@
+packages: []
+allowBuilds:
+  esbuild: true
+# pnpm 11 renamed `allowBuilds` from `onlyBuiltDependencies` and ignores the old key
+# without warning. Both are kept so the build runs on pnpm 9, 10 and 11 alike.
 onlyBuiltDependencies:
   - esbuild
