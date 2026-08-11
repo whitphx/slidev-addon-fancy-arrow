@@ -37,7 +37,7 @@
     "@slidev/theme-default": "latest",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
-    "oxfmt": "^0.45.0",
+    "oxfmt": "^0.46.0",
     "oxlint": "^1.60.0",
     "oxlint-tsgolint": "^0.21.1",
     "vitest": "^4.1.4"
