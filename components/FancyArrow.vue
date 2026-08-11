@@ -222,9 +222,17 @@ const { arrowSvg, textPosition } = useRoughArrow({
       <slot name="head" />
     </ChildElementPicker>
 
+    <!--
+    The paths stroke and fill with `currentColor`, and `color` may be either a UnoCSS color
+    token (`orange`, `red-500`) or a plain CSS color value (`var(--my-color)`, `#f00`).
+    Both forms are emitted and the cascade resolves which one is real: the raw value sits on
+    the `<svg>` to be inherited and is dropped when it isn't valid CSS, while the `text-*`
+    class on the inner `<g>` overrides that inherited value when UnoCSS generated the
+    matching utility.
+  -->
     <svg
       ref="svgContainer"
-      :class="props.color ? `text-${props.color}` : ''"
+      :style="{ color: props.color }"
       style="
         position: absolute;
         top: 0;
@@ -235,7 +243,7 @@ const { arrowSvg, textPosition } = useRoughArrow({
       "
     >
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <g v-html="arrowSvg" />
+      <g :class="props.color ? `text-${props.color}` : ''" v-html="arrowSvg" />
     </svg>
     <div
       v-if="$slots.default && textPosition"

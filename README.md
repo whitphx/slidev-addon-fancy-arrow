@@ -79,6 +79,19 @@ See also: https://sli.dev/guide/theme-addon#use-addon
 />
 ```
 
+#### Color
+
+`color` accepts either a [UnoCSS](https://unocss.dev/) color token or a plain CSS color value.
+
+```html
+<FancyArrow color="orange" from="(100, 200)" to="(300, 400)" />
+<FancyArrow color="#ff8800" from="(100, 200)" to="(300, 400)" />
+<FancyArrow color="var(--my-color)" from="(100, 200)" to="(300, 400)" />
+<FancyArrow color="rgb(255 136 0)" from="(100, 200)" to="(300, 400)" />
+```
+
+A UnoCSS token takes effect only when UnoCSS generates the matching `text-*` utility, and it does not always do so for a token that appears in this prop alone. A CSS color value has no such caveat, so prefer it when a token has no effect.
+
 ### Animation
 
 #### Animation properties
