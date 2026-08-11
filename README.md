@@ -90,7 +90,9 @@ See also: https://sli.dev/guide/theme-addon#use-addon
 <FancyArrow color="rgb(255 136 0)" from="(100, 200)" to="(300, 400)" />
 ```
 
-A UnoCSS token takes effect only when UnoCSS generates the matching `text-*` utility, and it does not always do so for a token that appears in this prop alone. A CSS color value has no such caveat, so prefer it when a token has no effect.
+A UnoCSS token takes effect only when UnoCSS generates the matching `text-*` utility, and it does not always do so for a token that appears in this prop alone. To force one, add it to `safelist` in your deck's `uno.config.ts`, or use it as a class somewhere in the deck.
+
+A CSS color value has no such caveat, so prefer it when a token has no effect. Note that for a name that is both a CSS color and a UnoCSS token, such as `orange` or `lime`, the token wins wherever UnoCSS generated the utility, so reach for an unambiguous form like `#a3e635` or `var(--my-color)` when the exact color matters.
 
 ### Animation
 

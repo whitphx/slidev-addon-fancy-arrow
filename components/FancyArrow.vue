@@ -224,12 +224,10 @@ const { arrowSvg, textPosition } = useRoughArrow({
 
     <!--
     The paths stroke and fill with `currentColor`, and `color` may be either a UnoCSS color
-    token (`orange`, `red-500`) or a plain CSS color value (`var(--my-color)`, `#f00`).
-    Both forms are emitted and the cascade resolves which one is real: the raw value sits on
-    the `<svg>` to be inherited and is dropped when it isn't valid CSS, while the `text-*`
-    class on the inner `<g>` overrides that inherited value when UnoCSS generated the
-    matching utility.
-  -->
+    token or a plain CSS color value, which can't be told apart reliably. So both forms are
+    emitted and the cascade resolves it: an invalid CSS value is dropped by the browser, and
+    the inner `text-*` class wins over the inherited value when UnoCSS generated the utility.
+    -->
     <svg
       ref="svgContainer"
       :style="{ color: props.color }"
