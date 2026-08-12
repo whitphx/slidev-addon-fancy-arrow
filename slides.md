@@ -401,10 +401,10 @@ If no snap target or absolute position is specified, the arrow will automaticall
     color="orange"
 />
 <FancyArrow x1="140" y1="180" x2="240" y2="280"
-    color="lime"
+    color="#a3e635"
 />
 <FancyArrow x1="180" y1="180" x2="280" y2="280"
-    color="cyan"
+    color="var(--slidev-theme-primary)"
 />
 
 <div grow-1><!-- Placeholder--></div>
@@ -414,10 +414,10 @@ If no snap target or absolute position is specified, the arrow will automaticall
     color="orange"
 />
 <FancyArrow x1="140" y1="180" x2="240" y2="280"
-    color="lime"
+    color="#a3e635"
 />
 <FancyArrow x1="180" y1="180" x2="280" y2="280"
-    color="cyan"
+    color="var(--slidev-theme-primary)"
 />
 ```
 
