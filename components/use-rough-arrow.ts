@@ -1,6 +1,6 @@
 import { computed, toValue, useId, type MaybeRefOrGetter, type Ref } from "vue";
 import roughjs from "roughjs";
-import { splitPath } from "./split-path";
+import { clonePath, splitPath } from "./split-path";
 import { getPathControlPointBounds } from "./path-bounds";
 
 type RoughSVG = ReturnType<typeof roughjs.svg>;
@@ -25,14 +25,6 @@ function getStrokeLineDash(
     return [0, width * 2.5];
   }
   return undefined;
-}
-
-function clonePath(path: SVGPathElement): SVGPathElement {
-  const cloned = path.cloneNode();
-  if (!(cloned instanceof SVGPathElement)) {
-    throw new Error("Expected cloneNode() to return an SVGPathElement");
-  }
-  return cloned;
 }
 
 const createArrowHeadSvg = (
@@ -340,8 +332,10 @@ export function useRoughArrow(props: {
 
     const maskStrokeWidth = toValue(props.width) * 2;
     const animatedPaths = linePaths.map((path) => {
+      // The clone carries rough.js's `stroke-dasharray` attribute along with the
+      // rest, and the animation's inline one overrides it, so the mask stroke that
+      // does the revealing is solid.
       const cloned = clonePath(path);
-      cloned.removeAttribute("stroke-dasharray");
       cloned.setAttribute("stroke", "#fff");
       cloned.setAttribute("stroke-width", `${maskStrokeWidth}`);
       cloned.setAttribute("stroke-linecap", "round");

@@ -495,9 +495,15 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 ### Solid
 
-<FancyArrow x1="100" y1="180" x2="200" y2="280" width="2" line-style="solid" />
-<FancyArrow x1="140" y1="180" x2="240" y2="280" width="4" line-style="solid" />
-<FancyArrow x1="180" y1="180" x2="280" y2="280" width="6" line-style="solid" />
+<FancyArrow x1="100" y1="180" x2="200" y2="280" width="2"
+    line-style="solid"
+/>
+<FancyArrow x1="140" y1="180" x2="240" y2="280" width="4"
+    line-style="solid"
+/>
+<FancyArrow x1="180" y1="180" x2="280" y2="280" width="6"
+    line-style="solid"
+/>
 
 <div grow-1><!-- Placeholder--></div>
 
@@ -519,9 +525,15 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 ### Dashed
 
-<FancyArrow x1="400" y1="180" x2="500" y2="280" width="2" line-style="dashed" />
-<FancyArrow x1="440" y1="180" x2="540" y2="280" width="4" line-style="dashed" />
-<FancyArrow x1="480" y1="180" x2="580" y2="280" width="6" line-style="dashed" />
+<FancyArrow x1="400" y1="180" x2="500" y2="280" width="2"
+    line-style="dashed"
+/>
+<FancyArrow x1="440" y1="180" x2="540" y2="280" width="4"
+    line-style="dashed"
+/>
+<FancyArrow x1="480" y1="180" x2="580" y2="280" width="6"
+    line-style="dashed"
+/>
 
 <div grow-1><!-- Placeholder--></div>
 
@@ -543,9 +555,15 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 ### Dotted
 
-<FancyArrow x1="700" y1="180" x2="800" y2="280" width="2" line-style="dotted" />
-<FancyArrow x1="740" y1="180" x2="840" y2="280" width="4" line-style="dotted" />
-<FancyArrow x1="780" y1="180" x2="880" y2="280" width="6" line-style="dotted" />
+<FancyArrow x1="700" y1="180" x2="800" y2="280" width="2"
+    line-style="dotted"
+/>
+<FancyArrow x1="740" y1="180" x2="840" y2="280" width="4"
+    line-style="dotted"
+/>
+<FancyArrow x1="780" y1="180" x2="880" y2="280" width="6"
+    line-style="dotted"
+/>
 
 <div grow-1><!-- Placeholder--></div>
 

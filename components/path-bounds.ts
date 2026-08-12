@@ -11,7 +11,7 @@ const NUMBER_PATTERN = /-?\d*\.?\d+(?:[eE][-+]?\d+)?/g;
  * Bounding box of the control points of the given path definitions.
  *
  * Rough.js emits only `M`, `L`, and `C` commands with absolute coordinate pairs
- * (https://github.com/rough-stuff/rough/blob/v4.6.6/src/generator.ts#L227-L241),
+ * (https://github.com/rough-stuff/rough/blob/b674e17f68d3ae79d124304978f8e78f16ee71fd/src/generator.ts#L238-L248),
  * and a bezier curve never leaves the convex hull of its control points, so the
  * box is guaranteed to contain the rendered path.
  */
