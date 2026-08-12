@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.17.0
+
+### Minor Changes
+
+- [#385](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/385) [`7c240b8`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/7c240b8f52ab6aac26d963101a9d282eba36fa9f) Thanks [@whitphx](https://github.com/whitphx)! - Accept plain CSS color values such as `var(--my-color)`, `#ff8800`, and `rgb(255 136 0)` in the `color` prop. Previously the prop only became a `text-*` UnoCSS class, which took effect only for the tokens UnoCSS happened to generate a utility for. UnoCSS tokens keep rendering exactly as before.
+
 ## 0.16.1
 
 ### Patch Changes
