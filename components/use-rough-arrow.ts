@@ -1,10 +1,39 @@
-import { computed, toValue, type MaybeRefOrGetter, type Ref } from "vue";
+import { computed, toValue, useId, type MaybeRefOrGetter, type Ref } from "vue";
 import roughjs from "roughjs";
 import { splitPath } from "./split-path";
+import { getPathControlPointBounds } from "./path-bounds";
 
 type RoughSVG = ReturnType<typeof roughjs.svg>;
 
+const SVGNS = "http://www.w3.org/2000/svg";
+
 export const DEFAULT_ANIMATION_DURATION = 800; // Same as https://github.com/rough-stuff/rough-notation/blob/668ba82ac89c903d6f59c9351b9b85855da9882c/src/model.ts#L3C14-L3C47
+
+export type LineStyle = "solid" | "dashed" | "dotted";
+
+// The pattern scales with the stroke width so that it reads the same at any width.
+function getStrokeLineDash(
+  lineStyle: LineStyle,
+  width: number,
+): number[] | undefined {
+  if (lineStyle === "dashed") {
+    return [width * 4, width * 3];
+  }
+  if (lineStyle === "dotted") {
+    // A zero-length dash renders as a dot only with a round line cap,
+    // which the caller applies to the path.
+    return [0, width * 2.5];
+  }
+  return undefined;
+}
+
+function clonePath(path: SVGPathElement): SVGPathElement {
+  const cloned = path.cloneNode();
+  if (!(cloned instanceof SVGPathElement)) {
+    throw new Error("Expected cloneNode() to return an SVGPathElement");
+  }
+  return cloned;
+}
 
 const createArrowHeadSvg = (
   roughSvg: RoughSVG,
@@ -19,7 +48,7 @@ const createArrowHeadSvg = (
   const x2 = -lineLength * Math.cos(arrowAngle);
   const y2 = lineLength * Math.sin(-arrowAngle);
 
-  const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  const g = document.createElementNS(SVGNS, "g");
 
   function addAllChildren(anotherGroup: SVGGElement) {
     // `for (... of anotherGroup.children)` doesn't work well: the second child and the latter will be discarded somehow.
@@ -57,6 +86,7 @@ export function useRoughArrow(props: {
   point1: Ref<AbsolutePosition | undefined>;
   point2: Ref<AbsolutePosition | undefined>;
   width: MaybeRefOrGetter<number>;
+  lineStyle: MaybeRefOrGetter<LineStyle>;
   headType: MaybeRefOrGetter<"line" | "polygon">;
   headSize: MaybeRefOrGetter<number | null>;
   roughness?: MaybeRefOrGetter<number | undefined>;
@@ -92,9 +122,12 @@ export function useRoughArrow(props: {
       ...(seed !== undefined && { seed }),
     };
   }
-  const roughSvg = roughjs.svg(
-    document.createElementNS("http://www.w3.org/2000/svg", "svg"),
+  const roughSvg = roughjs.svg(document.createElementNS(SVGNS, "svg"));
+
+  const strokeLineDash = computed(() =>
+    getStrokeLineDash(toValue(props.lineStyle), toValue(props.width)),
   );
+  const lineMaskId = `fancy-arrow-line-mask-${useId()}`;
 
   const arcData = computed(() => {
     if (!point1Ref.value || !point2Ref.value) {
@@ -113,6 +146,9 @@ export function useRoughArrow(props: {
 
     const lineOptions = {
       ...getBaseOptions(),
+      ...(strokeLineDash.value !== undefined && {
+        strokeLineDash: strokeLineDash.value,
+      }),
       stroke: "currentColor",
       strokeWidth: width,
     };
@@ -288,8 +324,50 @@ export function useRoughArrow(props: {
     return { arrowHeadBackwardSvg, arrowHeadForwardSvg, lineLength };
   });
 
+  // The stroke-drawing animation and a dash pattern both live in `stroke-dasharray`,
+  // so they can't share one element. The animation is moved onto white copies of the
+  // line inside a <mask>, and the dashed line is revealed through it as they are drawn.
+  function buildLineMask(linePaths: SVGPathElement[]): {
+    maskElement: SVGMaskElement;
+    animatedPaths: SVGPathElement[];
+  } | null {
+    const bounds = getPathControlPointBounds(
+      linePaths.map((path) => path.getAttribute("d") ?? ""),
+    );
+    if (bounds == null) {
+      return null;
+    }
+
+    const maskStrokeWidth = toValue(props.width) * 2;
+    const animatedPaths = linePaths.map((path) => {
+      const cloned = clonePath(path);
+      cloned.removeAttribute("stroke-dasharray");
+      cloned.setAttribute("stroke", "#fff");
+      cloned.setAttribute("stroke-width", `${maskStrokeWidth}`);
+      cloned.setAttribute("stroke-linecap", "round");
+      cloned.setAttribute("stroke-linejoin", "round");
+      return cloned;
+    });
+
+    const maskElement = document.createElementNS(SVGNS, "mask");
+    maskElement.setAttribute("id", lineMaskId);
+    // The default mask region is relative to the bounding box, which collapses for a
+    // horizontal or vertical line, so the region is spelled out in user space instead.
+    maskElement.setAttribute("maskUnits", "userSpaceOnUse");
+    // The mask stroke spreads half its width to either side of the geometry,
+    // and the region is padded by the whole width to leave slack.
+    const padding = maskStrokeWidth;
+    maskElement.setAttribute("x", `${bounds.x - padding}`);
+    maskElement.setAttribute("y", `${bounds.y - padding}`);
+    maskElement.setAttribute("width", `${bounds.width + padding * 2}`);
+    maskElement.setAttribute("height", `${bounds.height + padding * 2}`);
+    animatedPaths.forEach((path) => maskElement.appendChild(path));
+
+    return { maskElement, animatedPaths };
+  }
+
   const arrowSvg = computed(() => {
-    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    const g = document.createElementNS(SVGNS, "g");
 
     if (arcData.value == null || arrowHeadData.value == null) {
       return null;
@@ -303,7 +381,27 @@ export function useRoughArrow(props: {
     // Such paths don't be animated as expected, so we split them into multiple <path> elements that only contain `d` with only one `M`
     // and animate them individually.
     const splitPaths = splitPath(arcPath);
-    splitPaths.forEach((path) => g.appendChild(path));
+    if (toValue(props.lineStyle) === "dotted") {
+      splitPaths.forEach((path) =>
+        path.setAttribute("stroke-linecap", "round"),
+      );
+    }
+
+    const lineMask =
+      strokeLineDash.value !== undefined && animation.value
+        ? buildLineMask(splitPaths)
+        : null;
+    if (lineMask) {
+      const maskedGroup = document.createElementNS(SVGNS, "g");
+      maskedGroup.setAttribute("mask", `url(#${lineMaskId})`);
+      splitPaths.forEach((path) => maskedGroup.appendChild(path));
+      g.appendChild(lineMask.maskElement);
+      g.appendChild(maskedGroup);
+    } else {
+      splitPaths.forEach((path) => g.appendChild(path));
+    }
+    const animatedLinePaths = lineMask?.animatedPaths ?? splitPaths;
+
     g.appendChild(arrowHeadForwardSvg);
     if (arrowHeadBackwardSvg) {
       g.appendChild(arrowHeadBackwardSvg);
@@ -321,7 +419,7 @@ export function useRoughArrow(props: {
 
       segments.push({
         length: arcData.value.lineLength,
-        strokedPaths: splitPaths,
+        strokedPaths: animatedLinePaths,
         filledPaths: [],
       });
 
