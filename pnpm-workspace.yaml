@@ -1,4 +1,8 @@
-packages: []
+# pnpm refuses to read this file without a `packages` key, and an empty list would
+# declare a workspace holding no packages, leaving changesets unable to resolve the
+# package any changeset names. The root package is the published one, so list it.
+packages:
+  - "."
 allowBuilds:
   esbuild: true
 # pnpm 11 renamed `allowBuilds` from `onlyBuiltDependencies` and ignores the old key
