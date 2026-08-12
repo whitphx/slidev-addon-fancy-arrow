@@ -1,5 +1,6 @@
-# The root package is the published one. It has to be listed here, or changesets
-# sees a workspace with no packages and `changeset version` fails on any changeset.
+# pnpm refuses to read this file without a `packages` key, and an empty list would
+# declare a workspace holding no packages, leaving changesets unable to resolve the
+# package any changeset names. The root package is the published one, so list it.
 packages:
   - "."
 allowBuilds:
