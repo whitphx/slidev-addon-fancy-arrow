@@ -1,4 +1,7 @@
-packages: []
+# The root package is the published one. It has to be listed here, or changesets
+# sees a workspace with no packages and `changeset version` fails on any changeset.
+packages:
+  - "."
 allowBuilds:
   esbuild: true
 # pnpm 11 renamed `allowBuilds` from `onlyBuiltDependencies` and ignores the old key
