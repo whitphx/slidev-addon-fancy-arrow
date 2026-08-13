@@ -81,8 +81,8 @@ export function useRoughArrow(props: {
     fillAnimationClass,
   } = props;
 
-  // The styling props are read through toValue() inside the computeds below rather
-  // than unwrapped once here, so that updating one regenerates the SVG.
+  // Each computed reads only the props it uses. A single shared read would make a
+  // head-size change re-run arcData, re-roughening the line with a fresh random seed.
   function getBaseOptions() {
     const roughness = toValue(props.roughness);
     const seed = toValue(props.seed);
