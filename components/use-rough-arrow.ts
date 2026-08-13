@@ -1,4 +1,4 @@
-import { computed, type Ref } from "vue";
+import { computed, toValue, type MaybeRefOrGetter, type Ref } from "vue";
 import roughjs from "roughjs";
 import { splitPath } from "./split-path";
 
@@ -56,13 +56,13 @@ export interface AbsolutePosition {
 export function useRoughArrow(props: {
   point1: Ref<AbsolutePosition | undefined>;
   point2: Ref<AbsolutePosition | undefined>;
-  width: number;
-  headType: "line" | "polygon";
-  headSize: number | null;
-  roughness?: number;
-  seed?: number;
-  twoWay: boolean;
-  centerPositionParam: number;
+  width: MaybeRefOrGetter<number>;
+  headType: MaybeRefOrGetter<"line" | "polygon">;
+  headSize: MaybeRefOrGetter<number | null>;
+  roughness?: MaybeRefOrGetter<number | undefined>;
+  seed?: MaybeRefOrGetter<number | undefined>;
+  twoWay: MaybeRefOrGetter<boolean>;
+  centerPositionParam: MaybeRefOrGetter<number>;
   animation: Ref<
     | {
         duration?: number;
@@ -76,22 +76,22 @@ export function useRoughArrow(props: {
   const {
     point1: point1Ref,
     point2: point2Ref,
-    width,
-    headType,
-    headSize,
-    roughness,
-    seed,
-    twoWay,
-    centerPositionParam,
     animation,
     strokeAnimationClass,
     fillAnimationClass,
   } = props;
-  const baseOptions = {
-    // We don't support the `bowing` param because it's not so effective for arc.
-    ...(roughness !== undefined && { roughness }),
-    ...(seed !== undefined && { seed }),
-  } as const;
+
+  // The styling props are read through toValue() inside the computeds below rather
+  // than unwrapped once here, so that updating one regenerates the SVG.
+  function getBaseOptions() {
+    const roughness = toValue(props.roughness);
+    const seed = toValue(props.seed);
+    return {
+      // We don't support the `bowing` param because it's not so effective for arc.
+      ...(roughness !== undefined && { roughness }),
+      ...(seed !== undefined && { seed }),
+    };
+  }
   const roughSvg = roughjs.svg(
     document.createElementNS("http://www.w3.org/2000/svg", "svg"),
   );
@@ -108,8 +108,11 @@ export function useRoughArrow(props: {
       return null;
     }
 
+    const width = toValue(props.width);
+    const centerPositionParam = toValue(props.centerPositionParam);
+
     const lineOptions = {
-      ...baseOptions,
+      ...getBaseOptions(),
       stroke: "currentColor",
       strokeWidth: width,
     };
@@ -226,6 +229,7 @@ export function useRoughArrow(props: {
       return 0;
     }
 
+    const headSize = toValue(props.headSize);
     if (headSize != null) {
       return headSize;
     }
@@ -244,9 +248,14 @@ export function useRoughArrow(props: {
       return null;
     }
 
+    const width = toValue(props.width);
+    const headType = toValue(props.headType);
+    const twoWay = toValue(props.twoWay);
+    const centerPositionParam = toValue(props.centerPositionParam);
+
     const lineLength = getArrowHeadLineLength();
     const arrowHeadOptions = {
-      ...baseOptions,
+      ...getBaseOptions(),
       stroke: "currentColor",
       strokeWidth: width,
       fill: "currentColor",

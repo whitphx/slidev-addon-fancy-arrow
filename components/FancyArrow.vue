@@ -177,13 +177,13 @@ const animationEnabled = computed(() => {
 const { arrowSvg, textPosition } = useRoughArrow({
   point1: tailAbsPos,
   point2: headAbsPos,
-  width: Number(props.width ?? 2),
-  twoWay: props.twoWay ?? false,
-  centerPositionParam: Number(props.arc ?? 0),
-  headType: props.headType ?? "line",
-  headSize: props.headSize ? Number(props.headSize) : null,
-  roughness: props.roughness ? Number(props.roughness) : undefined,
-  seed: props.seed ? Number(props.seed) : undefined,
+  width: () => Number(props.width ?? 2),
+  twoWay: () => props.twoWay ?? false,
+  centerPositionParam: () => Number(props.arc ?? 0),
+  headType: () => props.headType ?? "line",
+  headSize: () => (props.headSize ? Number(props.headSize) : null),
+  roughness: () => (props.roughness ? Number(props.roughness) : undefined),
+  seed: () => (props.seed ? Number(props.seed) : undefined),
   animation: computed(() =>
     animationEnabled.value
       ? {
