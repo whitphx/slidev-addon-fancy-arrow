@@ -20,8 +20,8 @@ function getStrokeLineDash(
     return [width * 4, width * 3];
   }
   if (lineStyle === "dotted") {
-    // A zero-length dash renders as a dot only with a round line cap,
-    // which the caller applies to the path.
+    // A zero-length dash renders as a dot only with a round line cap, which
+    // applyLineStyle pairs with it.
     return [0, width * 2.5];
   }
   return undefined;
@@ -138,9 +138,6 @@ export function useRoughArrow(props: {
 
     const lineOptions = {
       ...getBaseOptions(),
-      ...(strokeLineDash.value !== undefined && {
-        strokeLineDash: strokeLineDash.value,
-      }),
       stroke: "currentColor",
       strokeWidth: width,
     };
@@ -316,6 +313,24 @@ export function useRoughArrow(props: {
     return { arrowHeadBackwardSvg, arrowHeadForwardSvg, lineLength };
   });
 
+  // The dash pattern is set here rather than handed to rough.js as `strokeLineDash`,
+  // which would make arcData depend on the line style and re-roughen the line on every
+  // change. Rough.js only forwards that option to this same attribute.
+  function applyLineStyle(linePaths: SVGPathElement[]): void {
+    const lineDash = strokeLineDash.value;
+    if (lineDash === undefined) {
+      return;
+    }
+    const dashArray = lineDash.join(" ");
+    const lineCap = toValue(props.lineStyle) === "dotted" ? "round" : null;
+    for (const path of linePaths) {
+      path.setAttribute("stroke-dasharray", dashArray);
+      if (lineCap != null) {
+        path.setAttribute("stroke-linecap", lineCap);
+      }
+    }
+  }
+
   // The stroke-drawing animation and a dash pattern both live in `stroke-dasharray`,
   // so they can't share one element. The animation is moved onto white copies of the
   // line inside a <mask>, and the dashed line is revealed through it as they are drawn.
@@ -330,11 +345,13 @@ export function useRoughArrow(props: {
       return null;
     }
 
+    // Twice the line width so the revealed stroke sits clear of the mask edge,
+    // where antialiasing would dim it.
     const maskStrokeWidth = toValue(props.width) * 2;
     const animatedPaths = linePaths.map((path) => {
-      // The clone carries rough.js's `stroke-dasharray` attribute along with the
-      // rest, and the animation's inline one overrides it, so the mask stroke that
-      // does the revealing is solid.
+      // The clone carries the dash pattern along with the rest, and the animation's
+      // inline `stroke-dasharray` overrides it, so the mask stroke that does the
+      // revealing is solid.
       const cloned = clonePath(path);
       cloned.setAttribute("stroke", "#fff");
       cloned.setAttribute("stroke-width", `${maskStrokeWidth}`);
@@ -375,11 +392,7 @@ export function useRoughArrow(props: {
     // Such paths don't be animated as expected, so we split them into multiple <path> elements that only contain `d` with only one `M`
     // and animate them individually.
     const splitPaths = splitPath(arcPath);
-    if (toValue(props.lineStyle) === "dotted") {
-      splitPaths.forEach((path) =>
-        path.setAttribute("stroke-linecap", "round"),
-      );
-    }
+    applyLineStyle(splitPaths);
 
     const lineMask =
       strokeLineDash.value !== undefined && animation.value
