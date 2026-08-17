@@ -1,5 +1,19 @@
 # slidev-addon-fancy-arrow
 
+## 0.18.0
+
+### Minor Changes
+
+- [#395](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/395) [`40484cf`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/40484cf259474bf0564b0390273a66f963f5919b) Thanks [@whitphx](https://github.com/whitphx)! - Add a `line-style` prop accepting `solid` (the default), `dashed`, and `dotted`. The dash pattern scales with `width` and applies to the line only, leaving the arrow head solid, and dashed lines keep the stroke-drawing animation.
+
+### Patch Changes
+
+- [#402](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/402) [`d9fae18`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/d9fae18a49fd7f0b561cb9decc90550b6c646b01) Thanks [@whitphx](https://github.com/whitphx)! - Honor an explicit `0` for `head-size` and `roughness`. Both were read with a truthiness check, so a bound `:roughness="0"` fell back to the Rough.js default instead of drawing a straight line.
+
+- [#404](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/404) [`66d769c`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/66d769cd901fe7d9996f7114d87eb564c778fb0a) Thanks [@whitphx](https://github.com/whitphx)! - Add tests covering the reactivity of the styling props in `useRoughArrow`.
+
+- [#402](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/402) [`d9fae18`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/d9fae18a49fd7f0b561cb9decc90550b6c646b01) Thanks [@whitphx](https://github.com/whitphx)! - Regenerate the arrow when `width`, `arc`, `head-type`, `head-size`, `roughness`, `seed`, or `two-way` changes. These props were read once while the component was set up, so a bound value such as `:width="big ? 10 : 2"` kept rendering whatever it resolved to first.
+
 ## 0.17.0
 
 ### Minor Changes
