@@ -11,7 +11,11 @@ import {
   SnapTarget,
   computeEndpointPosition,
 } from "./position";
-import { useRoughArrow, DEFAULT_ANIMATION_DURATION } from "./use-rough-arrow";
+import {
+  useRoughArrow,
+  DEFAULT_ANIMATION_DURATION,
+  type LineStyle,
+} from "./use-rough-arrow";
 import ChildElementPicker from "./ChildElementPicker.vue";
 
 const props = defineProps<{
@@ -28,6 +32,7 @@ const props = defineProps<{
   x2?: number | string;
   y2?: number | string;
   width?: number | string;
+  lineStyle?: LineStyle;
   color?: string;
   twoWay?: boolean;
   arc?: number | string;
@@ -178,6 +183,7 @@ const { arrowSvg, textPosition } = useRoughArrow({
   point1: tailAbsPos,
   point2: headAbsPos,
   width: () => Number(props.width ?? 2),
+  lineStyle: () => props.lineStyle ?? "solid",
   twoWay: () => props.twoWay ?? false,
   centerPositionParam: () => Number(props.arc ?? 0),
   headType: () => props.headType ?? "line",

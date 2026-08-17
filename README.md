@@ -67,6 +67,7 @@ See also: https://sli.dev/guide/theme-addon#use-addon
 <FancyArrow
   color="orange"
   width="4"
+  line-style="dashed"
   two-way
   head-type="polygon"
   head-size="40"
@@ -93,6 +94,17 @@ See also: https://sli.dev/guide/theme-addon#use-addon
 A UnoCSS token takes effect only when UnoCSS generates the matching `text-*` utility, and it does not always do so for a token that appears in this prop alone. To force one, add it to `safelist` in your deck's `uno.config.ts`, or use it as a class somewhere in the deck.
 
 A CSS color value has no such caveat, so prefer it when a token has no effect. Note that for a name that is both a CSS color and a UnoCSS token, such as `orange` or `lime`, the token wins wherever UnoCSS generated the utility, so reach for an unambiguous form like `#a3e635` or `var(--my-color)` when the exact color matters.
+
+#### Line style
+
+`line-style` accepts `solid` (the default), `dashed`, or `dotted`.
+
+```html
+<FancyArrow line-style="dashed" from="(100, 200)" to="(300, 400)" />
+<FancyArrow line-style="dotted" from="(100, 200)" to="(300, 400)" />
+```
+
+The dash pattern scales with `width`, and applies to the line only so that the arrow head stays readable at any size.
 
 ### Animation
 

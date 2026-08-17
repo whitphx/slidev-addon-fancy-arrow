@@ -487,6 +487,110 @@ If no snap target or absolute position is specified, the arrow will automaticall
 
 ---
 
+# Line style
+
+<div grid="~ cols-3 gap-4" mt-6 h-100>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
+
+### Solid
+
+<FancyArrow x1="100" y1="180" x2="200" y2="280" width="2"
+    line-style="solid"
+/>
+<FancyArrow x1="140" y1="180" x2="240" y2="280" width="4"
+    line-style="solid"
+/>
+<FancyArrow x1="180" y1="180" x2="280" y2="280" width="6"
+    line-style="solid"
+/>
+
+<div grow-1><!-- Placeholder--></div>
+
+```html {2,5,8}
+<FancyArrow x1="100" y1="180" x2="200" y2="280" width="2"
+    line-style="solid"
+/>
+<FancyArrow x1="140" y1="180" x2="240" y2="280" width="4"
+    line-style="solid"
+/>
+<FancyArrow x1="180" y1="180" x2="280" y2="280" width="6"
+    line-style="solid"
+/>
+```
+
+</div>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
+
+### Dashed
+
+<FancyArrow x1="400" y1="180" x2="500" y2="280" width="2"
+    line-style="dashed"
+/>
+<FancyArrow x1="440" y1="180" x2="540" y2="280" width="4"
+    line-style="dashed"
+/>
+<FancyArrow x1="480" y1="180" x2="580" y2="280" width="6"
+    line-style="dashed"
+/>
+
+<div grow-1><!-- Placeholder--></div>
+
+```html {2,5,8}
+<FancyArrow x1="400" y1="180" x2="500" y2="280" width="2"
+    line-style="dashed"
+/>
+<FancyArrow x1="440" y1="180" x2="540" y2="280" width="4"
+    line-style="dashed"
+/>
+<FancyArrow x1="480" y1="180" x2="580" y2="280" width="6"
+    line-style="dashed"
+/>
+```
+
+</div>
+
+<div bg-gray:10 p-4 border="~ gray/50 rounded-lg" flex="~ col">
+
+### Dotted
+
+<FancyArrow x1="700" y1="180" x2="800" y2="280" width="2"
+    line-style="dotted"
+/>
+<FancyArrow x1="740" y1="180" x2="840" y2="280" width="4"
+    line-style="dotted"
+/>
+<FancyArrow x1="780" y1="180" x2="880" y2="280" width="6"
+    line-style="dotted"
+/>
+
+<div grow-1><!-- Placeholder--></div>
+
+```html {2,5,8}
+<FancyArrow x1="700" y1="180" x2="800" y2="280" width="2"
+    line-style="dotted"
+/>
+<FancyArrow x1="740" y1="180" x2="840" y2="280" width="4"
+    line-style="dotted"
+/>
+<FancyArrow x1="780" y1="180" x2="880" y2="280" width="6"
+    line-style="dotted"
+/>
+```
+
+</div>
+
+</div>
+
+<div text-sm op-75 mt-2>
+
+The dash pattern scales with `width`, and applies to the line only so that the arrow head stays readable.
+
+</div>
+
+---
+
 # Rough.js options
 
 <div grid="~ cols-3 gap-4" mt-6 h-100>
