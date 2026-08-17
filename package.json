@@ -35,6 +35,7 @@
     "@iconify-json/octicon": "^1.2.22",
     "@slidev/cli": "^52.6.0",
     "@slidev/theme-default": "latest",
+    "happy-dom": "^20.11.2",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "oxfmt": "^0.62.0",
