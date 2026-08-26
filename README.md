@@ -138,4 +138,4 @@ node scripts/screenshot.js 3                    # writes screenshots/slide-3.png
 node scripts/screenshot.js 3 shot.png --clicks 2
 ```
 
-It reads the dev server at `http://localhost:3030` unless `--url` says otherwise, and it drives whichever Chrome it finds on the machine, or the one `CHROME_PATH` points at. `npx @puppeteer/browsers install chrome@stable` provides one where there is none.
+It reads the dev server at `http://localhost:3030` unless `--url` says otherwise, and it drives whichever Chrome it finds on the machine, or the one `CHROME_PATH` points at. Where there is none, `npx @puppeteer/browsers install chrome@stable` downloads one and prints the path to set `CHROME_PATH` to.

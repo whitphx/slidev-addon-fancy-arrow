@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [ ! -d node_modules ]; then pnpm install --frozen-lockfile > /dev/null; fi",
+            "command": "pnpm install --frozen-lockfile > /dev/null",
             "timeout": 600
           }
         ]

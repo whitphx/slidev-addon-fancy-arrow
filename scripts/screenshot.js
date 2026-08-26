@@ -41,7 +41,7 @@ const executablePath = CHROME_CANDIDATES.find(
 );
 if (!executablePath) {
   console.error(
-    "No Chrome found. Set CHROME_PATH, or install one with `npx @puppeteer/browsers install chrome@stable`.",
+    "No Chrome found. Set CHROME_PATH to a Chrome executable. `npx @puppeteer/browsers install chrome@stable` downloads one and prints the path to point it at.",
   );
   process.exit(1);
 }
