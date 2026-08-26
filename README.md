@@ -108,6 +108,8 @@ The dash pattern scales with `width`, and applies to the line only so that the a
 
 ### Animation
 
+An arrow draws itself once each time it appears. While it stays on screen, an arrow snapped to an element that moves follows it without drawing itself again.
+
 #### Animation properties
 
 ```html

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, useSlots } from "vue";
+import { ref, computed, useSlots, onBeforeUpdate, onUpdated } from "vue";
 import {
   compileArrowEndpointProps,
   SnapTargetQuery,
@@ -201,6 +201,30 @@ const { arrowSvg, textPosition } = useRoughArrow({
   ),
   strokeAnimationClass: "animated-rough-arrow-stroke",
   fillAnimationClass: "animated-rough-arrow-fill",
+});
+
+function getArrowAnimations(): Animation[] {
+  return svgContainer.value?.getAnimations({ subtree: true }) ?? [];
+}
+
+// Re-rendering the arrow, which an endpoint moving is enough to do, hands the browser
+// fresh elements that start the drawing animation over from the beginning. An arrow
+// that had already finished drawing is jumped to the end of the new animation instead,
+// so that it just follows the element it is snapped to.
+// The animation stays in place and armed, so the arrow draws itself again whenever a
+// `v-click` reveal or a slide transition replays it.
+let arrowWasDrawn = false;
+onBeforeUpdate(() => {
+  const animations = getArrowAnimations();
+  arrowWasDrawn =
+    animations.length > 0 &&
+    animations.every((animation) => animation.playState === "finished");
+});
+onUpdated(() => {
+  if (!arrowWasDrawn) {
+    return;
+  }
+  getArrowAnimations().forEach((animation) => animation.finish());
 });
 </script>
 
