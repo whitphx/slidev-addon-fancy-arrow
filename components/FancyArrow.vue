@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, useSlots, watch, onBeforeUpdate, onUpdated } from "vue";
+import { isBackwardMove } from "./nav-direction";
 import {
   compileArrowEndpointProps,
   SnapTargetQuery,
@@ -58,7 +59,6 @@ const slideContainer = computed(() => {
 });
 
 const svgContainer = ref<SVGSVGElement>();
-const contentContainer = ref<HTMLElement>();
 
 const slots = useSlots();
 const tailElementRef = ref<Element>();
@@ -142,8 +142,7 @@ const head = computed(() => {
   return getSnapTarget(headConfig);
 });
 
-const { isPrintMode, currentPage, clicks, navDirection, clicksDirection } =
-  useNav();
+const { isPrintMode, currentPage, clicks } = useNav();
 const isSlideActive = useIsSlideActive();
 function getSnapTarget(
   snapTargetQuery: SnapTargetQuery,
@@ -181,6 +180,33 @@ const animationEnabled = computed(() => {
   return props.static !== true;
 });
 
+// An arrow draws itself as the deck moves forward. Moving backward would replay a
+// drawing the audience has already seen, so while the deck moves backward the arrow is
+// shown as already drawn, by the rules at the end of this file.
+const movingBackward = ref(false);
+watch([currentPage, clicks], ([page, click], [previousPage, previousClick]) => {
+  movingBackward.value = isBackwardMove(
+    { page: previousPage, clicks: previousClick },
+    { page, clicks: click },
+  );
+});
+
+// Those rules only paint over the animation, which is still running underneath and
+// would carry on in view once the deck moves forward again, so it is sent to its end
+// as soon as it starts.
+function onAnimationStart(event: AnimationEvent) {
+  if (!movingBackward.value || !(event.target instanceof Element)) {
+    return;
+  }
+  const isArrowAnimation = event.target.matches(
+    ".animated-rough-arrow-stroke, .animated-rough-arrow-fill, .animated-rough-arrow-content",
+  );
+  if (!isArrowAnimation) {
+    return;
+  }
+  event.target.getAnimations().forEach((animation) => animation.finish());
+}
+
 const { arrowSvg, textPosition } = useRoughArrow({
   point1: tailAbsPos,
   point2: headAbsPos,
@@ -206,30 +232,7 @@ const { arrowSvg, textPosition } = useRoughArrow({
 });
 
 function getArrowAnimations(): Animation[] {
-  return [
-    ...(svgContainer.value?.getAnimations({ subtree: true }) ?? []),
-    // Without `subtree`, so that an animation of the contents themselves is left alone.
-    ...(contentContainer.value?.getAnimations() ?? []),
-  ];
-}
-
-// The deck draws an arrow as it moves forward, so moving backward should not draw it
-// again. Slidev reports the direction of the last navigation:
-// a slide move sets `navDirection`, and a click within a slide sets `clicksDirection`.
-let movingBackward = false;
-watch([currentPage, clicks], ([page], [previousPage]) => {
-  movingBackward =
-    page !== previousPage ? navDirection.value < 0 : clicksDirection.value < 0;
-});
-
-// The animation starts on its own once a slide transition ends or a `v-click` reveals
-// the arrow, so the arrow is skipped to its final state right after it starts,
-// rather than never being animated in the first place.
-function onAnimationStart() {
-  if (!movingBackward) {
-    return;
-  }
-  getArrowAnimations().forEach((animation) => animation.finish());
+  return svgContainer.value?.getAnimations({ subtree: true }) ?? [];
 }
 
 // Every re-render replaces the arrow's elements,
@@ -286,6 +289,7 @@ onUpdated(() => {
     -->
     <svg
       ref="svgContainer"
+      :class="{ 'fancy-arrow-skip-drawing': movingBackward }"
       :style="{ color: props.color }"
       style="
         position: absolute;
@@ -301,8 +305,10 @@ onUpdated(() => {
     </svg>
     <div
       v-if="$slots.default && textPosition"
-      ref="contentContainer"
-      :class="{ 'animated-rough-arrow-content': animationEnabled }"
+      :class="{
+        'animated-rough-arrow-content': animationEnabled,
+        'fancy-arrow-skip-drawing': movingBackward,
+      }"
       :style="{
         position: 'absolute',
         left: `${textPosition.x}px`,
@@ -373,6 +379,37 @@ onUpdated(() => {
 }
 .slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-content {
   animation: none;
+}
+
+/*
+Show the arrow as already drawn while the deck is moving backward, rather than let it
+draw a picture the audience has already seen.
+`!important` puts these above the animation, which the cascade otherwise ranks above
+the styles each path is built with.
+*/
+.fancy-arrow-skip-drawing .animated-rough-arrow-stroke,
+.fancy-arrow-skip-drawing .animated-rough-arrow-fill,
+.animated-rough-arrow-content.fancy-arrow-skip-drawing {
+  visibility: visible !important;
+}
+.fancy-arrow-skip-drawing .animated-rough-arrow-stroke {
+  stroke-dashoffset: 0 !important;
+}
+
+/*
+An arrow a `v-click` is hiding stays hidden: the rules above are for an arrow that is on
+screen. Slidev hides it by turning the opacity down, which has no effect on the
+`display: contents` element the arrow hangs from, so this `visibility` is what hides it.
+*/
+.slidev-vclick-target.slidev-vclick-hidden
+  .fancy-arrow-skip-drawing
+  .animated-rough-arrow-stroke,
+.slidev-vclick-target.slidev-vclick-hidden
+  .fancy-arrow-skip-drawing
+  .animated-rough-arrow-fill,
+.slidev-vclick-target.slidev-vclick-hidden
+  .animated-rough-arrow-content.fancy-arrow-skip-drawing {
+  visibility: hidden !important;
 }
 
 /*
