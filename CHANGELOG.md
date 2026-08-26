@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.18.1
+
+### Patch Changes
+
+- [#413](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/413) [`2b02bb2`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/2b02bb26192d16e2786c75149584ee73348d581d) Thanks [@whitphx](https://github.com/whitphx)! - Keep an arrow that has finished drawing from drawing itself again when it is re-rendered, as it is whenever its endpoints move
+
 ## 0.18.0
 
 ### Minor Changes
