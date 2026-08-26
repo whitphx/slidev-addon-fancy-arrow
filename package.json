@@ -41,6 +41,7 @@
     "oxfmt": "^0.62.0",
     "oxlint": "^1.78.0",
     "oxlint-tsgolint": "^7.0.2001",
+    "puppeteer-core": "^25.9.0",
     "vitest": "^4.1.10"
   }
 }

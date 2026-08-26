@@ -121,3 +121,25 @@ An arrow draws itself once each time it appears. Once it has finished drawing, a
 ```html
 <FancyArrow from="(100, 200)" to="(300, 400)" static />
 ```
+
+## Development
+
+```bash
+pnpm install
+pnpm dev     # live demo at http://localhost:3030
+pnpm test
+pnpm lint
+```
+
+`scripts/screenshot.js` renders a slide from a running dev server to a PNG, for environments with no browser to open the slides in.
+
+```bash
+node scripts/screenshot.js 3                    # writes screenshots/slide-3.png
+node scripts/screenshot.js 3 shot.png --clicks 2
+```
+
+It uses whichever Chrome it finds on the machine, or the one `CHROME_PATH` points at. `npx @puppeteer/browsers install chrome@stable` provides one where there is none.
+
+### Preview deployments
+
+Pushes to `main` deploy the demo to GitHub Pages from CI. Pull requests get their own preview URL from a Cloudflare Pages project linked to this repository, which runs `pnpm build` and serves `dist/`. Node comes from `.nvmrc` and the build image supplies pnpm.

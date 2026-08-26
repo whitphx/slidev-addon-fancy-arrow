@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"${CLAUDE_CODE_REMOTE_SESSION_ID:-}\" ]; then pnpm install --frozen-lockfile; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
