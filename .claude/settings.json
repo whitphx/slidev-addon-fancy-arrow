@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pnpm install --frozen-lockfile > /dev/null",
+            "timeout": 600
+          }
+        ]
+      }
+    ]
+  }
+}

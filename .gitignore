@@ -5,3 +5,5 @@ dist
 .vite-inspect
 .remote-assets
 components.d.ts
+screenshots
+.claude/settings.local.json
