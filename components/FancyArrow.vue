@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, useSlots, onBeforeUpdate, onUpdated } from "vue";
+import { ref, computed, useSlots, watch, onBeforeUpdate, onUpdated } from "vue";
 import {
   compileArrowEndpointProps,
   SnapTargetQuery,
@@ -58,6 +58,7 @@ const slideContainer = computed(() => {
 });
 
 const svgContainer = ref<SVGSVGElement>();
+const contentContainer = ref<HTMLElement>();
 
 const slots = useSlots();
 const tailElementRef = ref<Element>();
@@ -141,7 +142,8 @@ const head = computed(() => {
   return getSnapTarget(headConfig);
 });
 
-const { isPrintMode } = useNav();
+const { isPrintMode, currentPage, clicks, navDirection, clicksDirection } =
+  useNav();
 const isSlideActive = useIsSlideActive();
 function getSnapTarget(
   snapTargetQuery: SnapTargetQuery,
@@ -204,7 +206,30 @@ const { arrowSvg, textPosition } = useRoughArrow({
 });
 
 function getArrowAnimations(): Animation[] {
-  return svgContainer.value?.getAnimations({ subtree: true }) ?? [];
+  return [
+    ...(svgContainer.value?.getAnimations({ subtree: true }) ?? []),
+    // Without `subtree`, so that an animation of the contents themselves is left alone.
+    ...(contentContainer.value?.getAnimations() ?? []),
+  ];
+}
+
+// The deck draws an arrow as it moves forward, so moving backward should not draw it
+// again. Slidev reports the direction of the last navigation:
+// a slide move sets `navDirection`, and a click within a slide sets `clicksDirection`.
+let movingBackward = false;
+watch([currentPage, clicks], ([page], [previousPage]) => {
+  movingBackward =
+    page !== previousPage ? navDirection.value < 0 : clicksDirection.value < 0;
+});
+
+// The animation starts on its own once a slide transition ends or a `v-click` reveals
+// the arrow, so the arrow is skipped to its final state right after it starts,
+// rather than never being animated in the first place.
+function onAnimationStart() {
+  if (!movingBackward) {
+    return;
+  }
+  getArrowAnimations().forEach((animation) => animation.finish());
 }
 
 // Every re-render replaces the arrow's elements,
@@ -229,7 +254,7 @@ onUpdated(() => {
 </script>
 
 <template>
-  <div ref="root" style="display: contents">
+  <div ref="root" style="display: contents" @animationstart="onAnimationStart">
     <!--
     "display: contents" ensures the root element doesn't affect the layout
     so that the positions of the elements injected into the slots are not
@@ -276,6 +301,7 @@ onUpdated(() => {
     </svg>
     <div
       v-if="$slots.default && textPosition"
+      ref="contentContainer"
       :class="{ 'animated-rough-arrow-content': animationEnabled }"
       :style="{
         position: 'absolute',
