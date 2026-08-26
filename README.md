@@ -108,9 +108,9 @@ The dash pattern scales with `width`, and applies to the line only so that the a
 
 ### Animation
 
-An arrow draws itself once each time it appears. Once it has finished drawing, an arrow whose endpoints move follows them without drawing itself again for as long as it stays on screen.
+As the deck moves forward, an arrow draws itself once each time it appears. Once it has finished drawing, an arrow whose endpoints move follows them without drawing itself again for as long as it stays on screen.
 
-An arrow draws itself only as the deck moves forward. Stepping back to an earlier slide or click brings it back in its final state, with no drawing.
+Stepping back to an earlier slide or click brings an arrow back in its final state, with no drawing.
 
 #### Animation properties
 
