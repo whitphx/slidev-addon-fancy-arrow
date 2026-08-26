@@ -207,12 +207,12 @@ function getArrowAnimations(): Animation[] {
   return svgContainer.value?.getAnimations({ subtree: true }) ?? [];
 }
 
-// Re-rendering the arrow, which an endpoint moving is enough to do, hands the browser
-// fresh elements that start the drawing animation over from the beginning. An arrow
-// that had already finished drawing is jumped to the end of the new animation instead,
-// so that it just follows the element it is snapped to.
-// The animation stays in place and armed, so the arrow draws itself again whenever a
-// `v-click` reveal or a slide transition replays it.
+// Every re-render replaces the arrow's elements,
+// and the new ones start the drawing animation from the beginning.
+// So once the arrow has finished drawing, we skip the new animation to its end,
+// and the arrow simply appears at its new position.
+// The animation itself is left as it is,
+// so a `v-click` reveal or a slide transition still replays the drawing.
 let arrowWasDrawn = false;
 onBeforeUpdate(() => {
   const animations = getArrowAnimations();
