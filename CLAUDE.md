@@ -88,4 +88,4 @@ node scripts/screenshot.js 1 --clicks 3
 
 `pnpm dev` is the wrong command here because it passes `--open` and a VM has no browser to open. The script waits for the drawing animations to finish, so a capture shows an arrow in its final state.
 
-The environment at claude.ai/code has to provide two things. Its setup script installs Chrome, and `.claude/cloud-setup.sh` holds the copy to paste in. Its network access level has to allow `cdn.playwright.dev` for `pnpm export` to work there; the Trusted level covers everything else the project needs.
+The environment at claude.ai/code needs the setup script in `.claude/cloud-setup.sh` pasted into its Setup script field, which installs Chrome when the image ships none. Its network access can stay on Trusted, since the script pins a Chrome for Testing build rather than looking a channel name up on a host Trusted blocks. Add `cdn.playwright.dev` to a Custom allowlist if `pnpm export` should work there too.
