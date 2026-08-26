@@ -81,11 +81,11 @@ When modifying the `<FancyArrow>` component interface (props, slots, usage patte
 A cloud session has no browser, so the only way to look at a slide is to render it to a PNG and read the image back.
 
 ```bash
-pnpm exec slidev --port 3030 &          # `pnpm dev` passes --open, which has no browser to open
+pnpm exec slidev --port 3030 &
 node scripts/screenshot.js 1           # writes screenshots/slide-1.png
 node scripts/screenshot.js 1 --clicks 3
 ```
 
-The script waits for the drawing animations to finish, so a capture shows the arrow in its final state.
+`pnpm dev` is the wrong command here because it passes `--open` and a VM has no browser to open. The script waits for the drawing animations to finish, so a capture shows an arrow in its final state.
 
 The environment at claude.ai/code has to provide two things. Its setup script installs Chrome, and `.claude/cloud-setup.sh` holds the copy to paste in. Its network access level has to allow `cdn.playwright.dev` for `pnpm export` to work there; the Trusted level covers everything else the project needs.

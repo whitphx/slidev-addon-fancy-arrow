@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 // Renders a slide from a running dev server to a PNG, for environments that have
 // no browser to open the slides in, such as Claude Code cloud sessions.
-//
-// Usage: node scripts/screenshot.js [slide] [outfile] [--clicks N]
 
 import { existsSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
@@ -66,8 +64,14 @@ try {
   await page.goto(`${values.url}/${slide}${query}`, {
     waitUntil: "networkidle0",
   });
-  // Arrows draw themselves through delayed CSS animations, so capturing on load
-  // would catch them half-drawn.
+  // An arrow animates itself into place once its endpoints resolve, which happens
+  // after the load event. Wait for the first animation to exist, otherwise the
+  // wait below has nothing to wait for and the capture catches an empty slide.
+  await page
+    .waitForFunction(() => document.getAnimations().length > 0, {
+      timeout: 2000,
+    })
+    .catch(() => {});
   await page.evaluate(async (timeout) => {
     await Promise.race([
       Promise.all(

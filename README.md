@@ -139,7 +139,3 @@ node scripts/screenshot.js 3 shot.png --clicks 2
 ```
 
 It uses whichever Chrome it finds on the machine, or the one `CHROME_PATH` points at. `npx @puppeteer/browsers install chrome@stable` provides one where there is none.
-
-### Preview deployments
-
-Pushes to `main` deploy the demo to GitHub Pages from CI. Pull requests get their own preview URL from a Cloudflare Pages project linked to this repository, which runs `pnpm build` and serves `dist/`. Node comes from `.nvmrc` and the build image supplies pnpm.
