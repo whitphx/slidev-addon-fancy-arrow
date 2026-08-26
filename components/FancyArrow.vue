@@ -142,7 +142,7 @@ const head = computed(() => {
   return getSnapTarget(headConfig);
 });
 
-const { isPrintMode, currentPage, clicks } = useNav();
+const { isPrintMode, currentPage, clicks, clicksDirection } = useNav();
 const isSlideActive = useIsSlideActive();
 function getSnapTarget(
   snapTargetQuery: SnapTargetQuery,
@@ -183,7 +183,11 @@ const animationEnabled = computed(() => {
 // An arrow draws itself as the deck moves forward. Moving backward would replay a
 // drawing the audience has already seen, so while the deck moves backward the arrow is
 // shown as already drawn, by the rules at the end of this file.
-const movingBackward = ref(false);
+// An arrow whose slide is entered from the next one mounts as part of that move and
+// has no earlier position of its own to compare against, so it starts from the
+// direction Slidev reports. That covers every move made with a key or a click, and
+// leaves an arrow jumped to from the overview or the URL to draw itself as ever.
+const movingBackward = ref(clicksDirection.value < 0);
 watch([currentPage, clicks], ([page, click], [previousPage, previousClick]) => {
   movingBackward.value = isBackwardMove(
     { page: previousPage, clicks: previousClick },
