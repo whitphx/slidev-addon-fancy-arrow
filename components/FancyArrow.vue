@@ -185,8 +185,7 @@ const animationEnabled = computed(() => {
 // shown as already drawn, by the rules at the end of this file.
 // An arrow whose slide is entered from the next one mounts as part of that move and
 // has no earlier position of its own to compare against, so it starts from the
-// direction Slidev reports. That covers every move made with a key or a click, and
-// leaves an arrow jumped to from the overview or the URL to draw itself as ever.
+// direction Slidev reports, which every move made with a key or a click sets.
 const movingBackward = ref(clicksDirection.value < 0);
 watch([currentPage, clicks], ([page, click], [previousPage, previousClick]) => {
   movingBackward.value = isBackwardMove(
@@ -195,6 +194,16 @@ watch([currentPage, clicks], ([page, click], [previousPage, previousClick]) => {
   );
 });
 
+// The parts of an arrow the rules paint over. Whatever a slot's contents animate is
+// their own business, so this leaves those animations alone.
+const PAINTED_PARTS_SELECTOR =
+  ".animated-rough-arrow-stroke, .animated-rough-arrow-fill, .animated-rough-arrow-content";
+
+function getPaintedAnimations(): Animation[] {
+  const parts = root.value?.querySelectorAll(PAINTED_PARTS_SELECTOR) ?? [];
+  return Array.from(parts).flatMap((part) => part.getAnimations());
+}
+
 // Those rules only paint over the animation, which is still running underneath and
 // would carry on in view once the deck moves forward again, so it is sent to its end
 // as soon as it starts.
@@ -202,14 +211,22 @@ function onAnimationStart(event: AnimationEvent) {
   if (!movingBackward.value || !(event.target instanceof Element)) {
     return;
   }
-  const isArrowAnimation = event.target.matches(
-    ".animated-rough-arrow-stroke, .animated-rough-arrow-fill, .animated-rough-arrow-content",
-  );
-  if (!isArrowAnimation) {
+  if (!event.target.matches(PAINTED_PARTS_SELECTOR)) {
     return;
   }
   event.target.getAnimations().forEach((animation) => animation.finish());
 }
+
+// A path only reports its animation starting once its turn in the stagger comes round,
+// and the paths still waiting are held together by the painting alone. They would fall
+// back to being undrawn the moment the deck turns around and the painting stops, so the
+// whole arrow is sent to its end first.
+watch(movingBackward, (backward) => {
+  if (backward) {
+    return;
+  }
+  getPaintedAnimations().forEach((animation) => animation.finish());
+});
 
 const { arrowSvg, textPosition } = useRoughArrow({
   point1: tailAbsPos,
