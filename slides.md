@@ -1025,4 +1025,4 @@ clicks: 4
 <div absolute left="50%" top="50%" translate-x="-50%" translate-y="-50%" data-id="center-anchor"></div>
 <div absolute right-10 top="50%" translate-x="-50%" translate-y="-50%" data-id="right-anchor">Anchor</div>
 
-<FancyArrow q1="[data-id=center-anchor]" :x2="$clicks % 2 === 0 ? 100 : 900" :y2="$clicks / 2 < 1 ? 100 : 500" :q2="$clicks > 3 ? '[data-id=right-anchor]' : undefined" static />
+<FancyArrow q1="[data-id=center-anchor]" :x2="$clicks % 2 === 0 ? 100 : 900" :y2="$clicks / 2 < 1 ? 100 : 500" :q2="$clicks > 3 ? '[data-id=right-anchor]' : undefined" />
