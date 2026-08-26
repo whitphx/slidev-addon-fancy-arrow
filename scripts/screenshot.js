@@ -1,11 +1,18 @@
 #!/usr/bin/env node
 // Renders a slide from a running dev server to a PNG, for environments that have
 // no browser to open the slides in, such as Claude Code cloud sessions.
+//
+// It drives a Chrome that is already on the machine rather than depending on
+// `puppeteer`, which downloads a copy of Chrome on every install.
 
 import { existsSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { parseArgs } from "node:util";
 import puppeteer from "puppeteer-core";
+
+const VIEWPORT = { width: 1280, height: 720, deviceScaleFactor: 2 };
+const ANIMATION_START_TIMEOUT = 2000;
+const ANIMATION_END_TIMEOUT = 5000;
 
 const CHROME_CANDIDATES = [
   process.env.CHROME_PATH,
@@ -19,14 +26,7 @@ const CHROME_CANDIDATES = [
 const { values, positionals } = parseArgs({
   allowPositionals: true,
   options: {
-    url: {
-      type: "string",
-      default: process.env.SLIDEV_URL ?? "http://localhost:3030",
-    },
-    width: { type: "string", default: "1280" },
-    height: { type: "string", default: "720" },
-    scale: { type: "string", default: "2" },
-    wait: { type: "string", default: "5000" },
+    url: { type: "string", default: "http://localhost:3030" },
     clicks: { type: "string" },
   },
 });
@@ -55,11 +55,7 @@ const browser = await puppeteer.launch({
 });
 try {
   const page = await browser.newPage();
-  await page.setViewport({
-    width: Number(values.width),
-    height: Number(values.height),
-    deviceScaleFactor: Number(values.scale),
-  });
+  await page.setViewport(VIEWPORT);
   const query = values.clicks ? `?clicks=${values.clicks}` : "";
   await page.goto(`${values.url}/${slide}${query}`, {
     waitUntil: "networkidle0",
@@ -69,7 +65,7 @@ try {
   // wait below has nothing to wait for and the capture catches an empty slide.
   await page
     .waitForFunction(() => document.getAnimations().length > 0, {
-      timeout: 2000,
+      timeout: ANIMATION_START_TIMEOUT,
     })
     .catch(() => {});
   await page.evaluate(async (timeout) => {
@@ -79,7 +75,7 @@ try {
       ),
       new Promise((resolve) => setTimeout(resolve, timeout)),
     ]);
-  }, Number(values.wait));
+  }, ANIMATION_END_TIMEOUT);
   await page.screenshot({ path: out });
 } finally {
   await browser.close();

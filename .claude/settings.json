@@ -2,11 +2,10 @@
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "startup|resume",
         "hooks": [
           {
             "type": "command",
-            "command": "if [ -n \"${CLAUDE_CODE_REMOTE_SESSION_ID:-}\" ]; then pnpm install --frozen-lockfile > /dev/null; fi",
+            "command": "if [ ! -d node_modules ]; then pnpm install --frozen-lockfile > /dev/null; fi",
             "timeout": 600
           }
         ]
