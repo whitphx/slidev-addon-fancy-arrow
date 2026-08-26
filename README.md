@@ -108,7 +108,7 @@ The dash pattern scales with `width`, and applies to the line only so that the a
 
 ### Animation
 
-An arrow draws itself once each time it appears. While it stays on screen, an arrow whose endpoints move follows them without drawing itself again.
+An arrow draws itself once each time it appears. Once it has finished drawing, an arrow whose endpoints move follows them without drawing itself again for as long as it stays on screen.
 
 #### Animation properties
 
