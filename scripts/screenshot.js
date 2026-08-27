@@ -58,9 +58,11 @@ const browser = await puppeteer.launch({
   args: ["--no-sandbox"],
 });
 // Vite reloads the page when it meets a dependency it has not optimized yet, which
-// is routine on a cold dev server and destroys whatever we were waiting on.
+// is routine on a cold dev server and destroys whatever we were waiting on. The page
+// itself survives the reload, so retrying on it is enough. A closed target is not in
+// this set on purpose: it means the browser is gone, which no retry can recover.
 const isNavigationError = (error) =>
-  /Execution context was destroyed|Execution context is not available|frame was detached|Target closed/.test(
+  /Execution context was destroyed|Execution context is not available|frame was detached/.test(
     error.message,
   );
 
