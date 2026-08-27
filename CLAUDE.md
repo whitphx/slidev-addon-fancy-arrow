@@ -81,11 +81,13 @@ When modifying the `<FancyArrow>` component interface (props, slots, usage patte
 A cloud session has no browser, so the only way to look at a slide is to render it to a PNG and read the image back.
 
 ```bash
-pnpm exec slidev --port 3030 &
+pnpm dev:headless --port 3030 &
 node scripts/screenshot.js 1           # writes screenshots/slide-1.png
 node scripts/screenshot.js 1 --clicks 3
 ```
 
-`pnpm dev` is the wrong command here because it passes `--open` and a VM has no browser to open. The script waits for the drawing animations to finish, so a capture shows an arrow in its final state.
+`pnpm dev` is the wrong command here because it passes `--open` and a VM has no browser to open, which is what `dev:headless` exists for. The screenshot script waits for the drawing animations to finish, so a capture shows an arrow in its final state.
 
-The environment at claude.ai/code needs the setup script in `.claude/cloud-setup.sh` pasted into its Setup script field, which installs Chrome when the image ships none. Its network access can stay on Trusted, since the script pins a Chrome for Testing build rather than looking a channel name up on a host Trusted blocks. Add `cdn.playwright.dev` to a Custom allowlist if `pnpm export` should work there too.
+`scripts/screenshot.js` finds a browser on its own. The images at claude.ai/code ship Playwright's Chromium at `/opt/pw-browsers/chromium`, which is one of the paths it looks in, so a session there captures slides with no environment setup at all.
+
+The setup script in `.claude/cloud-setup.sh` is a fallback for an image that ships no browser: paste it into the environment's Setup script field, and it installs Chrome. Nothing in the repository runs it. Network access can stay on Trusted either way, since the script pins a Chrome for Testing build rather than looking a channel name up on a host Trusted blocks. Add `cdn.playwright.dev` to a Custom allowlist if `pnpm export` should work there too, which also needs `playwright-chromium`, a package this repository does not depend on.
