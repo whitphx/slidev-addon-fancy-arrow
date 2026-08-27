@@ -11,6 +11,8 @@ import { parseArgs } from "node:util";
 import puppeteer from "puppeteer-core";
 
 const VIEWPORT = { width: 1280, height: 720, deviceScaleFactor: 2 };
+const PAGE_READY_TIMEOUT = 60000;
+const RELOAD_RETRIES = 3;
 const ANIMATION_START_TIMEOUT = 2000;
 const ANIMATION_END_TIMEOUT = 5000;
 
@@ -21,6 +23,8 @@ const CHROME_CANDIDATES = [
   "/usr/bin/google-chrome",
   "/usr/bin/chromium",
   "/usr/bin/chromium-browser",
+  // Playwright's browsers, which some cloud images ship instead of a system Chrome.
+  "/opt/pw-browsers/chromium",
 ];
 
 const { values, positionals } = parseArgs({
@@ -53,21 +57,42 @@ const browser = await puppeteer.launch({
   executablePath,
   args: ["--no-sandbox"],
 });
-try {
-  const page = await browser.newPage();
-  await page.setViewport(VIEWPORT);
-  const query = values.clicks ? `?clicks=${values.clicks}` : "";
-  await page.goto(`${values.url}/${slide}${query}`, {
-    waitUntil: "networkidle0",
-  });
-  // An arrow animates itself into place once its endpoints resolve, which happens
-  // after the load event. Wait for the first animation to exist, otherwise the
-  // wait below has nothing to wait for and the capture catches an empty slide.
+// Vite reloads the page when it meets a dependency it has not optimized yet, which
+// is routine on a cold dev server and destroys whatever we were waiting on. The page
+// itself survives the reload, so retrying on it is enough. A closed target is not in
+// this set on purpose: it means the browser is gone, which no retry can recover.
+const isNavigationError = (error) =>
+  /Execution context was destroyed|Execution context is not available|frame was detached/.test(
+    error.message,
+  );
+
+// The load event only means the entry module arrived. The slide mounts later, and on
+// a cold dev server it sits behind a "Loading slide..." placeholder while Vite
+// compiles, which can take tens of seconds. Without this wait the capture is a blank
+// page or that placeholder. Neighbouring slides are in the DOM too, so this looks at
+// the requested one rather than whichever `.slidev-page` comes first.
+const waitForSlide = (page) =>
+  page.waitForFunction(
+    (slideNumber) => {
+      const el = document.querySelector(`.slidev-page-${slideNumber}`);
+      if (!el || /Loading slide/.test(el.innerText)) return false;
+      return el.innerText.trim() !== "" || el.querySelector("img, svg, video");
+    },
+    { timeout: PAGE_READY_TIMEOUT, polling: 100 },
+    slide,
+  );
+
+// An arrow animates itself into place once its endpoints resolve, which happens after
+// the load event. Wait for the first animation to exist, otherwise the wait below has
+// nothing to wait for and the capture catches an arrow that has not been drawn yet.
+const waitForAnimations = async (page) => {
   await page
     .waitForFunction(() => document.getAnimations().length > 0, {
       timeout: ANIMATION_START_TIMEOUT,
     })
-    .catch(() => {});
+    .catch((error) => {
+      if (isNavigationError(error)) throw error;
+    });
   await page.evaluate(async (timeout) => {
     await Promise.race([
       Promise.all(
@@ -76,6 +101,26 @@ try {
       new Promise((resolve) => setTimeout(resolve, timeout)),
     ]);
   }, ANIMATION_END_TIMEOUT);
+};
+
+try {
+  const page = await browser.newPage();
+  await page.setViewport(VIEWPORT);
+  const query = values.clicks ? `?clicks=${values.clicks}` : "";
+  // Not `networkidle0`: Slidev keeps a `/@server-reactive/` connection open for the
+  // life of the page, so the network never goes idle and the navigation times out.
+  await page.goto(`${values.url}/${slide}${query}`, {
+    waitUntil: "load",
+  });
+  for (let attempt = 0; ; attempt++) {
+    try {
+      await waitForSlide(page);
+      await waitForAnimations(page);
+      break;
+    } catch (error) {
+      if (attempt >= RELOAD_RETRIES || !isNavigationError(error)) throw error;
+    }
+  }
   await page.screenshot({ path: out });
 } finally {
   await browser.close();
