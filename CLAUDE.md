@@ -90,4 +90,18 @@ node scripts/screenshot.js 1 --clicks 3
 
 `scripts/screenshot.js` finds a browser on its own. The images at claude.ai/code ship Playwright's Chromium at `/opt/pw-browsers/chromium`, which is one of the paths it looks in, so a session there captures slides with no environment setup at all.
 
-The setup script in `.claude/cloud-setup.sh` is a fallback for an image that ships no browser: paste it into the environment's Setup script field, and it installs Chrome. Nothing in the repository runs it. Network access can stay on Trusted either way, since the script pins a Chrome for Testing build rather than looking a channel name up on a host Trusted blocks. Add `cdn.playwright.dev` to a Custom allowlist if `pnpm export` should work there too, which also needs `playwright-chromium`, a package this repository does not depend on.
+The setup script in `.claude/cloud-setup.sh` is a fallback for an image that ships no browser: paste it into the environment's Setup script field, and it installs Chrome. Nothing in the repository runs it. Network access can stay on Trusted either way, since the script pins a Chrome for Testing build rather than looking a channel name up on a host Trusted blocks.
+
+### Exporting a PDF
+
+`pnpm export` needs `playwright-chromium`, which this repository deliberately does not depend on. The version matters: Playwright pins an exact Chromium revision, and the images at claude.ai/code ship revision 1194, which only 1.56.x asks for. Any other version looks for a revision that is not there and fails with `Executable doesn't exist at /opt/pw-browsers/chromium_headless_shell-<revision>`.
+
+```bash
+pnpm add -D playwright-chromium@1.56   # the revision the image already has
+pnpm export                            # first run times out on a cold cache
+pnpm export                            # second one writes slides-export.pdf
+```
+
+Pinned that way nothing is downloaded, so Trusted access is enough. Any other version fetches its own browser from `cdn.playwright.dev`, which needs a Custom allowlist.
+
+Install it for the session that needs a PDF and leave it out of a commit. The pin only matches whichever image is current, so carrying it in `package.json` would break on the next image bump and hold every other checkout to an old Playwright. The first run failing is Slidev's own export timing out while Vite still compiles, in `@slidev/cli` rather than in anything here.
