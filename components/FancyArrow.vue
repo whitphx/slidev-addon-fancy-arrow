@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed, useSlots, watch, onBeforeUpdate, onUpdated } from "vue";
-import { isBackwardMove } from "./nav-direction";
 import {
   compileArrowEndpointProps,
   SnapTargetQuery,
@@ -142,7 +141,7 @@ const head = computed(() => {
   return getSnapTarget(headConfig);
 });
 
-const { isPrintMode, currentPage, clicks, clicksDirection } = useNav();
+const { isPrintMode, clicksDirection } = useNav();
 const isSlideActive = useIsSlideActive();
 function getSnapTarget(
   snapTargetQuery: SnapTargetQuery,
@@ -182,17 +181,10 @@ const animationEnabled = computed(() => {
 
 // An arrow draws itself as the deck moves forward. Moving backward would replay a
 // drawing the audience has already seen, so while the deck moves backward the arrow is
-// shown as already drawn, by the rules at the end of this file.
-// An arrow whose slide is entered from the next one mounts as part of that move and
-// has no earlier position of its own to compare against, so it starts from the
-// direction Slidev reports, which every move made with a key or a click sets.
-const movingBackward = ref(clicksDirection.value < 0);
-watch([currentPage, clicks], ([page, click], [previousPage, previousClick]) => {
-  movingBackward.value = isBackwardMove(
-    { page: previousPage, clicks: previousClick },
-    { page, clicks: click },
-  );
-});
+// shown as already drawn, by the rules at the end of this file. Slidev marks the
+// direction on the slide container, which is what those rules hang from, and reports it
+// here as well: https://sli.dev/features/direction-variant
+const movingBackward = computed(() => clicksDirection.value < 0);
 
 // The parts of an arrow the rules paint over. Whatever a slot's contents animate is
 // their own business, so this leaves those animations alone.
@@ -310,7 +302,6 @@ onUpdated(() => {
     -->
     <svg
       ref="svgContainer"
-      :class="{ 'fancy-arrow-skip-drawing': movingBackward }"
       :style="{ color: props.color }"
       style="
         position: absolute;
@@ -326,10 +317,7 @@ onUpdated(() => {
     </svg>
     <div
       v-if="$slots.default && textPosition"
-      :class="{
-        'animated-rough-arrow-content': animationEnabled,
-        'fancy-arrow-skip-drawing': movingBackward,
-      }"
+      :class="{ 'animated-rough-arrow-content': animationEnabled }"
       :style="{
         position: 'absolute',
         left: `${textPosition.x}px`,
@@ -391,46 +379,40 @@ onUpdated(() => {
   animation: rough-arrow-content ease-out forwards;
 }
 
-/* Stop animation when this element is hidden due to v-click */
+/*
+Stop animation when this element is hidden due to v-click.
+The `visibility` keeps the arrow hidden against the rules further down that show it as
+already drawn. Slidev hides it by turning the opacity down, which has no effect on the
+`display: contents` element the arrow hangs from.
+*/
 .slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-stroke {
   animation: none;
+  visibility: hidden !important;
 }
 .slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-fill {
   animation: none;
+  visibility: hidden !important;
 }
 .slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-content {
   animation: none;
+  visibility: hidden !important;
 }
 
 /*
 Show the arrow as already drawn while the deck is moving backward, rather than let it
 draw a picture the audience has already seen.
+Slidev marks the direction on the slide container (https://sli.dev/features/direction-variant),
+which reaches an arrow however it came on screen.
 `!important` puts these above the animation, which the cascade otherwise ranks above
 the styles each path is built with.
 */
-.fancy-arrow-skip-drawing .animated-rough-arrow-stroke,
-.fancy-arrow-skip-drawing .animated-rough-arrow-fill,
-.animated-rough-arrow-content.fancy-arrow-skip-drawing {
+.slidev-nav-go-backward .animated-rough-arrow-stroke,
+.slidev-nav-go-backward .animated-rough-arrow-fill,
+.slidev-nav-go-backward .animated-rough-arrow-content {
   visibility: visible !important;
 }
-.fancy-arrow-skip-drawing .animated-rough-arrow-stroke {
+.slidev-nav-go-backward .animated-rough-arrow-stroke {
   stroke-dashoffset: 0 !important;
-}
-
-/*
-An arrow a `v-click` is hiding stays hidden: the rules above are for an arrow that is on
-screen. Slidev hides it by turning the opacity down, which has no effect on the
-`display: contents` element the arrow hangs from, so this `visibility` is what hides it.
-*/
-.slidev-vclick-target.slidev-vclick-hidden
-  .fancy-arrow-skip-drawing
-  .animated-rough-arrow-stroke,
-.slidev-vclick-target.slidev-vclick-hidden
-  .fancy-arrow-skip-drawing
-  .animated-rough-arrow-fill,
-.slidev-vclick-target.slidev-vclick-hidden
-  .animated-rough-arrow-content.fancy-arrow-skip-drawing {
-  visibility: hidden !important;
 }
 
 /*
