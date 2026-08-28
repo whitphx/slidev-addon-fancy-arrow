@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, useSlots, onBeforeUpdate, onUpdated } from "vue";
+import { ref, computed, useSlots, watch, onBeforeUpdate, onUpdated } from "vue";
 import {
   compileArrowEndpointProps,
   SnapTargetQuery,
@@ -141,7 +141,7 @@ const head = computed(() => {
   return getSnapTarget(headConfig);
 });
 
-const { isPrintMode } = useNav();
+const { isPrintMode, clicksDirection } = useNav();
 const isSlideActive = useIsSlideActive();
 function getSnapTarget(
   snapTargetQuery: SnapTargetQuery,
@@ -177,6 +177,47 @@ const animationEnabled = computed(() => {
     return false;
   }
   return props.static !== true;
+});
+
+// An arrow draws itself as the deck moves forward. Moving backward would replay a
+// drawing the audience has already seen, so while the deck moves backward the arrow is
+// shown as already drawn, by the rules at the end of this file. Slidev marks the
+// direction on the slide container, which is what those rules hang from, and reports it
+// here as well: https://sli.dev/features/direction-variant
+const movingBackward = computed(() => clicksDirection.value < 0);
+
+// The parts of an arrow the rules paint over. Whatever a slot's contents animate is
+// their own business, so this leaves those animations alone.
+const PAINTED_PARTS_SELECTOR =
+  ".animated-rough-arrow-stroke, .animated-rough-arrow-fill, .animated-rough-arrow-content";
+
+function getPaintedAnimations(): Animation[] {
+  const parts = root.value?.querySelectorAll(PAINTED_PARTS_SELECTOR) ?? [];
+  return Array.from(parts).flatMap((part) => part.getAnimations());
+}
+
+// Those rules only paint over the animation, which is still running underneath and
+// would carry on in view once the deck moves forward again, so it is sent to its end
+// as soon as it starts.
+function onAnimationStart(event: AnimationEvent) {
+  if (!movingBackward.value || !(event.target instanceof Element)) {
+    return;
+  }
+  if (!event.target.matches(PAINTED_PARTS_SELECTOR)) {
+    return;
+  }
+  event.target.getAnimations().forEach((animation) => animation.finish());
+}
+
+// A path only reports its animation starting once its turn in the stagger comes round,
+// and the paths still waiting are held together by the painting alone. They would fall
+// back to being undrawn the moment the deck turns around and the painting stops, so the
+// whole arrow is sent to its end first.
+watch(movingBackward, (backward) => {
+  if (backward) {
+    return;
+  }
+  getPaintedAnimations().forEach((animation) => animation.finish());
 });
 
 const { arrowSvg, textPosition } = useRoughArrow({
@@ -229,7 +270,7 @@ onUpdated(() => {
 </script>
 
 <template>
-  <div ref="root" style="display: contents">
+  <div ref="root" style="display: contents" @animationstart="onAnimationStart">
     <!--
     "display: contents" ensures the root element doesn't affect the layout
     so that the positions of the elements injected into the slots are not
@@ -338,15 +379,40 @@ onUpdated(() => {
   animation: rough-arrow-content ease-out forwards;
 }
 
-/* Stop animation when this element is hidden due to v-click */
+/*
+Stop animation when this element is hidden due to v-click.
+The `visibility` keeps the arrow hidden against the rules further down that show it as
+already drawn. Slidev hides it by turning the opacity down, which has no effect on the
+`display: contents` element the arrow hangs from.
+*/
 .slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-stroke {
   animation: none;
+  visibility: hidden !important;
 }
 .slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-fill {
   animation: none;
+  visibility: hidden !important;
 }
 .slidev-vclick-target.slidev-vclick-hidden .animated-rough-arrow-content {
   animation: none;
+  visibility: hidden !important;
+}
+
+/*
+Show the arrow as already drawn while the deck is moving backward, rather than let it
+draw a picture the audience has already seen.
+Slidev marks the direction on the slide container (https://sli.dev/features/direction-variant),
+which reaches an arrow however it came on screen.
+`!important` puts these above the animation, which the cascade otherwise ranks above
+the styles each path is built with.
+*/
+.slidev-nav-go-backward .animated-rough-arrow-stroke,
+.slidev-nav-go-backward .animated-rough-arrow-fill,
+.slidev-nav-go-backward .animated-rough-arrow-content {
+  visibility: visible !important;
+}
+.slidev-nav-go-backward .animated-rough-arrow-stroke {
+  stroke-dashoffset: 0 !important;
 }
 
 /*
