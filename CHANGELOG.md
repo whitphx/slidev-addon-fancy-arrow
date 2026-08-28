@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.18.2
+
+### Patch Changes
+
+- [#418](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/418) [`d43b88a`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/d43b88a20dfb8de73b7269b2b00aef2bf753d956) Thanks [@whitphx](https://github.com/whitphx)! - Skip the drawing animation when the deck moves backward, so that an arrow coming back into view appears in its final state
+
 ## 0.18.1
 
 ### Patch Changes
