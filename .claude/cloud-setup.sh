@@ -1,7 +1,11 @@
 #!/bin/bash
 # Setup script for Claude Code cloud environments, kept here so that it is
-# versioned and reviewable. Paste it into the Setup script field of the
-# environment at claude.ai/code. Nothing in the repository runs it.
+# versioned and reviewable. Nothing in the repository runs it: paste it into the
+# Setup script field of the environment at claude.ai/code.
+#
+# It is a fallback, not a requirement. Those images ship Playwright's Chromium at
+# /opt/pw-browsers/chromium, which scripts/screenshot.js looks for by itself, so
+# an environment only needs this script when its image ships no browser at all.
 #
 # Project dependencies are installed by the SessionStart hook in settings.json
 # instead, because that one runs in the repository directory.

@@ -17,6 +17,7 @@
   "scripts": {
     "build": "slidev build",
     "dev": "slidev --open",
+    "dev:headless": "slidev",
     "export": "slidev export",
     "lint": "oxlint",
     "format": "oxfmt",
