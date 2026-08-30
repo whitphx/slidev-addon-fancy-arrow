@@ -14,6 +14,8 @@ Slidev addon for adding fancy arrows to your slides, powered by [Rough.js](https
 npm install slidev-addon-fancy-arrow
 ```
 
+The addon uses the Vue and Slidev instances from your deck rather than installing its own, so the deck needs `@slidev/client` `^51.0.0 || ^52.0.0` and `vue` `^3.5.0`. Any recent Slidev deck already provides both.
+
 ## Slidev configuration
 
 Add the `addons` option in your [headmatter](https://sli.dev/custom/#headmatter) with `fancy-arrow`:
