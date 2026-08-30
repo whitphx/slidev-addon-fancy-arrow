@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.20.0
+
+### Minor Changes
+
+- [#433](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/433) [`14d78bc`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/14d78bc1eb4a612381b11a6b18f2b2ca1912ae8a) Thanks [@whitphx](https://github.com/whitphx)! - Add a line specifier to the endpoint shorthand, so an arrow snaps to a line of a code block without a hand-written `:nth-child()` selector. `to="[data-id=code]{3}"` takes the third line of the matched code block, `{3-5}` takes the box covering a range, and `{1,3-5}` takes several lines or ranges at once. Lines are counted from `1`, the same way Slidev's own line highlighting counts them, and a line specifier on its own, as in `to="{3}"`, takes the first code block on the slide. The long form of the same thing is the new `line1` and `line2` props.
+
 ## 0.19.0
 
 ### Minor Changes
