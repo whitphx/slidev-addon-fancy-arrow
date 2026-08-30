@@ -78,7 +78,7 @@ When modifying the `<FancyArrow>` component interface (props, slots, usage patte
 
 ## Deployment
 
-The demo deploys to Cloudflare Pages from the `build-demo` job in `.github/workflows/ci.yml`, which runs `wrangler pages deploy` against the `slidev-addon-fancy-arrow` project. A push to `main` updates production at <https://slidev-addon-fancy-arrow.pages.dev/>; every other branch gets a preview of its own, whose URL the job posts as a single comment on the pull request and rewrites on each push.
+The demo deploys to Cloudflare Pages from the `build-demo` job in `.github/workflows/ci.yml`, which runs `wrangler pages deploy` against the `slidev-addon-fancy-arrow` project through Cloudflare's own `wrangler-action`. A push to `main` updates production at <https://slidev-addon-fancy-arrow.pages.dev/>; every other branch gets a preview of its own, whose URL the job posts as a single comment on the pull request and rewrites on each push.
 
 That needs `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as repository secrets. A pull request from a fork cannot read them, so it builds as a check and skips the deploy.
 

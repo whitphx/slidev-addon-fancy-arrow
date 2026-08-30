@@ -5,7 +5,14 @@ packages:
   - "."
 allowBuilds:
   esbuild: true
+  # wrangler pulls workerd, and `wrangler-action` installs wrangler into the project
+  # to deploy the demo, so an unapproved build script there stops the deploy: pnpm 11
+  # fails the install with ERR_PNPM_IGNORED_BUILDS rather than warning as pnpm 10 did.
+  # A Pages upload never runs the runtime binary this builds; it is approved so that
+  # installing wrangler succeeds.
+  workerd: true
 # pnpm 11 renamed `allowBuilds` from `onlyBuiltDependencies` and ignores the old key
 # without warning. Both are kept so the build runs on pnpm 9, 10 and 11 alike.
 onlyBuiltDependencies:
   - esbuild
+  - workerd
