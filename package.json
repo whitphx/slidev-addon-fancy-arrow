@@ -29,15 +29,6 @@
   "dependencies": {
     "roughjs": "^4.6.6"
   },
-  "peerDependencies": {
-    "@slidev/client": "^51.0.0 || ^52.0.0",
-    "vue": "^3.5.0"
-  },
-  "peerDependenciesMeta": {
-    "@slidev/client": {
-      "optional": true
-    }
-  },
   "devDependencies": {
     "@changesets/changelog-github": "^1.0.0",
     "@changesets/cli": "^3.0.1",
@@ -53,5 +44,14 @@
     "puppeteer-core": "^25.8.0",
     "vitest": "^4.1.10",
     "vue": "^3.5.41"
+  },
+  "peerDependencies": {
+    "@slidev/client": "^51.0.0 || ^52.0.0",
+    "vue": "^3.5.0"
+  },
+  "peerDependenciesMeta": {
+    "@slidev/client": {
+      "optional": true
+    }
   }
 }
