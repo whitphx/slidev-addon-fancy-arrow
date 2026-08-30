@@ -1,5 +1,15 @@
 # slidev-addon-fancy-arrow
 
+## 0.19.0
+
+### Minor Changes
+
+- [#432](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/432) [`8e1bb1e`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/8e1bb1e48e316a7c02940c0c2ea3932ac9083cb7) Thanks [@whitphx](https://github.com/whitphx)! - Take `vue` and `@slidev/client` from the host deck as peer dependencies, requiring `vue` `^3.5.0` and `@slidev/client` `^51.0.0 || ^52.0.0`. The addon ships its components as source for the deck's own toolchain to compile, so both belong to the deck. `vue` was a direct dependency, so installing the addon pulled down a second copy of Vue that Slidev's bundler then aliased away, and `@slidev/client` was imported by the components without ever being declared. The `@slidev/client` peer is optional, since it already arrives with `@slidev/cli`, so there is nothing extra to install.
+
+### Patch Changes
+
+- [#430](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/430) [`1fc7e80`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/1fc7e80914e115b2a2036ae131aa9544cb7ce56f) Thanks [@whitphx](https://github.com/whitphx)! - Draw an arrow whenever it comes into view, including when the deck moves backward, as Slidev's own `v-click` content does. This undoes the 0.18.2 change that showed an arrow in its final state while the deck moved backward.
+
 ## 0.18.2
 
 ### Patch Changes
