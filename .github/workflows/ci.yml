@@ -94,8 +94,11 @@ jobs:
           set -euo pipefail
           # Run through pnpm rather than a third-party action so the install is
           # covered by Safe Chain above, and pin the version for the same reason
-          # every action here is pinned.
-          pnpm dlx wrangler@4.127.1 pages deploy dist \
+          # every action here is pinned. Bumping it means picking a release old
+          # enough that Safe Chain's minimum-age filter has let it through, which
+          # the newest one on the registry usually has not: an unreachable pin
+          # fails as ERR_PNPM_NO_MATCHING_VERSION, naming the newest it can see.
+          pnpm dlx wrangler@4.127.0 pages deploy dist \
             --project-name slidev-addon-fancy-arrow \
             --branch "$BRANCH" | tee deploy.log
           # A branch deploy also gets an alias that stays put across pushes, which is
