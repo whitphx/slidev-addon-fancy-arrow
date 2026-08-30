@@ -8,12 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@slidev/client':
+        specifier: ^51.0.0 || ^52.0.0
+        version: 52.6.0(@nuxt/kit@3.19.3)(@vue/compiler-sfc@3.5.41)(markdown-it-async@2.2.0)(postcss@8.5.26)(vite@7.3.2(@types/node@22.18.12)(jiti@2.6.1)(yaml@2.8.1))
       roughjs:
         specifier: ^4.6.6
         version: 4.6.6
-      vue:
-        specifier: ^3.5.41
-        version: 3.5.41(typescript@5.9.3)
     devDependencies:
       '@changesets/changelog-github':
         specifier: ^1.0.0
@@ -54,6 +54,9 @@ importers:
       vitest:
         specifier: ^4.1.10
         version: 4.1.10(@types/node@22.18.12)(happy-dom@20.11.2)(vite@7.3.2(@types/node@22.18.12)(jiti@2.6.1)(yaml@2.8.1))
+      vue:
+        specifier: ^3.5.41
+        version: 3.5.41(typescript@5.9.3)
 
 packages:
 
