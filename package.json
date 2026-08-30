@@ -42,7 +42,7 @@
     "oxlint": "^1.79.0",
     "oxlint-tsgolint": "^7.0.2001",
     "puppeteer-core": "^25.8.0",
-    "vitest": "^4.1.10",
+    "vitest": "^4.1.11",
     "vue": "^3.5.41"
   },
   "peerDependencies": {
