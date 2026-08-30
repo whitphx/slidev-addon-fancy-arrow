@@ -48,6 +48,39 @@ See also: https://sli.dev/guide/theme-addon#use-addon
 <FancyArrow from="[data-id=anchor1]@bottom" to="[data-id=anchor2]@top" />
 ```
 
+#### Snap to a line of a code block
+
+A line specifier `{n}` after the selector snaps to a line of the code block the selector matches, instead of to the code block as a whole. Lines are counted from `1`, the same way Slidev's own [line highlighting](https://sli.dev/features/line-highlighting) counts them.
+
+````md
+```js {*}{'data-id':'code'}
+for (const item of items) {
+  console.log(item);
+}
+```
+
+<FancyArrow from="[data-id=note]@left" to="[data-id=code]{2}@right" />
+````
+
+`{n-m}` snaps to the box that covers a range of lines, and `{n,m-o}` takes several lines or ranges at once.
+
+```html
+<FancyArrow to="[data-id=code]{2-4}" from="(500, 300)" />
+<FancyArrow to="[data-id=code]{1,3-4}" from="(500, 300)" />
+```
+
+A line specifier on its own takes the first code block on the slide, which is all a slide with a single code block needs.
+
+```html
+<FancyArrow to="{2}@right" from="(500, 300)" />
+```
+
+The long form is `line1` and `line2`, alongside `q1`/`q2` and `pos1`/`pos2`.
+
+```html
+<FancyArrow q2="[data-id=code]" line2="2" pos2="right" x1="500" y1="300" />
+```
+
 #### Define the snapped elements via `tail` and `head` slots
 
 ```html

@@ -1,5 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { parseArrowEndpointShorthand } from "./parse-option";
+import {
+  compileArrowEndpointProps,
+  parseArrowEndpointShorthand,
+} from "./parse-option";
 
 describe("parsePosition", () => {
   (
@@ -134,6 +137,102 @@ describe("parsePosition", () => {
         query: expectedQuery,
         snapPosition: expectedSnapPosition,
       });
+    });
+  });
+});
+
+describe("line specifiers", () => {
+  (
+    [
+      [
+        "[data-id=code]{3}",
+        "[data-id=code]",
+        [{ start: 3, end: 3 }],
+        undefined,
+      ],
+      [
+        "[data-id=code]{3-5}",
+        "[data-id=code]",
+        [{ start: 3, end: 5 }],
+        undefined,
+      ],
+      [
+        "[data-id=code]{1,3-5}",
+        "[data-id=code]",
+        [
+          { start: 1, end: 1 },
+          { start: 3, end: 5 },
+        ],
+        undefined,
+      ],
+      [
+        "[data-id=code]{3}@left",
+        "[data-id=code]",
+        [{ start: 3, end: 3 }],
+        "left",
+      ],
+      [
+        " [data-id=code] { 3 - 5 } @ left ",
+        "[data-id=code]",
+        [{ start: 3, end: 5 }],
+        "left",
+      ],
+      // A reversed range means the same lines as the forward one.
+      [
+        "[data-id=code]{5-3}",
+        "[data-id=code]",
+        [{ start: 3, end: 5 }],
+        undefined,
+      ],
+      // Without a selector, the line specifier takes the slide's first code block.
+      ["{3}", ".slidev-code", [{ start: 3, end: 3 }], undefined],
+      ["{3-5}@right", ".slidev-code", [{ start: 3, end: 5 }], "right"],
+    ] as const
+  ).forEach(
+    ([optionString, expectedQuery, expectedLines, expectedSnapPosition]) => {
+      it(`parses a line specifier correctly: "${optionString}"`, () => {
+        expect(parseArrowEndpointShorthand(optionString)).toEqual({
+          query: expectedQuery,
+          lines: expectedLines,
+          snapPosition: expectedSnapPosition,
+        });
+      });
+    },
+  );
+
+  it("keeps a selector without a line specifier free of lines", () => {
+    expect(parseArrowEndpointShorthand("[data-id=code]")).not.toHaveProperty(
+      "lines",
+    );
+  });
+
+  (["{}", "{0}", "{abc}", "{1-}", "{-1}", "{1.5}"] as const).forEach(
+    (optionString) => {
+      it(`rejects an invalid line specifier: "${optionString}"`, () => {
+        expect(() => parseArrowEndpointShorthand(optionString)).toThrow();
+      });
+    },
+  );
+
+  it("compiles the `line` prop into lines", () => {
+    expect(
+      compileArrowEndpointProps({
+        q: "[data-id=code]",
+        line: "3-5",
+        pos: "left",
+      }),
+    ).toEqual({
+      query: "[data-id=code]",
+      lines: [{ start: 3, end: 5 }],
+      snapPosition: "left",
+    });
+  });
+
+  it("takes the first code block when `line` comes without `q`", () => {
+    expect(compileArrowEndpointProps({ line: 3 })).toEqual({
+      query: ".slidev-code",
+      lines: [{ start: 3, end: 3 }],
+      snapPosition: undefined,
     });
   });
 });

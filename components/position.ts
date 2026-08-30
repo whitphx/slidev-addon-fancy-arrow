@@ -37,8 +37,38 @@ function getAbsoluteValue(
 }
 
 export interface SnapTarget {
-  element: Element | undefined;
+  /**
+   * The elements the arrow snaps to. More than one when the target spans several
+   * elements, such as a range of code block lines, in which case the arrow snaps to
+   * the box that covers them all.
+   */
+  elements: Element[];
   snapPosition: SnapAnchorPoint | Position | undefined;
+}
+
+interface Rect {
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+}
+
+function getUnionRect(elements: Element[]): Rect | undefined {
+  // An element that renders nothing at all reports an empty rect at the origin, which
+  // would stretch the union far beyond the elements that are actually on screen.
+  const rects = elements
+    .map((element) => element.getBoundingClientRect())
+    .filter((rect) => rect.width > 0 || rect.height > 0);
+  if (rects.length === 0) {
+    return elements[0]?.getBoundingClientRect();
+  }
+
+  return {
+    left: Math.min(...rects.map((rect) => rect.left)),
+    top: Math.min(...rects.map((rect) => rect.top)),
+    right: Math.max(...rects.map((rect) => rect.right)),
+    bottom: Math.max(...rects.map((rect) => rect.bottom)),
+  };
 }
 
 export interface BoxPosition {
@@ -68,19 +98,19 @@ export function resolveSnapTargetPosition(
 
     const snapTarget = endpointRef.value;
 
-    const { element, snapPosition } = snapTarget;
-    if (!rootElementRef.value || !element) {
+    const { elements, snapPosition } = snapTarget;
+    const rect = getUnionRect(elements);
+    if (!rootElementRef.value || !rect) {
       position.value = undefined;
       return;
     }
 
-    const rect = element.getBoundingClientRect();
     const rootRect = rootElementRef.value.getBoundingClientRect();
 
     const x = (rect.left - rootRect.left) / $scale.value;
     const y = (rect.top - rootRect.top) / $scale.value;
-    const width = rect.width / $scale.value;
-    const height = rect.height / $scale.value;
+    const width = (rect.right - rect.left) / $scale.value;
+    const height = (rect.bottom - rect.top) / $scale.value;
 
     if (
       position.value &&
@@ -115,9 +145,11 @@ export function resolveSnapTargetPosition(
       if ("x" in newVal) {
         // Sync Position -> Position
         position.value = newVal;
-      } else if (newVal.element) {
+      } else if (newVal.elements.length > 0) {
         const observer = new MutationObserver(updateSnappedPosition);
-        observer.observe(newVal.element, { attributes: true });
+        newVal.elements.forEach((element) => {
+          observer.observe(element, { attributes: true });
+        });
 
         onWatcherCleanup(() => {
           observer.disconnect();

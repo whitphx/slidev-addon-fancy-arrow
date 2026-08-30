@@ -17,6 +17,7 @@ import {
   type LineStyle,
 } from "./use-rough-arrow";
 import ChildElementPicker from "./ChildElementPicker.vue";
+import { pickCodeLineElements } from "./code-lines";
 
 const props = defineProps<{
   from?: string; // Shorthand for (q1 and pos1) or (x1 and y1)
@@ -27,6 +28,8 @@ const props = defineProps<{
   id2?: string; // Deprecated
   pos1?: SnapAnchorPoint;
   pos2?: SnapAnchorPoint;
+  line1?: number | string;
+  line2?: number | string;
   x1?: number | string;
   y1?: number | string;
   x2?: number | string;
@@ -73,7 +76,7 @@ const tail = computed(() => {
   const useTailSlot = slots.tail != null;
   if (useTailSlot) {
     const snapTarget: SnapTarget = {
-      element: tailElementRef.value,
+      elements: tailElementRef.value ? [tailElementRef.value] : [],
       snapPosition: undefined,
     };
     return snapTarget;
@@ -84,14 +87,16 @@ const tail = computed(() => {
     q: props.q1,
     id: props.id1,
     pos: props.pos1,
+    line: props.line1,
     x: props.x1,
     y: props.y1,
   });
 
   if (tailConfig == null) {
     // Try to use the next or previous element as fallback snap target.
+    const previousElement = root.value?.previousElementSibling;
     const snapTarget: SnapTarget = {
-      element: root.value?.previousElementSibling ?? undefined,
+      elements: previousElement ? [previousElement] : [],
       snapPosition: undefined,
     };
     return snapTarget;
@@ -109,7 +114,7 @@ const head = computed(() => {
   const useHeadSlot = slots.head != null;
   if (useHeadSlot) {
     const snapTarget: SnapTarget = {
-      element: headElementRef.value,
+      elements: headElementRef.value ? [headElementRef.value] : [],
       snapPosition: undefined,
     };
     return snapTarget;
@@ -120,14 +125,16 @@ const head = computed(() => {
     q: props.q2,
     id: props.id2,
     pos: props.pos2,
+    line: props.line2,
     x: props.x2,
     y: props.y2,
   });
 
   if (headConfig == null) {
     // Try to use the next or previous element as fallback snap target.
+    const nextElement = root.value?.nextElementSibling;
     const snapTarget: SnapTarget = {
-      element: root.value?.nextElementSibling ?? undefined,
+      elements: nextElement ? [nextElement] : [],
       snapPosition: undefined,
     };
     return snapTarget;
@@ -153,14 +160,18 @@ function getSnapTarget(
     return undefined;
   }
 
-  const element =
-    slideContainer.value?.querySelector(snapTargetQuery.query) ?? undefined;
+  const element = slideContainer.value?.querySelector(snapTargetQuery.query);
   if (element == null) {
     console.warn(`Element not found for query: ${snapTargetQuery.query}`);
   }
 
   const snapTarget: SnapTarget = {
-    element,
+    elements:
+      element == null
+        ? []
+        : snapTargetQuery.lines
+          ? pickCodeLineElements(element, snapTargetQuery.lines)
+          : [element],
     snapPosition: snapTargetQuery.snapPosition,
   };
   return snapTarget;

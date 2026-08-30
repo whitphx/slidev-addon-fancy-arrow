@@ -940,20 +940,66 @@ for(let i = 1; i <= 100; i++) {
 
 </div>
 
-<FancyArrow from="[data-id=description-loop]@left" to="[data-id=code-block] .line:nth-child(1) @ right" />
-<FancyArrow from="[data-id=description-15]@left" to="[data-id=code-block] .line:nth-child(3) @ right" color="orange" />
-<FancyArrow from="[data-id=description-5]@left" to="[data-id=code-block] .line:nth-child(5) @ right" color="yellow" />
-<FancyArrow from="[data-id=description-3]@left" to="[data-id=code-block] .line:nth-child(7) @ right" color="green" />
-<FancyArrow from="[data-id=description-else]@left" to="[data-id=code-block] .line:nth-child(9) @ right" color="cyan" />
+<FancyArrow from="[data-id=description-loop]@left" to="[data-id=code-block]{1}@right" />
+<FancyArrow from="[data-id=description-15]@left" to="[data-id=code-block]{3}@right" color="orange" />
+<FancyArrow from="[data-id=description-5]@left" to="[data-id=code-block]{5}@right" color="yellow" />
+<FancyArrow from="[data-id=description-3]@left" to="[data-id=code-block]{7}@right" color="green" />
+<FancyArrow from="[data-id=description-else]@left" to="[data-id=code-block]{9}@right" color="cyan" />
 
 
 ```html
-<FancyArrow to="[data-id=code-block] .line:nth-child(1) @ right" from="[data-id=description-loop]@left" />
-<FancyArrow to="[data-id=code-block] .line:nth-child(3) @ right" from="[data-id=description-15]@left" color="orange" />
-<FancyArrow to="[data-id=code-block] .line:nth-child(5) @ right" from="[data-id=description-5]@left" color="yellow" />
-<FancyArrow to="[data-id=code-block] .line:nth-child(7) @ right" from="[data-id=description-3]@left" color="green" />
-<FancyArrow to="[data-id=code-block] .line:nth-child(9) @ right" from="[data-id=description-else]@left" color="cyan" />
+<FancyArrow to="[data-id=code-block]{1}@right" from="[data-id=description-loop]@left" />
+<FancyArrow to="[data-id=code-block]{3}@right" from="[data-id=description-15]@left" color="orange" />
+<FancyArrow to="[data-id=code-block]{5}@right" from="[data-id=description-5]@left" color="yellow" />
+<FancyArrow to="[data-id=code-block]{7}@right" from="[data-id=description-3]@left" color="green" />
+<FancyArrow to="[data-id=code-block]{9}@right" from="[data-id=description-else]@left" color="cyan" />
 ```
+
+---
+
+# Line specifiers
+
+`{n}` after a selector snaps to a line of the code block it matches, counting rendered lines from `1` just like Slidev's own `{n}` line highlighting. A range `{n-m}` snaps to the box that covers those lines.
+
+<div grid="~ cols-2" gap-4 mt-4>
+
+<div>
+
+```py {*}{'data-id':'lines-demo'}
+def fizzbuzz(n):
+    if n % 15 == 0:
+        return "FizzBuzz"
+    if n % 5 == 0:
+        return "Buzz"
+    return str(n)
+```
+
+</div>
+
+<div text-sm>
+
+<div data-id="lines-desc-1" p-2>`{1}` — one line</div>
+<div data-id="lines-desc-2" p-2>`{2-5}` — a range of lines</div>
+<div data-id="lines-desc-3" p-2>`{6}@bottomright` — a line with an anchor point</div>
+
+</div>
+
+</div>
+
+<FancyArrow from="[data-id=lines-desc-1]@left" to="[data-id=lines-demo]{1}@right" />
+<FancyArrow from="[data-id=lines-desc-2]@left" to="[data-id=lines-demo]{2-5}" color="orange" />
+<FancyArrow from="[data-id=lines-desc-3]@left" to="[data-id=lines-demo]{6}@bottomright" color="green" arc="0.2" />
+
+```html
+<FancyArrow from="[data-id=lines-desc-1]@left" to="[data-id=lines-demo]{1}@right" />
+<FancyArrow from="[data-id=lines-desc-2]@left" to="[data-id=lines-demo]{2-5}" color="orange" />
+<FancyArrow from="[data-id=lines-desc-3]@left" to="[data-id=lines-demo]{6}@bottomright" color="green" arc="0.2" />
+```
+
+<div m-2 text-sm>
+
+A line specifier on its own, like `to="{3}"`, takes the first code block on the slide, and the long form `q2="[data-id=code]" line2="3"` does the same as `to="[data-id=code]{3}"`.
+</div>
 
 ---
 transition: slide-left
@@ -1026,3 +1072,4 @@ clicks: 4
 <div absolute right-10 top="50%" translate-x="-50%" translate-y="-50%" data-id="right-anchor">Anchor</div>
 
 <FancyArrow q1="[data-id=center-anchor]" :x2="$clicks % 2 === 0 ? 100 : 900" :y2="$clicks / 2 < 1 ? 100 : 500" :q2="$clicks > 3 ? '[data-id=right-anchor]' : undefined" />
+
