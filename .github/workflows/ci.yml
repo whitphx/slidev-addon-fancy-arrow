@@ -48,6 +48,10 @@ jobs:
   build-demo:
     needs: [test]
 
+    permissions:
+      contents: read
+      pull-requests: write # To comment a pull request's preview URL.
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -69,29 +73,61 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      # No --base: Cloudflare Pages serves the demo from the root of its own domain.
       - name: Build
-        run: pnpm build --base /${{ github.event.repository.name }}/
+        run: pnpm build
 
-      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+      # Deploying from the build job keeps the artifact in place, so no upload and
+      # download round trip is needed. A fork's pull request cannot read the secrets,
+      # so it builds as a check and stops there.
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
         with:
-          path: dist/
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # The action installs wrangler with this repository's own package manager,
+          # so Safe Chain covers it. Pin it as everything else here is pinned, to a
+          # release old enough for Safe Chain's minimum-age filter to have let it
+          # through: too new a pin fails as ERR_PNPM_NO_MATCHING_VERSION, naming the
+          # newest version it can see.
+          wranglerVersion: "4.127.0"
+          # Cloudflare deploys the project's production branch to the production URL
+          # and every other branch to a preview of its own, so passing the branch
+          # through is what makes a pull request preview appear.
+          command: >-
+            pages deploy dist
+            --project-name slidev-addon-fancy-arrow
+            --branch ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
 
-  deploy-demo:
-    needs: [build-demo]
-    if: ${{ github.event_name == 'push' && github.ref_name == github.event.repository.default_branch }}
+      # A branch deploy also gets an alias that stays put across pushes, which is the
+      # more useful link; production only has the one URL.
+      - name: Note where it went
+        if: ${{ steps.deploy.outputs.deployment-url != '' }}
+        env:
+          URL: ${{ steps.deploy.outputs.pages-deployment-alias-url || steps.deploy.outputs.deployment-url }}
+        run: echo "Deployed to $URL" >> "$GITHUB_STEP_SUMMARY"
 
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    runs-on: ubuntu-latest
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
+      # One comment that gets rewritten, rather than a new one per push.
+      - name: Comment the preview URL
+        if: ${{ github.event_name == 'pull_request' && steps.deploy.outputs.deployment-url != '' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          URL: ${{ steps.deploy.outputs.pages-deployment-alias-url || steps.deploy.outputs.deployment-url }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          marker="<!-- cloudflare-pages-preview -->"
+          body="$(printf '%s\n\n[Preview this branch](%s), built from %s.' "$marker" "$URL" "${SHA:0:7}")"
+          id="$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments" --paginate \
+            --jq "map(select(.body | startswith(\"$marker\"))) | .[0].id // empty")"
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$id" -f body="$body"
+          else
+            gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR/comments" -f body="$body"
+          fi
 
   release:
     needs: [build-demo] # Semantically, this job can be run just after test, but we wait for build-demo to ensure the build is successful.

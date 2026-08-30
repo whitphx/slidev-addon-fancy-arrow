@@ -4,9 +4,9 @@ Slidev addon for adding fancy arrows to your slides, powered by [Rough.js](https
 
 [![NPM Version](https://img.shields.io/npm/v/slidev-addon-fancy-arrow)](https://www.npmjs.com/package/slidev-addon-fancy-arrow)
 
-[![Cover image](./assets/cover.png)](https://whitphx.github.io/slidev-addon-fancy-arrow/)
+[![Cover image](./assets/cover.png)](https://slidev-addon-fancy-arrow.pages.dev/)
 
-[👉 Check out the demo and docs](https://whitphx.github.io/slidev-addon-fancy-arrow/).
+[👉 Check out the demo and docs](https://slidev-addon-fancy-arrow.pages.dev/).
 
 ## Installation
 
@@ -29,7 +29,7 @@ See also: https://sli.dev/guide/theme-addon#use-addon
 
 ## Usage
 
-[👉 Check out the demo and docs](https://whitphx.github.io/slidev-addon-fancy-arrow/).
+[👉 Check out the demo and docs](https://slidev-addon-fancy-arrow.pages.dev/).
 
 ### Absolute positions
 

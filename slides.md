@@ -46,7 +46,7 @@ the demo and docs!
 
 <div data-id="check-out" absolute right-50 top-20 text-2xl>
 
-[Check out](https://whitphx.github.io/slidev-addon-fancy-arrow/)
+[Check out](https://slidev-addon-fancy-arrow.pages.dev/)
 
 </div>
 
