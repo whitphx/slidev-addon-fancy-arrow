@@ -33,6 +33,11 @@
     "@slidev/client": "^51.0.0 || ^52.0.0",
     "vue": "^3.5.0"
   },
+  "peerDependenciesMeta": {
+    "@slidev/client": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@changesets/changelog-github": "^1.0.0",
     "@changesets/cli": "^3.0.1",
