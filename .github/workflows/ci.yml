@@ -83,39 +83,47 @@ jobs:
       - name: Deploy to Cloudflare Pages
         id: deploy
         if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
-        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # The action installs wrangler with this repository's own package manager,
-          # so Safe Chain covers it. Pin it as everything else here is pinned, to a
-          # release old enough for Safe Chain's minimum-age filter to have let it
-          # through: too new a pin fails as ERR_PNPM_NO_MATCHING_VERSION, naming the
-          # newest version it can see.
-          wranglerVersion: "4.127.0"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           # Cloudflare deploys the project's production branch to the production URL
           # and every other branch to a preview of its own, so passing the branch
           # through is what makes a pull request preview appear.
-          command: >-
-            pages deploy dist
-            --project-name slidev-addon-fancy-arrow
-            --branch ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
-
-      # A branch deploy also gets an alias that stays put across pushes, which is the
-      # more useful link; production only has the one URL.
-      - name: Note where it went
-        if: ${{ steps.deploy.outputs.deployment-url != '' }}
-        env:
-          URL: ${{ steps.deploy.outputs.pages-deployment-alias-url || steps.deploy.outputs.deployment-url }}
-        run: echo "Deployed to $URL" >> "$GITHUB_STEP_SUMMARY"
+          BRANCH: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
+        run: |
+          set -euo pipefail
+          # Run through pnpm rather than a third-party action so the install is
+          # covered by Safe Chain above, and pin the version for the same reason
+          # every action here is pinned. Bumping it means picking a release old
+          # enough that Safe Chain's minimum-age filter has let it through, which
+          # the newest one on the registry usually has not: an unreachable pin
+          # fails as ERR_PNPM_NO_MATCHING_VERSION, naming the newest it can see.
+          pnpm dlx wrangler@4.127.0 pages deploy dist \
+            --project-name slidev-addon-fancy-arrow \
+            --branch "$BRANCH" | tee deploy.log
+          # A branch deploy also gets an alias that stays put across pushes, which is
+          # the more useful link; production only prints the one URL. Both greps end
+          # in `|| true` because a miss is expected and would otherwise, under
+          # `pipefail`, end the step before the fallback runs.
+          url="$(grep -Eo 'alias URL: *https://[a-z0-9.-]+\.pages\.dev' deploy.log | grep -Eo 'https://.*' | tail -1 || true)"
+          if [ -z "$url" ]; then
+            url="$(grep -Eo 'https://[a-z0-9-]+\.[a-z0-9-]+\.pages\.dev' deploy.log | tail -1 || true)"
+          fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          if [ -n "$url" ]; then
+            echo "Deployed $BRANCH to $url" >> "$GITHUB_STEP_SUMMARY"
+          else
+            # The deploy itself succeeded, so this is not worth failing the build over.
+            echo "Deployed $BRANCH, but could not read a URL out of wrangler's output." >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       # One comment that gets rewritten, rather than a new one per push.
       - name: Comment the preview URL
-        if: ${{ github.event_name == 'pull_request' && steps.deploy.outputs.deployment-url != '' }}
+        if: ${{ github.event_name == 'pull_request' && steps.deploy.outputs.url != '' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.number }}
-          URL: ${{ steps.deploy.outputs.pages-deployment-alias-url || steps.deploy.outputs.deployment-url }}
+          URL: ${{ steps.deploy.outputs.url }}
           SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
