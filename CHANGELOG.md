@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.20.1
+
+### Patch Changes
+
+- [#436](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/436) [`7fc62b7`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/7fc62b75c1dc8e00dec81099dc751eabd1bf0da1) Thanks [@whitphx](https://github.com/whitphx)! - Anchor an arrow to the slide it is on rather than to whatever the browser gives its SVG as a containing block, so positions stay right wherever the arrow sits in the markup. An arrow inside a positioned or transformed element, such as `<div class="relative">` or a `v-drag` container, used to draw `x1`/`y1`, `from="(x, y)"` and percentage positions offset by that element's own position, and to snap at the wrong scale when something between the slide and the arrow scaled it. The scale is now measured from the arrow's own SVG instead of taken from the slide's, which also fixes arrows on a slide with a `zoom` frontmatter.
+
 ## 0.20.0
 
 ### Minor Changes
