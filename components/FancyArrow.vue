@@ -177,8 +177,16 @@ function getSnapTarget(
   return snapTarget;
 }
 
-const tailPosition = resolveSnapTargetPosition(svgContainer, tail);
-const headPosition = resolveSnapTargetPosition(svgContainer, head);
+const tailPosition = resolveSnapTargetPosition(
+  svgContainer,
+  slideContainer,
+  tail,
+);
+const headPosition = resolveSnapTargetPosition(
+  svgContainer,
+  slideContainer,
+  head,
+);
 
 const tailAbsPos = computeEndpointPosition(tailPosition, headPosition);
 const headAbsPos = computeEndpointPosition(headPosition, tailPosition);
