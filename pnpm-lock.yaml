@@ -22,8 +22,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1
       '@iconify-json/octicon':
-        specifier: ^1.2.31
-        version: 1.2.31
+        specifier: ^1.2.32
+        version: 1.2.32
       '@slidev/cli':
         specifier: ^52.6.0
         version: 52.6.0(@babel/parser@7.29.8)(@nuxt/kit@3.19.3)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vue/compiler-sfc@3.5.41)(markdown-it-async@2.2.0)(postcss@8.5.26)
@@ -475,8 +475,8 @@ packages:
   '@iconify-json/carbon@1.2.14':
     resolution: {integrity: sha512-33u6uGiYJ79Dfp72peT+PBMcjxzi+NyJLpqYRX8pnw0zchsUW7Us2xecgvkWgD83KYcbe6hufyWlHFU9y7fb/Q==}
 
-  '@iconify-json/octicon@1.2.31':
-    resolution: {integrity: sha512-U/JxEFb1qwc1GLPAUXsy/xHMtYNHg8TWcf9QTZsYVLyFnEoG69yExJB05U23YcY/tw1lrnX99AHdh1Cn7g8h6w==}
+  '@iconify-json/octicon@1.2.32':
+    resolution: {integrity: sha512-gkb+HMhBxZzVvOQhs4NZg0AtMJ8uht6bc8fG757gDOpXjjAOcNe2KrJDd8ydGVmRZoNBIexJAovz8b+no4oTuA==}
 
   '@iconify-json/ph@1.2.2':
     resolution: {integrity: sha512-PgkEZNtqa8hBGjHXQa4pMwZa93hmfu8FUSjs/nv4oUU6yLsgv+gh9nu28Kqi8Fz9CCVu4hj1MZs9/60J57IzFw==}
@@ -3793,7 +3793,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/octicon@1.2.31':
+  '@iconify-json/octicon@1.2.32':
     dependencies:
       '@iconify/types': 2.0.0
 
