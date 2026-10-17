@@ -6,12 +6,8 @@ import {
   onWatcherCleanup,
   type Ref,
 } from "vue";
-import {
-  useSlideContext,
-  useIsSlideActive,
-  slideWidth,
-  slideHeight,
-} from "@slidev/client";
+import { useSlideContext } from "@slidev/client/context";
+import { slideWidth, slideHeight } from "@slidev/client/layoutHelper";
 import type { AbsolutePosition } from "./use-rough-arrow";
 import type {
   Position,
@@ -26,6 +22,7 @@ import {
   slideToSvgPoint,
   type ArrowFrame,
 } from "./arrow-frame";
+import { useIsSlideActive } from "./use-slidev-context";
 
 function getAbsoluteValue(
   lengthPercentage: LengthPercentage,
