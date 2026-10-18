@@ -1,4 +1,5 @@
 import { computed, type ComputedRef } from "vue";
+import { useRoute } from "vue-router";
 import { useSlideContext } from "@slidev/client/context.ts";
 
 /**
@@ -9,8 +10,7 @@ import { useSlideContext } from "@slidev/client/context.ts";
  * close an HMR circular import (`/@slidev/slides` → FancyArrow → `@slidev/client`
  * → `#slidev/slides`) and force a full page reload on every `slides.md` edit.
  *
- * `useSlideContext()` is inject-based and lives in a module with no slides-registry
- * dependency, so these local wrappers keep the same behavior without the cycle.
+ * These helpers use slide context and Vue Router without the slides registry.
  *
  * @see https://github.com/whitphx/slidev-addon-fancy-arrow/issues/449
  */
@@ -22,8 +22,15 @@ export function useIsSlideActive(): ComputedRef<boolean> {
 }
 
 export function useIsPrintMode(): ComputedRef<boolean> {
-  const { $nav } = useSlideContext();
-  // Runtime nav is SlidevContextNavFull (includes isPrintMode); injected type is SlidevContextNav.
-  type NavWithPrintMode = typeof $nav.value & { isPrintMode: boolean };
-  return computed(() => ($nav.value as NavWithPrintMode).isPrintMode);
+  const route = useRoute();
+  return computed(() => {
+    // Track navigation because location.search is not reactive.
+    void route.query;
+    // Fixed navigation omits isPrintMode. Follow Slidev's URL-based detection (MIT; see LICENSE).
+    // https://github.com/slidevjs/slidev/blob/v52.6.0/packages/client/composables/useNav.ts#L273-L284
+    return (
+      new URLSearchParams(location.search).has("print") ||
+      route.name === "export"
+    );
+  });
 }
