@@ -23,10 +23,13 @@ jobs:
 
       - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
         with:
-          version: latest
+          # pnpm 12 crashes Safe Chain 1.4.7's proxy ("Safe-chain: Uncaught exception:
+          # unexpected end of file"), after which every tarball fetch fails with
+          # "Connection refused". Pin the last 11.x until that is fixed.
+          version: 11.28.6
           run_install: false
 
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
           cache: "pnpm"
@@ -51,6 +54,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: write # To comment a pull request's preview URL.
+      deployments: write # To record each deploy as a GitHub deployment.
 
     runs-on: ubuntu-latest
     steps:
@@ -60,10 +64,11 @@ jobs:
 
       - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
         with:
-          version: latest
+          # Pinned for Safe Chain; see the test job.
+          version: 11.28.6
           run_install: false
 
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
           cache: "pnpm"
@@ -83,10 +88,14 @@ jobs:
       - name: Deploy to Cloudflare Pages
         id: deploy
         if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
-        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
+        uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4.1.3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # With a token the action records the deploy as a GitHub deployment, in the
+          # "preview" or "production" environment, so the pull request page shows a
+          # "View deployment" button. It also writes the job summary with both URLs.
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           # The action installs wrangler with this repository's own package manager,
           # so Safe Chain covers it. Pin it as everything else here is pinned, to a
           # release old enough for Safe Chain's minimum-age filter to have let it
@@ -102,14 +111,8 @@ jobs:
             --branch ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
 
       # A branch deploy also gets an alias that stays put across pushes, which is the
-      # more useful link; production only has the one URL.
-      - name: Note where it went
-        if: ${{ steps.deploy.outputs.deployment-url != '' }}
-        env:
-          URL: ${{ steps.deploy.outputs.pages-deployment-alias-url || steps.deploy.outputs.deployment-url }}
-        run: echo "Deployed to $URL" >> "$GITHUB_STEP_SUMMARY"
-
-      # One comment that gets rewritten, rather than a new one per push.
+      # more useful link to leave in the thread; the deployment points at the
+      # per-commit URL. One comment that gets rewritten, rather than a new one per push.
       - name: Comment the preview URL
         if: ${{ github.event_name == 'pull_request' && steps.deploy.outputs.deployment-url != '' }}
         env:
@@ -147,10 +150,11 @@ jobs:
 
       - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
         with:
-          version: latest
+          # Pinned for Safe Chain; see the test job.
+          version: 11.28.6
           run_install: false
 
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
           cache: "pnpm"

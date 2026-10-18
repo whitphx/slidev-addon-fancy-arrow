@@ -5,7 +5,6 @@ import {
   SnapTargetQuery,
   type SnapAnchorPoint,
 } from "./parse-option";
-import { useIsSlideActive, useNav } from "@slidev/client";
 import {
   resolveSnapTargetPosition,
   SnapTarget,
@@ -18,6 +17,7 @@ import {
 } from "./use-rough-arrow";
 import ChildElementPicker from "./ChildElementPicker.vue";
 import { pickCodeLineElements } from "./code-lines";
+import { useIsPrintMode, useIsSlideActive } from "./use-slidev-context";
 
 const props = defineProps<{
   from?: string; // Shorthand for (q1 and pos1) or (x1 and y1)
@@ -148,7 +148,7 @@ const head = computed(() => {
   return getSnapTarget(headConfig);
 });
 
-const { isPrintMode } = useNav();
+const isPrintMode = useIsPrintMode();
 const isSlideActive = useIsSlideActive();
 function getSnapTarget(
   snapTargetQuery: SnapTargetQuery,
