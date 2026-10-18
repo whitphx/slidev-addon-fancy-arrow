@@ -1,5 +1,5 @@
 import { computed, type ComputedRef } from "vue";
-import { useSlideContext } from "@slidev/client/context";
+import { useSlideContext } from "@slidev/client/context.ts";
 
 /**
  * Slidev helpers that must not go through the `@slidev/client` barrel.

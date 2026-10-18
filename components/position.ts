@@ -6,8 +6,8 @@ import {
   onWatcherCleanup,
   type Ref,
 } from "vue";
-import { useSlideContext } from "@slidev/client/context";
-import { slideWidth, slideHeight } from "@slidev/client/layoutHelper";
+import { useSlideContext } from "@slidev/client/context.ts";
+import { slideWidth, slideHeight } from "@slidev/client/env.ts";
 import type { AbsolutePosition } from "./use-rough-arrow";
 import type {
   Position,
