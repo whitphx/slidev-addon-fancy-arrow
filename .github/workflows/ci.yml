@@ -54,6 +54,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: write # To comment a pull request's preview URL.
+      deployments: write # To record each deploy as a GitHub deployment.
 
     runs-on: ubuntu-latest
     steps:
@@ -91,6 +92,10 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # With a token the action records the deploy as a GitHub deployment, in the
+          # "preview" or "production" environment, so the pull request page shows a
+          # "View deployment" button. It also writes the job summary with both URLs.
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           # The action installs wrangler with this repository's own package manager,
           # so Safe Chain covers it. Pin it as everything else here is pinned, to a
           # release old enough for Safe Chain's minimum-age filter to have let it
@@ -106,14 +111,8 @@ jobs:
             --branch ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
 
       # A branch deploy also gets an alias that stays put across pushes, which is the
-      # more useful link; production only has the one URL.
-      - name: Note where it went
-        if: ${{ steps.deploy.outputs.deployment-url != '' }}
-        env:
-          URL: ${{ steps.deploy.outputs.pages-deployment-alias-url || steps.deploy.outputs.deployment-url }}
-        run: echo "Deployed to $URL" >> "$GITHUB_STEP_SUMMARY"
-
-      # One comment that gets rewritten, rather than a new one per push.
+      # more useful link to leave in the thread; the deployment points at the
+      # per-commit URL. One comment that gets rewritten, rather than a new one per push.
       - name: Comment the preview URL
         if: ${{ github.event_name == 'pull_request' && steps.deploy.outputs.deployment-url != '' }}
         env:
