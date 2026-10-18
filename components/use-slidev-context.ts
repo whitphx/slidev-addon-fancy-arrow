@@ -23,5 +23,7 @@ export function useIsSlideActive(): ComputedRef<boolean> {
 
 export function useIsPrintMode(): ComputedRef<boolean> {
   const { $nav } = useSlideContext();
-  return computed(() => $nav.value.isPrintMode);
+  // Runtime nav is SlidevContextNavFull (includes isPrintMode); injected type is SlidevContextNav.
+  type NavWithPrintMode = typeof $nav.value & { isPrintMode: boolean };
+  return computed(() => ($nav.value as NavWithPrintMode).isPrintMode);
 }
