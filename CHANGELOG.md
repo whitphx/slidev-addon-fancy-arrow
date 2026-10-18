@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.20.2
+
+### Patch Changes
+
+- [#450](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/450) [`69936ca`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/69936caa8f5c8bdaf714286c36362ab0b7869b56) Thanks [@MurzNN](https://github.com/MurzNN)! - Avoid importing `@slidev/client` barrel APIs that pull `#slidev/slides`, which closed an HMR circular import and forced a full page reload on every `slides.md` edit.
+
 ## 0.20.1
 
 ### Patch Changes
