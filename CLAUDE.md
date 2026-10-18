@@ -64,11 +64,11 @@ Animation is disabled during Slidev transitions and when elements are hidden via
 
 ## Slidev Integration
 
-The addon integrates with Slidev via `@slidev/client` imports for:
-- `useIsSlideActive()` - Only resolve snap targets on active slides
-- `useNav()` - Detect print mode to disable animations
-- `$scale` - Account for slide scaling when calculating positions
-- `slideWidth`/`slideHeight` - Convert percentage positions to pixels
+The addon integrates with Slidev via **deep** `@slidev/client/*` imports (not the package barrel) for:
+- `useSlideContext()` from `@slidev/client/context.ts` — `$scale`, `$page`, `$nav` (active-slide checks)
+- `slideWidth`/`slideHeight` from `@slidev/client/env.ts` — Convert percentage positions to pixels
+
+Local wrappers in `components/use-slidev-context.ts` use slide context for active-slide checks and Vue Router for print-mode detection, because Slidev's fixed navigation omits `isPrintMode`. Do **not** import `useNav` or `useIsSlideActive` from `@slidev/client`: those pull `#slidev/slides` into the module graph and create an HMR circular import that forces a full page reload on every `slides.md` edit (see issue #449).
 
 ## Documentation
 
