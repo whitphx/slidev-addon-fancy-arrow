@@ -16,3 +16,9 @@ allowBuilds:
 onlyBuiltDependencies:
   - esbuild
   - workerd
+overrides:
+  # magic-string 1.4.3 makes @unocss/transformer-directives write the declarations it
+  # inserts a second time into the wrong place, which leaves loose declarations in
+  # Slidev's bundled CSS and fails `slidev build` in the lightningcss minifier
+  # (unocss/unocss#5373). Hold it at 1.4.2 until a fixed release is out.
+  magic-string@^1.4.3: 1.4.2
