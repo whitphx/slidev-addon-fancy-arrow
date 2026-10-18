@@ -39,15 +39,17 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.3.0",
     "oxfmt": "^0.64.0",
-    "oxlint": "^1.79.0",
+    "oxlint": "^1.80.0",
     "oxlint-tsgolint": "^7.0.2001",
     "puppeteer-core": "^25.9.0",
     "vitest": "^4.1.11",
-    "vue": "^3.5.41"
+    "vue": "^3.5.41",
+    "vue-router": "4.6.3"
   },
   "peerDependencies": {
     "@slidev/client": "^51.0.0 || ^52.0.0",
-    "vue": "^3.5.0"
+    "vue": "^3.5.0",
+    "vue-router": "^4.5.0"
   },
   "peerDependenciesMeta": {
     "@slidev/client": {

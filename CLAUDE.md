@@ -6,69 +6,13 @@ This file provides guidance to coding agents working with code in this repositor
 
 This is a Slidev addon that provides a `<FancyArrow>` Vue component for adding hand-drawn style arrows to Slidev presentations, powered by Rough.js.
 
-## Commands
-
-```bash
-# Development - starts Slidev dev server with live demo
-pnpm dev
-
-# Run tests (uses vitest)
-pnpm test
-
-# Run a single test file
-pnpm test components/parse-option.test.ts
-
-# Linting
-pnpm lint
-
-# Formatting
-pnpm format
-
-# Build the slides for production
-pnpm build
-```
-
-## Architecture
-
-### Component Structure (`components/`)
-
-The addon exports a single main component `FancyArrow.vue` that renders hand-drawn arrows using SVG.
-
-**Core modules:**
-- `FancyArrow.vue` - Main component that orchestrates arrow rendering. Handles props parsing, endpoint resolution, and SVG rendering
-- `use-rough-arrow.ts` - Vue composable that generates the actual Rough.js SVG paths for arrows and arrowheads, including animation logic
-- `parse-option.ts` - Parses the various endpoint specification formats (CSS selectors, absolute positions, snap positions)
-- `position.ts` - Resolves endpoint positions by tracking DOM elements and computing coordinates relative to the slide
-- `closest-edge-point.ts` - Calculates snap points when auto-snapping arrows to element edges
-- `split-path.ts` - Splits compound SVG paths for proper animation sequencing
-- `ChildElementPicker.vue` - Helper component for slot-based endpoint definitions
-
-### Endpoint Specification
-
-Arrows support multiple ways to define endpoints:
-1. Absolute positions: `from="(100, 200)"` or `x1="100" y1="200"`
-2. CSS selector snapping: `from="[data-id=element]@bottom"`
-3. Slot-based: `<template #tail>` and `<template #head>` slots
-
-The `@` syntax specifies snap anchor points: `center`, `top`, `bottom`, `left`, `right`, `topleft`, `topright`, `bottomleft`, `bottomright`, or custom `(x%, y%)` positions.
-
-### Animation System
-
-Arrows animate using CSS stroke-dashoffset animation. The `use-rough-arrow.ts` composable:
-1. Calculates total path length
-2. Splits paths into segments (arc + arrowheads)
-3. Applies sequential animation delays based on segment lengths
-4. Uses CSS classes `animated-rough-arrow-stroke` and `animated-rough-arrow-fill`
-
-Animation is disabled during Slidev transitions and when elements are hidden via `v-click`.
-
 ## Slidev Integration
 
-The addon integrates with Slidev via `@slidev/client` imports for:
-- `useIsSlideActive()` - Only resolve snap targets on active slides
-- `useNav()` - Detect print mode to disable animations
-- `$scale` - Account for slide scaling when calculating positions
-- `slideWidth`/`slideHeight` - Convert percentage positions to pixels
+The addon integrates with Slidev via **deep** `@slidev/client/*` imports (not the package barrel) for:
+- `useSlideContext()` from `@slidev/client/context.ts` — `$scale`, `$page`, `$nav` (active-slide checks)
+- `slideWidth`/`slideHeight` from `@slidev/client/env.ts` — Convert percentage positions to pixels
+
+Local wrappers in `components/use-slidev-context.ts` use slide context for active-slide checks and Vue Router for print-mode detection, because Slidev's fixed navigation omits `isPrintMode`. Do **not** import `useNav` or `useIsSlideActive` from `@slidev/client`: those pull `#slidev/slides` into the module graph and create an HMR circular import that forces a full page reload on every `slides.md` edit (see issue #449).
 
 ## Documentation
 
@@ -78,7 +22,7 @@ When modifying the `<FancyArrow>` component interface (props, slots, usage patte
 
 ## Deployment
 
-The demo deploys to Cloudflare Pages from the `build-demo` job in `.github/workflows/ci.yml`, which runs `wrangler pages deploy` against the `slidev-addon-fancy-arrow` project through Cloudflare's own `wrangler-action`. A push to `main` updates production at <https://slidev-addon-fancy-arrow.pages.dev/>; every other branch gets a preview of its own, whose URL the job posts as a single comment on the pull request and rewrites on each push.
+The demo deploys to Cloudflare Pages from the `build-demo` job in `.github/workflows/ci.yml`, which runs `wrangler pages deploy` against the `slidev-addon-fancy-arrow` project through Cloudflare's own `wrangler-action`. A push to `main` updates production at <https://slidev-addon-fancy-arrow.pages.dev/>; every other branch gets a preview of its own, whose URL the job posts as a single comment on the pull request and rewrites on each push. The action is also handed `GITHUB_TOKEN`, so it records every deploy as a GitHub deployment in the `preview` or `production` environment, which is what puts the "View deployment" button on the pull request page and fills the Deployments list; that is why the job asks for `deployments: write`.
 
 That needs `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as repository secrets. A pull request from a fork cannot read them, so it builds as a check and skips the deploy.
 
@@ -86,35 +30,4 @@ The build takes no `--base`, since Cloudflare serves the demo from the root of i
 
 ## Cloud sessions
 
-A cloud session has no browser, so the only way to look at a slide is to render it to a PNG and read the image back.
-
-```bash
-pnpm dev:headless --port 3030 &
-node scripts/screenshot.js 1           # writes screenshots/slide-1.png
-node scripts/screenshot.js 1 --clicks 3
-```
-
-`pnpm dev` is the wrong command here because it passes `--open` and a VM has no browser to open, which is what `dev:headless` exists for. The screenshot script waits for the drawing animations to finish, so a capture shows an arrow in its final state.
-
-`scripts/screenshot.js` finds a browser on its own. The images at claude.ai/code ship Playwright's Chromium at `/opt/pw-browsers/chromium`, which is one of the paths it looks in, so a session there captures slides with no environment setup at all.
-
-The setup script in `.claude/cloud-setup.sh` is a fallback for an image that ships no browser: paste it into the environment's Setup script field, and it installs Chrome. Nothing in the repository runs it. Network access can stay on Trusted either way, since the script pins a Chrome for Testing build rather than looking a channel name up on a host Trusted blocks.
-
-### Exporting a PDF
-
-`pnpm export` needs `playwright-chromium`, which this repository deliberately does not depend on. The version matters: Playwright pins an exact Chromium revision, and the images at claude.ai/code ship revision 1194, which only 1.56.x asks for. Any other version looks for a revision that is not there and fails with `Executable doesn't exist at /opt/pw-browsers/chromium_headless_shell-<revision>`.
-
-```bash
-pnpm add -D playwright-chromium@1.56.1                    # the revision the image has
-pnpm export                                               # times out on a cold cache
-pnpm export                                               # writes slides-export.pdf
-git checkout package.json pnpm-lock.yaml && pnpm install  # put the tree back
-```
-
-Name the patch version rather than a range. `@1.56` saves `~1.56.1`, which floats across 1.56 patches, and nothing promises they keep the same Chromium revision. Naming it in full saves it in full; `--save-exact` changes nothing, since it is the version spec that decides.
-
-Pinned that way nothing is downloaded, so Trusted access is enough. Any other version fetches its own browser from `cdn.playwright.dev`, which needs a Custom allowlist.
-
-Put the tree back with git rather than `pnpm remove`, which restores `package.json` but leaves the lockfile carrying both the package and the `(playwright-chromium@1.56.1)` peer suffix it added to `@slidev/cli`.
-
-Install it for the session that needs a PDF and leave it out of a commit. The pin only matches whichever image is current, so carrying it in `package.json` would break on the next image bump and hold every other checkout to an old Playwright. The first run failing is Slidev's own export timing out while Vite still compiles, in `@slidev/cli` rather than in anything here.
+To look at a slide or export a PDF in a session with no browser, follow `.claude/skills/cloud-session-rendering/SKILL.md`.

@@ -1,0 +1,39 @@
+name: Dependabot auto-merge
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  auto-merge:
+    # Only Dependabot's own pull requests, opened from this repository.
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' && github.event.pull_request.head.repo.full_name == github.repository }}
+
+    permissions:
+      contents: write # To merge.
+      pull-requests: write # To turn on auto-merge.
+
+    runs-on: ubuntu-latest
+    steps:
+      # Dependabot writes the update type of every dependency it bumps into the commit
+      # message, which is what dependabot/fetch-metadata parses too. Reading it here
+      # keeps a third-party action out of a job holding a write token.
+      - name: Enable auto-merge for non-major updates
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          message="$(gh api "repos/$GITHUB_REPOSITORY/commits/$SHA" --jq .commit.message)"
+          types="$(grep -oE 'update-type: version-update:semver-[a-z]+' <<<"$message" | sort -u || true)"
+          echo "Update types:"; echo "${types:-(none found)}"
+          if [ -z "$types" ] || grep -q 'semver-major' <<<"$types"; then
+            echo "Major or unrecognized update; leaving it for a human to merge." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          # Auto-merge waits for the required checks, so CI still has to pass first.
+          gh pr merge --auto --squash "$PR_URL"
+          echo "Auto-merge enabled." >> "$GITHUB_STEP_SUMMARY"
