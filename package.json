@@ -37,7 +37,7 @@
     "@slidev/theme-default": "latest",
     "happy-dom": "^20.11.6",
     "husky": "^9.1.7",
-    "lint-staged": "^17.3.0",
+    "lint-staged": "^17.6.0",
     "oxfmt": "^0.72.0",
     "oxlint": "^1.80.0",
     "oxlint-tsgolint": "^7.0.2001",
