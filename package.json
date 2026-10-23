@@ -39,7 +39,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.6.0",
     "oxfmt": "^0.73.0",
-    "oxlint": "^1.80.0",
+    "oxlint": "^1.88.0",
     "oxlint-tsgolint": "^7.0.2004",
     "puppeteer-core": "^25.14.0",
     "vitest": "^5.0.5",
