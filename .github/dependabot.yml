@@ -12,3 +12,11 @@ updates:
       interval: "daily"
     cooldown:
       default-days: 7
+    ignore:
+      # The markdown-it devDependency only exists to hold @comark/markdown-it,
+      # which Slidev 53 uses, on markdown-it 14. It imports markdown-it/lib/token.mjs,
+      # which 15 no longer exports, and `slidev` then crashes on startup
+      # (slidevjs/slidev#2761). Drop the devDependency and this entry
+      # once Slidev ships a fix.
+      - dependency-name: "markdown-it"
+        update-types: ["version-update:semver-major"]
