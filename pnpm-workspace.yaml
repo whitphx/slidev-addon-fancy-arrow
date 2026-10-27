@@ -22,3 +22,8 @@ overrides:
   # Slidev's bundled CSS and fails `slidev build` in the lightningcss minifier
   # (unocss/unocss#5373). Hold it at 1.4.2 until a fixed release is out.
   magic-string@^1.4.3: 1.4.2
+# Slidev 53 pulls in several long-published releases (chokidar 4.0.3, undici-types
+# 6.21.0, ...) that lack the provenance attestation an earlier version carried.
+# pnpm's trust policy rejects those as possible takeovers. A takeover is caught
+# while it is fresh, so the check is skipped only for releases older than 30 days.
+trustPolicyIgnoreAfter: 43200

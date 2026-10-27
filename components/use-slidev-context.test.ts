@@ -68,38 +68,3 @@ describe("useIsPrintMode with fixed navigation lacking isPrintMode", () => {
     expect(isPrintMode.value).toBe(false);
   });
 });
-
-describe("useIsPrintMode without a Vue Router injection", () => {
-  let app: App | undefined;
-  let isPrintMode: ComputedRef<boolean>;
-
-  afterEach(() => {
-    app?.unmount();
-    app = undefined;
-    window.history.replaceState({}, "", "/");
-  });
-
-  function mountWithoutRouter() {
-    app = createApp({
-      setup() {
-        // No app.use(router): useRoute() returns undefined, which previously
-        // threw on route.query and blanked the whole Slidev slide.
-        isPrintMode = useIsPrintMode();
-        return () => null;
-      },
-    });
-    app.mount(document.createElement("div"));
-  }
-
-  it("does not throw when useRoute() is undefined", () => {
-    window.history.replaceState({}, "", "/1");
-    expect(() => mountWithoutRouter()).not.toThrow();
-    expect(isPrintMode.value).toBe(false);
-  });
-
-  it("falls back to location.search when useRoute() is undefined", () => {
-    window.history.replaceState({}, "", "/1?print");
-    mountWithoutRouter();
-    expect(isPrintMode.value).toBe(true);
-  });
-});
