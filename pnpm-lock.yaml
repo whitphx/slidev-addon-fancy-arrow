@@ -52,8 +52,8 @@ importers:
         specifier: ^7.0.2004
         version: 7.0.2004
       puppeteer-core:
-        specifier: ^25.14.0
-        version: 25.14.0
+        specifier: ^25.15.0
+        version: 25.15.0
       vitest:
         specifier: ^5.0.5
         version: 5.0.5(@types/node@26.2.0)(happy-dom@20.11.6)(vite@7.3.2(@types/node@26.2.0)(jiti@2.7.0)(lightningcss@1.33.0)(yaml@2.9.1))
@@ -3764,8 +3764,8 @@ packages:
     resolution: {integrity: sha512-uxFIHU0YlHYhDQtV4R9J6a52SLx28BCjT+4ieh7IGbgwVJWO+km431c4yRlREUAsAmt/uMjQUyQHNEPf0M39CA==}
     engines: {node: '>=6'}
 
-  puppeteer-core@25.14.0:
-    resolution: {integrity: sha512-LQitnes3tBeVbdZ7V/4iwJPLZGgkl9uBVK0W7YYMh68j/3Y9eNuvj4yl+Fdo7zN0SuajOMrhd7aPj3DifK8k6A==}
+  puppeteer-core@25.15.0:
+    resolution: {integrity: sha512-DEk7S2tlBDp4+iXdnHjFmMofoqVftlz1JO4eyE+oBSiQIfIVTYq8hWF1EsjmRvD49chxGX3oKQT5hX2dnIIDdg==}
     engines: {node: '>=22.12.0'}
 
   quansync@0.2.11:
@@ -8991,7 +8991,7 @@ snapshots:
 
   punycode.js@2.3.1: {}
 
-  puppeteer-core@25.14.0:
+  puppeteer-core@25.15.0:
     dependencies:
       '@puppeteer/browsers': 3.2.5
       chromium-bidi: 157.0.8090-0(devtools-protocol@0.0.1696802)
