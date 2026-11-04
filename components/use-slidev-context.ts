@@ -22,10 +22,8 @@ export function useIsSlideActive(): ComputedRef<boolean> {
 }
 
 export function useIsPrintMode(): ComputedRef<boolean> {
-  // Slidev points every @slidev/client import at its own copy but dedupes only vue.
-  // A deck that installs a second vue-router copy for this addon gives it a router
-  // whose injection key Slidev never provided, so the route is missing there.
-  // Falling back to the query keeps the slide rendering instead of throwing.
+  // Slidev dedupes only vue, so a deck can still install a second vue-router copy for this addon.
+  // That copy's useRoute() looks up an injection key Slidev never provided, and returns undefined.
   // https://github.com/slidevjs/slidev/blob/v53.0.0/packages/slidev/node/vite/extendConfig.ts#L81-L106
   const route = useRoute() as ReturnType<typeof useRoute> | undefined;
   return computed(() => {
