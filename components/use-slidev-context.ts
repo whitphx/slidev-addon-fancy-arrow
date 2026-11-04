@@ -22,21 +22,18 @@ export function useIsSlideActive(): ComputedRef<boolean> {
 }
 
 export function useIsPrintMode(): ComputedRef<boolean> {
-  // May be undefined when FancyArrow mounts outside the Vue Router injection
-  // context (Slidev preload of inactive slides, or some HMR remount paths).
-  // Accessing route.query in that case blanks the whole slide.
-  const route = useRoute();
+  // Slidev dedupes only vue, so a deck can still install a second vue-router copy for this addon.
+  // That copy's useRoute() looks up an injection key Slidev never provided, and returns undefined.
+  // https://github.com/slidevjs/slidev/blob/v53.0.0/packages/slidev/node/vite/extendConfig.ts#L81-L106
+  const route = useRoute() as ReturnType<typeof useRoute> | undefined;
   return computed(() => {
-    if (route == null) {
-      return new URLSearchParams(location.search).has("print");
-    }
     // Track navigation because location.search is not reactive.
-    void route.query;
+    void route?.query;
     // Fixed navigation omits isPrintMode. Follow Slidev's URL-based detection (MIT; see LICENSE).
     // https://github.com/slidevjs/slidev/blob/v52.6.0/packages/client/composables/useNav.ts#L273-L284
     return (
       new URLSearchParams(location.search).has("print") ||
-      route.name === "export"
+      route?.name === "export"
     );
   });
 }
