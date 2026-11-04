@@ -13,7 +13,7 @@ importers:
     dependencies:
       '@slidev/client':
         specifier: ^51.0.0 || ^52.0.0 || ^53.0.0
-        version: 53.0.0(@nuxt/kit@3.19.3)(@oxc-project/types@0.153.0)(@vue/compiler-sfc@3.5.44)(cac@7.0.0)(crossws@0.4.15(srvx@1.0.5))(esbuild@0.27.7)(lightningcss@1.33.0)(markdown-it-async@2.2.0)(markdown-it@14.3.3)(oxc-parser@0.150.0)(rolldown@1.2.13)(rollup@4.59.0)(srvx@1.0.5)(vite@8.3.4(@types/node@26.2.0)(esbuild@0.27.7)(jiti@2.7.0)(yaml@2.9.1))
+        version: 53.0.0(@nuxt/kit@3.19.3)(@oxc-project/types@0.153.0)(@vue/compiler-sfc@3.5.44)(cac@7.0.0)(crossws@0.4.15(srvx@1.0.5))(esbuild@0.27.7)(lightningcss@1.33.0)(markdown-it-async@2.2.0)(markdown-it@15.0.3)(oxc-parser@0.150.0)(rolldown@1.2.13)(rollup@4.59.0)(srvx@1.0.5)(vite@8.3.4(@types/node@26.2.0)(esbuild@0.27.7)(jiti@2.7.0)(yaml@2.9.1))
       roughjs:
         specifier: ^4.6.6
         version: 4.6.6
@@ -29,7 +29,7 @@ importers:
         version: 1.2.40
       '@slidev/cli':
         specifier: ^53.0.0
-        version: 53.0.0(@nuxt/kit@3.19.3)(@oxc-project/types@0.153.0)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vue/compiler-sfc@3.5.44)(cac@7.0.0)(crossws@0.4.15(srvx@1.0.5))(esbuild@0.27.7)(lightningcss@1.33.0)(markdown-it-async@2.2.0)(markdown-it@14.3.3)(oxc-parser@0.150.0)(postcss@8.5.29)(rolldown@1.2.13)(rollup@4.59.0)(srvx@1.0.5)
+        version: 53.0.0(@nuxt/kit@3.19.3)(@oxc-project/types@0.153.0)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vue/compiler-sfc@3.5.44)(cac@7.0.0)(crossws@0.4.15(srvx@1.0.5))(esbuild@0.27.7)(lightningcss@1.33.0)(markdown-it-async@2.2.0)(markdown-it@15.0.3)(oxc-parser@0.150.0)(postcss@8.5.29)(rolldown@1.2.13)(rollup@4.59.0)(srvx@1.0.5)
       '@slidev/theme-default':
         specifier: latest
         version: 0.25.0
@@ -43,8 +43,8 @@ importers:
         specifier: ^17.6.0
         version: 17.6.0
       markdown-it:
-        specifier: ^14.3.3
-        version: 14.3.3
+        specifier: ^15.0.3
+        version: 15.0.3
       oxfmt:
         specifier: ^0.75.0
         version: 0.75.0
@@ -1929,8 +1929,8 @@ packages:
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
 
-  argparse@3.0.2:
-    resolution: {integrity: sha512-mFdDM6WqWKraGLsVb+C9CahPnzTXOefAOLq3jYcca2YZ8bEWpr++Tzj+zSaKW9+X9L5uSxcm1AZ3Y6aZJ09OhQ==}
+  argparse@3.0.4:
+    resolution: {integrity: sha512-fwWK3Zq22l4XJJjx5mcBHGikIk+hJqO+32dPm0Jur7+rtG5x1scOjSfdT9ZKeWHPpsya/l0HHK4tDImBkTrtvA==}
 
   assertion-error@2.0.1:
     resolution: {integrity: sha512-Izi8RQcffqCeNVgFigKli1ssklIbpHnCYc6AknXGYoB6grJqyeby7jv12JUQgmTAnIDnbck1uxksT4dzN3PWBA==}
@@ -2897,8 +2897,8 @@ packages:
     resolution: {integrity: sha512-++gUqRDEvcnN6Zhqrr+y/CkVEHhlrR96vZn3nZZPYzMcBUyBtTKzB9NadClFIsIVSsu+3i9tfk/erqy9kAmt7Q==}
     engines: {node: '>=14'}
 
-  lodash-es@4.17.21:
-    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+  lodash-es@4.18.1:
+    resolution: {integrity: sha512-J8xewKD/Gk22OZbhpOVSwcs60zhd95ESDwezOFuA3/099925PdHJ7OFHNTGtajL3AlZkykD32HykiMo+BIBI8A==}
 
   longest-streak@3.1.0:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
@@ -2947,8 +2947,8 @@ packages:
     resolution: {integrity: sha512-L//tDAkjTjJCU6pBUSBTgs3Kg4InVaZuUZog/b6V12UKhcDQ7S78877ibbCanRExwPuYP1CZD7Gd2dxSy1GXRg==}
     hasBin: true
 
-  markdown-it@15.0.2:
-    resolution: {integrity: sha512-q4IGxMv56jCqT4OCRCADBoDP3LO4MhmTXjFbphHPXs4g3j9Xg5RDnxqN8IF/3vIWEU+VCnUq+7JUg/cfy2E6Qw==}
+  markdown-it@15.0.3:
+    resolution: {integrity: sha512-+Az7Ojz3iRGu8KYMvJ6xVhvrxP3eE+vEtJX75Ow88XBpcQNV/0lGX5ZynIIBftREo4DC2jsveAMDaeltmm8QvQ==}
     hasBin: true
 
   markdown-table@3.0.4:
@@ -3463,8 +3463,8 @@ packages:
   setimmediate@1.0.5:
     resolution: {integrity: sha512-MATJdZp8sLqDl/68LfQmbP8zKPLQNV6BIZoIgrscFDQ+RsvK/BxeDQOgyxKKoh0y/8h3BqVFnCqQ/gd+reiIXA==}
 
-  shell-quote@1.10.0:
-    resolution: {integrity: sha512-w1aiOKwKuRgtwAReIIj89puqg+I7GvX4IbLrvmhXbzQsj1+Zwi4VO3+fa6ZF91TWSjIxoEkKnMeHcLEODK5ZXA==}
+  shell-quote@1.12.0:
+    resolution: {integrity: sha512-PcByqNyT/38F2kDNi006HAMRJaULuBzq/FOsw3qdZvX/GA9W/jamDaRskgHjubHiftXK5sIFxLNkvrXUwcof6Q==}
     engines: {node: '>= 0.4'}
 
   shiki@4.5.0:
@@ -3477,10 +3477,6 @@ packages:
 
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
-
-  source-map-js@1.2.1:
-    resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
-    engines: {node: '>=0.10.0'}
 
   source-map-js@1.2.2:
     resolution: {integrity: sha512-KGj/8Y43x35aZVDtt+J4mK1hoLGHULMYfSkODJNQjNDC3oW1PqPoxMwo0pLUsWM/UEGzON/NxeHywEfNXNP3Vw==}
@@ -4418,11 +4414,11 @@ snapshots:
       fast-wrap-ansi: 0.2.2
       sisteransi: 1.0.5
 
-  '@comark/markdown-it@0.3.4(@types/markdown-it@14.1.2)(markdown-it@14.3.3)':
+  '@comark/markdown-it@0.3.4(@types/markdown-it@14.1.2)(markdown-it@15.0.3)':
     dependencies:
       '@types/markdown-it': 14.1.2
       js-yaml: 4.3.2
-      markdown-it: 14.3.3
+      markdown-it: 15.0.3
 
   '@devframes/hub@1.2.3(crossws@0.4.15(srvx@1.0.5))(devframe@1.2.3(cac@7.0.0)(srvx@1.0.5))':
     dependencies:
@@ -5064,7 +5060,7 @@ snapshots:
 
   '@shikijs/markdown-it@4.5.0(markdown-it-async@2.2.0)':
     dependencies:
-      markdown-it: 15.0.2
+      markdown-it: 15.0.3
       shiki: 4.5.0
     optionalDependencies:
       markdown-it-async: 2.2.0
@@ -5105,7 +5101,7 @@ snapshots:
       floating-vue: 5.4.0(@nuxt/kit@3.19.3)(vue@3.5.44(typescript@6.0.3))
       lz-string-es: 1.0.0
       magic-string: 1.4.2
-      markdown-it: 15.0.2
+      markdown-it: 15.0.3
       mdast-util-from-markdown: 2.1.0
       mdast-util-gfm: 3.1.0
       mdast-util-to-hast: 13.2.1
@@ -5121,11 +5117,11 @@ snapshots:
 
   '@shikijs/vscode-textmate@10.0.2': {}
 
-  '@slidev/cli@53.0.0(@nuxt/kit@3.19.3)(@oxc-project/types@0.153.0)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vue/compiler-sfc@3.5.44)(cac@7.0.0)(crossws@0.4.15(srvx@1.0.5))(esbuild@0.27.7)(lightningcss@1.33.0)(markdown-it-async@2.2.0)(markdown-it@14.3.3)(oxc-parser@0.150.0)(postcss@8.5.29)(rolldown@1.2.13)(rollup@4.59.0)(srvx@1.0.5)':
+  '@slidev/cli@53.0.0(@nuxt/kit@3.19.3)(@oxc-project/types@0.153.0)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vue/compiler-sfc@3.5.44)(cac@7.0.0)(crossws@0.4.15(srvx@1.0.5))(esbuild@0.27.7)(lightningcss@1.33.0)(markdown-it-async@2.2.0)(markdown-it@15.0.3)(oxc-parser@0.150.0)(postcss@8.5.29)(rolldown@1.2.13)(rollup@4.59.0)(srvx@1.0.5)':
     dependencies:
       '@antfu/ni': 30.6.0
       '@antfu/utils': 9.3.0
-      '@comark/markdown-it': 0.3.4(@types/markdown-it@14.1.2)(markdown-it@14.3.3)
+      '@comark/markdown-it': 0.3.4(@types/markdown-it@14.1.2)(markdown-it@15.0.3)
       '@iconify-json/carbon': 1.2.28
       '@iconify-json/ph': 1.2.2
       '@iconify-json/svg-spinners': 1.2.4
@@ -5136,7 +5132,7 @@ snapshots:
       '@shikijs/markdown-it': 4.5.0(markdown-it-async@2.2.0)
       '@shikijs/twoslash': 4.5.0(typescript@6.0.3)
       '@shikijs/vitepress-twoslash': 4.5.0(@nuxt/kit@3.19.3)(typescript@6.0.3)
-      '@slidev/client': 53.0.0(@nuxt/kit@3.19.3)(@oxc-project/types@0.153.0)(@vue/compiler-sfc@3.5.44)(cac@7.0.0)(crossws@0.4.15(srvx@1.0.5))(esbuild@0.27.7)(lightningcss@1.33.0)(markdown-it-async@2.2.0)(markdown-it@14.3.3)(oxc-parser@0.150.0)(rolldown@1.2.13)(rollup@4.59.0)(srvx@1.0.5)(vite@8.3.4(@types/node@26.2.0)(esbuild@0.27.7)(jiti@2.7.0)(yaml@2.9.1))
+      '@slidev/client': 53.0.0(@nuxt/kit@3.19.3)(@oxc-project/types@0.153.0)(@vue/compiler-sfc@3.5.44)(cac@7.0.0)(crossws@0.4.15(srvx@1.0.5))(esbuild@0.27.7)(lightningcss@1.33.0)(markdown-it-async@2.2.0)(markdown-it@15.0.3)(oxc-parser@0.150.0)(rolldown@1.2.13)(rollup@4.59.0)(srvx@1.0.5)(vite@8.3.4(@types/node@26.2.0)(esbuild@0.27.7)(jiti@2.7.0)(yaml@2.9.1))
       '@slidev/parser': 53.0.0(@nuxt/kit@3.19.3)(@vue/compiler-sfc@3.5.44)(cac@7.0.0)(crossws@0.4.15(srvx@1.0.5))(esbuild@0.27.7)(markdown-it-async@2.2.0)(rolldown@1.2.13)(rollup@4.59.0)(srvx@1.0.5)(typescript@6.0.3)(vite@8.3.4(@types/node@26.2.0)(esbuild@0.27.7)(jiti@2.7.0)(yaml@2.9.1))
       '@slidev/types': 53.0.0(@nuxt/kit@3.19.3)(@vue/compiler-sfc@3.5.44)(cac@7.0.0)(crossws@0.4.15(srvx@1.0.5))(esbuild@0.27.7)(markdown-it-async@2.2.0)(rolldown@1.2.13)(rollup@4.59.0)(srvx@1.0.5)(typescript@6.0.3)(vite@8.3.4(@types/node@26.2.0)(esbuild@0.27.7)(jiti@2.7.0)(yaml@2.9.1))
       '@unocss/extractor-mdc': 66.10.5
@@ -5161,7 +5157,7 @@ snapshots:
       magic-string-stack: 2.0.0
       markdown-exit: 1.3.0
       markdown-it-footnote: 4.0.0
-      markdown-it-github-alerts: 1.0.1(markdown-it@14.3.3)
+      markdown-it-github-alerts: 1.0.1(markdown-it@15.0.3)
       mlly: 1.8.2
       monaco-editor: 0.56.0
       obug: 3.0.0
@@ -5178,7 +5174,7 @@ snapshots:
       resolve-global: 2.0.0
       shiki: 4.5.0
       sirv: 3.0.2
-      source-map-js: 1.2.1
+      source-map-js: 1.2.2
       typescript: 6.0.3
       unhead: 3.4.2(esbuild@0.27.7)(rolldown@1.2.13)(rollup@4.59.0)(vite@8.3.4(@types/node@26.2.0)(esbuild@0.27.7)(jiti@2.7.0)(yaml@2.9.1))
       unocss: 66.10.5(cac@7.0.0)(rolldown@1.2.13)(rollup@4.59.0)(srvx@1.0.5)(vite@8.3.4(@types/node@26.2.0)(esbuild@0.27.7)(jiti@2.7.0)(yaml@2.9.1))
@@ -5247,7 +5243,7 @@ snapshots:
       - unloader
       - webpack
 
-  '@slidev/client@53.0.0(@nuxt/kit@3.19.3)(@oxc-project/types@0.153.0)(@vue/compiler-sfc@3.5.44)(cac@7.0.0)(crossws@0.4.15(srvx@1.0.5))(esbuild@0.27.7)(lightningcss@1.33.0)(markdown-it-async@2.2.0)(markdown-it@14.3.3)(oxc-parser@0.150.0)(rolldown@1.2.13)(rollup@4.59.0)(srvx@1.0.5)(vite@8.3.4(@types/node@26.2.0)(esbuild@0.27.7)(jiti@2.7.0)(yaml@2.9.1))':
+  '@slidev/client@53.0.0(@nuxt/kit@3.19.3)(@oxc-project/types@0.153.0)(@vue/compiler-sfc@3.5.44)(cac@7.0.0)(crossws@0.4.15(srvx@1.0.5))(esbuild@0.27.7)(lightningcss@1.33.0)(markdown-it-async@2.2.0)(markdown-it@15.0.3)(oxc-parser@0.150.0)(rolldown@1.2.13)(rollup@4.59.0)(srvx@1.0.5)(vite@8.3.4(@types/node@26.2.0)(esbuild@0.27.7)(jiti@2.7.0)(yaml@2.9.1))':
     dependencies:
       '@antfu/utils': 9.3.0
       '@fix-webm-duration/fix': 1.0.1
@@ -5277,7 +5273,7 @@ snapshots:
       fuse.js: 7.5.0
       katex: 0.18.10
       lz-string: 1.5.0
-      markdown-it-github-alerts: 1.0.1(markdown-it@14.3.3)
+      markdown-it-github-alerts: 1.0.1(markdown-it@15.0.3)
       mermaid: 12.2.0
       monaco-editor: 0.56.0
       nanotar: 0.3.0
@@ -5923,7 +5919,7 @@ snapshots:
       '@vue/shared': 3.5.41
       entities: 7.0.1
       estree-walker: 2.0.2
-      source-map-js: 1.2.1
+      source-map-js: 1.2.2
 
   '@vue/compiler-core@3.5.44':
     dependencies:
@@ -5953,7 +5949,7 @@ snapshots:
       estree-walker: 2.0.2
       magic-string: 0.30.21
       postcss: 8.5.26
-      source-map-js: 1.2.1
+      source-map-js: 1.2.2
 
   '@vue/compiler-sfc@3.5.44':
     dependencies:
@@ -6096,7 +6092,7 @@ snapshots:
 
   argparse@2.0.1: {}
 
-  argparse@3.0.2: {}
+  argparse@3.0.4: {}
 
   assertion-error@2.0.1: {}
 
@@ -6275,7 +6271,7 @@ snapshots:
   css-tree@3.2.1:
     dependencies:
       mdn-data: 2.27.1
-      source-map-js: 1.2.1
+      source-map-js: 1.2.2
 
   cssesc@3.0.0: {}
 
@@ -6463,7 +6459,7 @@ snapshots:
   dagre-d3-es@7.0.14:
     dependencies:
       d3: 7.9.0
-      lodash-es: 4.17.21
+      lodash-es: 4.18.1
 
   dataloader@2.2.3: {}
 
@@ -6934,7 +6930,7 @@ snapshots:
   launch-editor@2.14.1:
     dependencies:
       picocolors: 1.1.1
-      shell-quote: 1.10.0
+      shell-quote: 1.12.0
 
   layout-base@1.0.2: {}
 
@@ -7015,7 +7011,7 @@ snapshots:
       pkg-types: 2.3.0
       quansync: 0.2.11
 
-  lodash-es@4.17.21: {}
+  lodash-es@4.18.1: {}
 
   longest-streak@3.1.0: {}
 
@@ -7072,9 +7068,9 @@ snapshots:
 
   markdown-it-footnote@4.0.0: {}
 
-  markdown-it-github-alerts@1.0.1(markdown-it@14.3.3):
+  markdown-it-github-alerts@1.0.1(markdown-it@15.0.3):
     dependencies:
-      markdown-it: 14.3.3
+      markdown-it: 15.0.3
 
   markdown-it@14.3.3:
     dependencies:
@@ -7085,9 +7081,9 @@ snapshots:
       punycode.js: 2.3.1
       uc.micro: 2.1.0
 
-  markdown-it@15.0.2:
+  markdown-it@15.0.3:
     dependencies:
-      argparse: 3.0.2
+      argparse: 3.0.4
       entities: 8.1.0
       linkify-it: 6.1.0
       mdurl: 2.1.0
@@ -7658,7 +7654,7 @@ snapshots:
     dependencies:
       nanoid: 3.3.18
       picocolors: 1.1.1
-      source-map-js: 1.2.1
+      source-map-js: 1.2.2
 
   postcss@8.5.29:
     dependencies:
@@ -7853,7 +7849,7 @@ snapshots:
 
   setimmediate@1.0.5: {}
 
-  shell-quote@1.10.0: {}
+  shell-quote@1.12.0: {}
 
   shiki@4.5.0:
     dependencies:
@@ -7873,8 +7869,6 @@ snapshots:
       totalist: 3.0.1
 
   sisteransi@1.0.5: {}
-
-  source-map-js@1.2.1: {}
 
   source-map-js@1.2.2: {}
 
