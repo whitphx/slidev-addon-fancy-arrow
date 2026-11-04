@@ -38,7 +38,7 @@
     "happy-dom": "^20.11.6",
     "husky": "^9.1.7",
     "lint-staged": "^17.6.0",
-    "markdown-it": "^14.1.1",
+    "markdown-it": "^14.3.3",
     "oxfmt": "^0.75.0",
     "oxlint": "^1.90.0",
     "oxlint-tsgolint": "^7.0.2005",
