@@ -1,5 +1,11 @@
 # slidev-addon-fancy-arrow
 
+## 0.20.3
+
+### Patch Changes
+
+- [#459](https://github.com/whitphx/slidev-addon-fancy-arrow/pull/459) [`a570631`](https://github.com/whitphx/slidev-addon-fancy-arrow/commit/a570631c069753795201d5d887cd0737ed71820b) Thanks [@MurzNN](https://github.com/MurzNN)! - Guard `useIsPrintMode()` when `useRoute()` is undefined so FancyArrow no longer blanks slides during Slidev preload/HMR.
+
 ## 0.20.2
 
 ### Patch Changes
