@@ -68,3 +68,36 @@ describe("useIsPrintMode with fixed navigation lacking isPrintMode", () => {
     expect(isPrintMode.value).toBe(false);
   });
 });
+
+describe("useIsPrintMode without a Vue Router injection", () => {
+  let app: App | undefined;
+  let isPrintMode: ComputedRef<boolean>;
+
+  afterEach(() => {
+    app?.unmount();
+    app = undefined;
+    window.history.replaceState({}, "", "/");
+  });
+
+  function mountWithoutRouter() {
+    app = createApp({
+      setup() {
+        isPrintMode = useIsPrintMode();
+        return () => null;
+      },
+    });
+    app.mount(document.createElement("div"));
+  }
+
+  it("does not throw on a normal slide", () => {
+    window.history.replaceState({}, "", "/1");
+    expect(() => mountWithoutRouter()).not.toThrow();
+    expect(isPrintMode.value).toBe(false);
+  });
+
+  it("detects print mode from the document query", () => {
+    window.history.replaceState({}, "", "/1?print");
+    mountWithoutRouter();
+    expect(isPrintMode.value).toBe(true);
+  });
+});
