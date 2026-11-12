@@ -283,6 +283,7 @@ onUpdated(() => {
       :style="{ color: props.color }"
       style="
         position: absolute;
+        z-index: inherit;
         top: 0;
         left: 0;
         width: 1px;
