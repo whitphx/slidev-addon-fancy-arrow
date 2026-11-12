@@ -41,7 +41,7 @@
     "markdown-it": "^14.3.3",
     "oxfmt": "^0.75.0",
     "oxlint": "^1.91.0",
-    "oxlint-tsgolint": "^7.0.2005",
+    "oxlint-tsgolint": "^7.0.2006",
     "puppeteer-core": "^25.16.0",
     "vitest": "^5.1.0",
     "vue": "^3.5.44",
