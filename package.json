@@ -44,7 +44,7 @@
     "oxlint-tsgolint": "^7.0.2006",
     "puppeteer-core": "^25.16.0",
     "vitest": "^5.1.0",
-    "vue": "^3.5.44",
+    "vue": "^3.5.45",
     "vue-router": "5.4.0"
   },
   "peerDependencies": {
