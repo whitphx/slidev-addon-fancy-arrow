@@ -591,6 +591,25 @@ The dash pattern scales with `width`, and applies to the line only so that the a
 
 ---
 
+# Stacking order
+
+Use a class or inline style to set the arrow SVG's `z-index`.
+
+```html
+<FancyArrow from="[data-id=stack-tail]" to="[data-id=stack-head]" class="z-15" />
+```
+
+<div data-id="stack-tail" absolute left-20 bottom-20>Tail</div>
+
+<div class="absolute right-20 bottom-15 p-10 border bg-red-500 z-10">
+Wrapper with <code>z-10</code>
+<div data-id="stack-head">Head</div>
+</div>
+
+<FancyArrow from="[data-id=stack-tail]" to="[data-id=stack-head]" class="z-15" static />
+
+---
+
 # Rough.js options
 
 <div grid="~ cols-3 gap-4" mt-6 h-100>
@@ -1072,4 +1091,3 @@ clicks: 4
 <div absolute right-10 top="50%" translate-x="-50%" translate-y="-50%" data-id="right-anchor">Anchor</div>
 
 <FancyArrow q1="[data-id=center-anchor]" :x2="$clicks % 2 === 0 ? 100 : 900" :y2="$clicks / 2 < 1 ? 100 : 500" :q2="$clicks > 3 ? '[data-id=right-anchor]' : undefined" />
-
