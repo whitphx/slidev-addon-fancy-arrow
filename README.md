@@ -139,6 +139,15 @@ A CSS color value has no such caveat, so prefer it when a token has no effect. N
 
 The dash pattern scales with `width`, and applies to the line only so that the arrow head stays readable at any size.
 
+#### Stacking order
+
+Set `z-index` with a class or inline style on `<FancyArrow>` to draw its SVG above or below other positioned elements. The SVG inherits the wrapper's `z-index`.
+
+```html
+<FancyArrow from="[data-id=anchor1]" to="[data-id=anchor2]" class="z-15" />
+<FancyArrow from="(100, 200)" to="(300, 400)" style="z-index: 15" />
+```
+
 ### Animation
 
 An arrow draws itself once each time it appears. Once it has finished drawing, an arrow whose endpoints move follows them without drawing itself again for as long as it stays on screen.
